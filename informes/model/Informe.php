@@ -1,6 +1,6 @@
 <?php
 
-class Informe
+class Informe extends Entidad
 {
     protected $idInforme;
 
@@ -13,6 +13,7 @@ class Informe
     {
         $this->idInforme = $idInforme;
     }
+
     protected $idNutricionista;
 
     public function getIdNutricionista()
@@ -35,7 +36,6 @@ class Informe
     public function setIdPaciente($idPaciente)
     {
         $this->idPaciente = $idPaciente;
-
     }
 
     protected $idCelador;
@@ -48,8 +48,8 @@ class Informe
     public function setIdCelador($idCelador)
     {
         $this->idCelador = $idCelador;
-
     }
+
     protected $dieta;
 
     public function getDieta()
@@ -59,10 +59,8 @@ class Informe
 
     public function setDieta($dieta)
     {
-        $this->dieta= $dieta;
-
+        $this->dieta = $dieta;
     }
-
 
     protected $fecha;
 
@@ -73,8 +71,9 @@ class Informe
 
     public function setFecha($fecha)
     {
-        $this->fecha= $fecha;
+        $this->fecha = $fecha;
     }
+
     protected $desayuno;
 
     public function getDesayuno()
@@ -97,7 +96,6 @@ class Informe
     public function setComida1($comida1)
     {
         $this->comida1 = $comida1;
-
     }
 
     protected $comida2;
@@ -110,7 +108,6 @@ class Informe
     public function setComida2($comida2)
     {
         $this->comida2 = $comida2;
-
     }
     protected $comida3;
 
@@ -122,7 +119,6 @@ class Informe
     public function setComida3($comida3)
     {
         $this->comida3 = $comida3;
-
     }
 
     protected $merienda;
@@ -135,8 +131,8 @@ class Informe
     public function setMerienda($merienda)
     {
         $this->merienda = $merienda;
-
     }
+
     protected $cena1;
 
     public function getCena1()
@@ -146,9 +142,9 @@ class Informe
 
     public function setCena1($cena1)
     {
-        $this->cena1= $cena1;
-
+        $this->cena1 = $cena1;
     }
+
     protected $cena2;
 
     public function getCena2()
@@ -158,9 +154,9 @@ class Informe
 
     public function setCena2($cena2)
     {
-        $this->cena2= $cena2;
-
+        $this->cena2 = $cena2;
     }
+
     protected $cena3;
 
     public function getCena3()
@@ -170,8 +166,7 @@ class Informe
 
     public function setCena3($cena3)
     {
-        $this->cena3= $cena3;
-
+        $this->cena3 = $cena3;
     }
 
     protected $fechaModificacion;
@@ -183,9 +178,9 @@ class Informe
 
     public function setFechaModificacion($fechaModificacion)
     {
-        $this->fechaModificacion= $fechaModificacion;
-
+        $this->fechaModificacion = $fechaModificacion;
     }
+
     protected $ultimoEditor3;
 
     public function getUltimoEditor()
@@ -195,7 +190,6 @@ class Informe
 
     public function setUltimoEditor($ultimoEditor)
     {
-        $this->ultimoEditor= $ultimoEditor;
-
+        $this->ultimoEditor = $ultimoEditor;
     }
 }

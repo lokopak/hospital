@@ -1,6 +1,6 @@
 <?php
 
-class Administrador extends Persona
+class Administrador extends Empleado
 {
 
     public function __construct()

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Empleado
+abstract class Empleado extends Persona
 {
     protected $DNI;
 
@@ -13,6 +13,7 @@ abstract class Empleado
     {
         $this->DNI = $DNI;
     }
+
     protected $cargo;
 
     public function getCargo()
@@ -25,17 +26,15 @@ abstract class Empleado
         $this->cargo = $cargo;
     }
 
-    protected $contraseña;
+    protected $userPassword;
 
-    public function getContraseña()
+    public function getUserPassword()
     {
-        return $this->contraseña;
+        return $this->userPassword;
     }
 
-    public function setContraseña($contraseña)
+    public function setUserPassword($userPassword)
     {
-        $this->contraseña = $contraseña;
-
+        $this->userPassword = $userPassword;
     }
-
 }

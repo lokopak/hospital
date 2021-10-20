@@ -1,5 +1,5 @@
 <?php
 
-class Celador
+class Celador extends Empleado
 {
 }

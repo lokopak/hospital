@@ -1,6 +1,6 @@
 <?php
 
-class Paciente
+class Paciente extends Persona
 {
     protected $habitacion;
 
@@ -13,6 +13,7 @@ class Paciente
     {
         $this->habitacion = $habitacion;
     }
+
     protected $dieta;
 
     public function getDieta()
@@ -35,7 +36,6 @@ class Paciente
     public function setEstado($estado)
     {
         $this->estado = $estado;
-
     }
 
     protected $fechaRegistro;
@@ -48,8 +48,8 @@ class Paciente
     public function setFechaRegistro($fechaRegistro)
     {
         $this->fechaRegistro = $fechaRegistro;
-
     }
+
     protected $fechaSaliada;
 
     public function getfechaSalida()
@@ -60,7 +60,5 @@ class Paciente
     public function setFechaSalida($fechaSalida)
     {
         $this->fechaSaliada = $fechaSalida;
-
     }
-    
 }

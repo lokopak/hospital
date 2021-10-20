@@ -13,6 +13,7 @@ abstract class Persona extends Entidad
     {
         $this->nombre = $nombre;
     }
+
     protected $apellidos;
 
     public function getApellidos()
@@ -22,6 +23,6 @@ abstract class Persona extends Entidad
 
     public function setApellidos($apellidos)
     {
-        $this->apellidos= $apellidos;
+        $this->apellidos = $apellidos;
     }
 }
