@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS empleados (
     DNI varchar(9) NOT NULL UNIQUE,
     cargo tinyint(1) NOT NULL,
     _password varchar(512) NOT NULL,
-    
+    INDEX empleado_dni_index (DNI)
 );
