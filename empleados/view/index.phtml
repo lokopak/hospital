@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h3 class="h4 mb-0">Listado empleados:</h3>
+        </div>
+        <div class="card-body">
+            <?php if (empty($empleados)) { ?>
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <i class="fa fa-info-circle fa-2x me-4"></i>
+                <div>
+                    No hay ningún empleado registrado actualmente.
+                </div>
+            </div>
+            <?php } else { ?>
+            <div class="table-responsive">
+                <table class="table text-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Cargo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($empleados as $empleado) { ?>
+
+                        <tr>
+                            <td><?= $empleado->getId() ?></td>
+                            <td><?= $empleado->getNombre() ?></td>
+                            <td><?= $empleado->getApellidos() ?></td>
+                            <td><?= $empleado->getDNI() ?></td>
+                            <td><?= $empleado->getCargo() ?></td>
+                        </tr>
+
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>

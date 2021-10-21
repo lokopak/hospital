@@ -1,6 +1,8 @@
 <?php
 
-abstract class Empleado extends Persona
+require_once(__DIR__ . "/../../model/Persona.php");
+
+class Empleado extends Persona
 {
     protected $DNI;
 

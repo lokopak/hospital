@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/Entidad.php");
+
 abstract class Persona extends Entidad
 {
     protected $nombre;

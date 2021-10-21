@@ -19,8 +19,8 @@
                 <i class="fa fa-user-circle-o me-xl-2"></i>Empleados
             </a>
             <ul class="collapse list-unstyled " id="empleadosDropdown">
-                <li><a class="sidebar-link" href="#">Listado de empleados</a></li>
-                <li><a class="sidebar-link" href="#">Alta nuevo empleado</a></li>
+                <li><a class="sidebar-link" href="/empleados/index.php">Listado de empleados</a></li>
+                <li><a class="sidebar-link" href="/empleados/alta.php">Alta nuevo empleado</a></li>
             </ul>
         </li>
         <li class="sidebar-item">
@@ -28,8 +28,8 @@
                 <i class="fa fa-bed me-xl-2"></i>Pacientes
             </a>
             <ul class="collapse list-unstyled " id="pacientesDropdown">
-                <li><a class="sidebar-link" href="#">Listado de pacientes</a></li>
-                <li><a class="sidebar-link" href="#">Alta nuevo paciente</a></li>
+                <li><a class="sidebar-link" href="/pacientes/index.php">Listado de pacientes</a></li>
+                <li><a class="sidebar-link" href="/pacientes/alta.php">Alta nuevo paciente</a></li>
             </ul>
         </li>
         <li class="sidebar-item">
@@ -37,8 +37,8 @@
                 <i class="fa fa-coffee me-xl-2"></i>Dietas
             </a>
             <ul class="collapse list-unstyled " id="dietasDropdown">
-                <li><a class="sidebar-link" href="#">Informes</a></li>
-                <li><a class="sidebar-link" href="#">Nuevo informe</a></li>
+                <li><a class="sidebar-link" href="/informes/index.php">Informes</a></li>
+                <li><a class="sidebar-link" href="/informes/nuevo.php">Nuevo informe</a></li>
             </ul>
         </li>
     </ul>
