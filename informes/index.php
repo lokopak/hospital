@@ -39,32 +39,32 @@ $conexion = ConexionDB::getConexion();
 
         //print_r($resultado);
 
-        $empleados = [];
+        $informes = [];
 
-        foreach ($resultado as $empleado) {
-            $empleado = new Empleado();
-            $empleado->rellenar($registro);
-            $empleados[] = $empleado;
+        foreach ($resultado as $informe) {
+            $informe = new Empleado();
+            $informe->rellenar($registro);
+            $informes[] = $informe;
         }
 
-        foreach ($empleados as $empleado) {
+        foreach ($informes as $informe) {
             echo '<tr>';
-            echo '<td>' . $empleado->getIdInforme(). '</td>';
-            echo '<td>' . $empleado->etIdNutricionista() . '</td>';
-            echo '<td>' . $empleado->getIdPaciente() . '</td>';
-            echo '<td>' . $empleado->getIdCelador() . '</td>';
-            echo '<td>' . $empleado->getDieta() . '</td>';
-            echo '<td>' . $empleado->getFecha() . '</td>';
-            echo '<td>' . $empleado->getDesayuno() . '</td>';
-            echo '<td>' . $empleado->getComida1() . '</td>';
-            echo '<td>' . $empleado->getComida2() . '</td>';
-            echo '<td>' . $empleado->getComida3() . '</td>';
-            echo '<td>' . $empleado->getMerienda() . '</td>';
-            echo '<td>' . $empleado->getCena1() . '</td>';
-            echo '<td>' . $empleado->getCena2() . '</td>';
-            echo '<td>' . $empleado->getCena3() . '</td>';
-            echo '<td>' . $empleado->getFechaModificacion() . '</td>';
-            echo '<td>' . $empleado->getUltimoEditortCena1() . '</td>';
+            echo '<td>' . $informe->getIdInforme(). '</td>';
+            echo '<td>' . $informe->etIdNutricionista() . '</td>';
+            echo '<td>' . $informe->getIdPaciente() . '</td>';
+            echo '<td>' . $informe->getIdCelador() . '</td>';
+            echo '<td>' . $informe->getDieta() . '</td>';
+            echo '<td>' . $informe->getFecha() . '</td>';
+            echo '<td>' . $informe->getDesayuno() . '</td>';
+            echo '<td>' . $informe->getComida1() . '</td>';
+            echo '<td>' . $informe->getComida2() . '</td>';
+            echo '<td>' . $informe->getComida3() . '</td>';
+            echo '<td>' . $informe->getMerienda() . '</td>';
+            echo '<td>' . $informe->getCena1() . '</td>';
+            echo '<td>' . $informe->getCena2() . '</td>';
+            echo '<td>' . $informe->getCena3() . '</td>';
+            echo '<td>' . $informe->getFechaModificacion() . '</td>';
+            echo '<td>' . $informe->getUltimoEditortCena1() . '</td>';
             echo '<td>';
             echo '<td>';
             // echo '<a href="borrar.php?codigo='. $datos['id'] .'">Borrar</a>';
