@@ -50,7 +50,7 @@ class Paciente extends Persona
         $this->fechaRegistro = $fechaRegistro;
     }
 
-    protected $fechaSaliada;
+    protected $fechaSalida;
 
     public function getfechaSalida()
     {
@@ -59,12 +59,6 @@ class Paciente extends Persona
 
     public function setFechaSalida($fechaSalida)
     {
-<<<<<<< Updated upstream
-        $this->fechaSaliada = $fechaSalida;
-=======
-        $this->fechaSaliada
-         = $fechaSalida;
-
->>>>>>> Stashed changes
+        $this->fechaSalida = $fechaSalida;
     }
 }
