@@ -24,7 +24,7 @@
         <?php require(__DIR__ . "/footer.php"); ?>
 
     </div>
-    <script src="/hospital/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
                         href="#">
                         <i class="fa fa-bars text-white"></i>
                     </a>
-                    <a class="navbar-brand ms-2" href="/hospital/index.php">
+                    <a class="navbar-brand ms-2" href="/index.php">
                         <div class="brand-text d-none d-md-inline-block text-uppercase letter-spacing-0">
                             <span class="text-white fw-normal text-xs">Hospitalis </span>
                             <strong class="text-primary text-sm">Consulting</strong>
@@ -71,7 +71,7 @@
                         <ul class="dropdown-menu dropdown-menu-end mt-sm-3 shadow-sm" aria-labelledby="messages">
                             <li><a class="dropdown-item d-flex py-3" href="#!">
                                     <img class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0"
-                                        src="/hospital/assets/images/person-no-image.png" alt="..." width="45">
+                                        src="/assets/images/person-no-image.png" alt="..." width="45">
                                     <div class="ms-3">
                                         <span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">Jason
                                             Doe</span>
@@ -84,7 +84,7 @@
                             </li>
                             <li><a class="dropdown-item d-flex py-3" href="#!">
                                     <img class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0"
-                                        src="/hospital/assets/images/person-no-image.png" alt="..." width="45">
+                                        src="/assets/images/person-no-image.png" alt="..." width="45">
                                     <div class="ms-3">
                                         <span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">
                                             Jason Doe
@@ -99,7 +99,7 @@
                             <li>
                                 <a class="dropdown-item d-flex py-3" href="#!">
                                     <img class="img-fluid rounded-circle flex-shrink-0 avatar shadow-0"
-                                        src="/hospital/assets/images/person-no-image.png" alt="..." width="45">
+                                        src="/assets/images/person-no-image.png" alt="..." width="45">
                                     <div class="ms-3">
                                         <span class="h6 d-block fw-normal mb-1 text-sm text-gray-600">
                                             Jason Doe

@@ -1,7 +1,7 @@
 <nav class="side-navbar">
     <div class="sidebar-header d-flex align-items-center justify-content-center p-3 mb-3">
         <div class="sidenav-header-inner text-center"><img class="img-fluid rounded-circle avatar mb-3"
-                src="/hospital/assets/images/person-no-image.png" alt="person">
+                src="/assets/images/person-no-image.png" alt="person">
             <h2 class="h5 text-white text-uppercase mb-0">Señor Usuario</h2>
             <p class="text-sm mb-0 text-muted">Cargo en hospital</p>
         </div><a class="brand-small text-center" href="index.html">
