@@ -59,6 +59,12 @@ class Paciente extends Persona
 
     public function setFechaSalida($fechaSalida)
     {
+<<<<<<< Updated upstream
         $this->fechaSaliada = $fechaSalida;
+=======
+        $this->fechaSaliada
+         = $fechaSalida;
+
+>>>>>>> Stashed changes
     }
 }
