@@ -7,9 +7,3 @@
         </div>
     </div>
 </footer>
-</div>
-<script src="/hospital/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</script>
-</body>
-
-</html>
