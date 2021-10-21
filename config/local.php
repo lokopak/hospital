@@ -6,5 +6,5 @@ return [
         'password' => 'hospital',
         'host' => 'localhost',
         'dbname' => 'hospital'
-    ]s
+    ]
 ];
