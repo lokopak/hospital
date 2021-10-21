@@ -47,6 +47,9 @@ CREATE TABLE IF NOT EXISTS informes (
     ultimoEditor int(11) NOT NULL,
     INDEX informes_nutricionista_index (idNutricionista),
     INDEX informes_paciente_index (idPaciente),
-    INDEX informes_celador_index (idCelador)
+    INDEX informes_celador_index (idCelador),
+    CONSTRAINT fk_nutricionista FOREIGN KEY (idNutricionista) REFERENCES empleados(id),
+    CONSTRAINT fk_paciente FOREIGN KEY (idPaciente) REFERENCES pacientes(id),
+    CONSTRAINT fk_celador FOREIGN KEY (idCelador) REFERENCES empleados(id)
 );
 
