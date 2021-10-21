@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS informes (
     idNutricionista int(11) NOT NULL,
     idPaciente int(11) NOT NULL,
     idCelador int(11) NOT NULL,
-    dienta tinyint(1) NOT NULL,
+    dieta tinyint(1) NOT NULL,
     fecha date NOT NULL DEFAULT (CURRENT_DATE),
     desayuno tinyint(1) NOT NULL,
     comida1 tinyint(1) NOT NULL,
