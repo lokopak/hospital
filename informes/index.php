@@ -4,7 +4,7 @@ $conexion = ConexionDB::getConexion();
 
 ?>
 
-<h1>Listado empleados:</h1>
+<h1>Listado informes:</h1>
 <hr />
 
 <table class="table table-hover">
