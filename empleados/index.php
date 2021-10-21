@@ -1,6 +1,4 @@
 <?php
-  
-
   require_once(__DIR__ . "/../model/ConexionDB.php");
   $conexion = ConexionDB::getConexion();
 
@@ -39,7 +37,7 @@
   
       foreach ($empleados as $empleado) {
           echo '<tr>';
-          echo '<td>'.$empleado->getIdEmpleado().'</td>';
+          echo '<td>'.$empleado->getId().'</td>';
         echo '<td>' . $empleado->getNombre(). '</td>';
         echo '<td>' . $empleado->getApellidos(). '</td>';
         echo '<td>' . $empleado->getDNI(). '</td>';

@@ -17,7 +17,7 @@ class ConexionDB
             self::$instancia = self::crearConexion();
         }
 
-        return self::$instancia;
+        return self::$instancia->conexion;
     }
 
     private static function crearConexion() 
@@ -39,7 +39,7 @@ class ConexionDB
         try{
             $instancia = new ConexionDB();
             $instancia->conexion = new PDO($dsn, $userName, $pass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $instancia->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $instancia;
         } catch(PDOException $e){
