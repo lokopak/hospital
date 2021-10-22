@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h3 class="h4 mb-0">Listado pacientes:</h3>
+        </div>
+        <div class="card-body">
+            <?php if (empty($pacientes)) { ?>
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="fa fa-info-circle fa-2x me-4"></i>
+                    <div>
+                        No hay ningún paciente registrado actualmente.
+                    </div>
+                </div>
+            <?php } else { ?>
+                <div class="table-responsive">
+                    <table class="table text-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id de paciente</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Nº habitación</th>
+                                <th scope="col">Dieta</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha de registro</th>
+                                <th scope="col">Fecha de salida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($empleados as $empleado) { ?>
+
+                                <tr>
+                                    '
+                                <tr>';
+                                    <td><?= $paciente->getId() ?></td>;
+                                    <td><?= $paciente->getNombre() ?></td>;;
+                                    <td><?= $paciente->getApellidos() ?></td>;;
+                                    <td><?= $paciente->getHabitacion() ?></td>;
+                                    <td><?= $paciente->getDieta() ?></td>;
+                                    <td><?= $paciente->getEstado() ?></td>;?></td>;
+                                    <td><?= $paciente->getFechaRegistro() ?></td>;
+                                    <td><?= $paciente->getfechaSalida() ?></td>;
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
