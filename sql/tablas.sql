@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS pacientes (
     habitacion varchar(9) NOT NULL,
     dieta tinyint(1) NOT NULL DEfAULT 0,
     estado tinyint(1) NOT NULL,
-    fechaRegistro date NOT NULL DEFAULT (CURRENT_DATE),
-    fechaSalida date,
+    fechaRegistro TIMESTAMP NOT NULL DEFAULT NOW(),
+    fechaSalida TIMESTAMP,
     INDEX paciente_nombre_apellidos_index (nombre,apellidos)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS informes (
     cena1 tinyint(1) NOT NULL,
     cena2 tinyint(1) NOT NULL,
     cena3 tinyint(1) NOT NULL,
-    fechaModificacion date NOT NULL,
+    fechaModificacion TIMESTAMP NOT NULL,
     ultimoEditor int(11) NOT NULL,
     INDEX informes_nutricionista_index (idNutricionista),
     INDEX informes_paciente_index (idPaciente),
