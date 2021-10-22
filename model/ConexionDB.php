@@ -59,6 +59,10 @@ class ConexionDB extends PDO
     {
         $datos = require_once(__DIR__ . "/../config/local.php");
 
+        if (!isset($datos['basedatos'])) {
+            throw new Exception("No se ha proporcionado una configuración correcta para la conexión con la base de datos");
+        }
+
         $host = $datos['basedatos']['host'] ?? '';
         if (isset($datos['basedatos']['dbname'])) {
             $dbname = $datos['basedatos']['dbname'];
@@ -67,8 +71,9 @@ class ConexionDB extends PDO
         }
         $userName = $datos['basedatos']['usuario'] ?? '';
         $pass = $datos['basedatos']['password'] ?? '';
+        $driver = $datos['basedatos']['driver'] ?? '';
 
-        $dsn = sprintf("mysql:host=%s;dbname=%s", $host, $dbname);
+        $dsn = sprintf("%s:host=%s;dbname=%s", $driver, $host, $dbname);
 
         try {
             return new ConexionDB($dsn, $userName, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
