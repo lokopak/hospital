@@ -45,7 +45,7 @@ class TablaEmpleado extends Tabla
                 unset($datos['userPassword']);
             }
             // Rellenamos todos los atributos incluidos en el array en el objeto.
-            $empleado->rellenar($datos);
+            $empleado->rellenarConArray($datos);
 
             // Agregamos el nuevo objeto al array
             $empleados[] = $empleado;
@@ -60,18 +60,17 @@ class TablaEmpleado extends Tabla
      */
     public function obtenerNombreClase($datos)
     {
-        if (!isset($datos['cargo'])) {
-            return 'Empleado';
-        }
         switch ($datos['cargo']) {
-            case 1:
-                return 'Administrador';
-            case 2:
-                return 'Nutricionista';
-            case 3:
-                return 'Celador';
+            case Empleado::CARGO_EMPLEADO_ADMINISTRADOR:
+                return Administrador::class;
+            case Empleado::CARGO_EMPLEADO_NUTRICIONISTA:
+                return Nutricionista::class;
+            case Empleado::CARGO_EMPLEADO_CELADOR:
+                return Celador::class;
+            case Empleado::CARGO_EMPLEADO_INACTIVO:
+                return "Inactivo";
             default:
-                return 'Empleado';
+                return Empleado::class;
         }
     }
 }
