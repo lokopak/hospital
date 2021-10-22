@@ -1,12 +1,21 @@
 <?php
 
-abstract class Entidad
+require_once(__DIR__ . "/ArraySerializable.php");
+
+abstract class Entidad implements ArraySerializable
 {
     protected $id;
 
     protected $noRellenar = [
         'id'
     ];
+
+    /**
+     * Array que contiene los campos / atributos
+     * que no se rellenaran mediante la función
+     * "to 
+     */
+    protected $noDevolver = [];
 
     public function getId()
     {
@@ -45,6 +54,31 @@ abstract class Entidad
             } else if (method_exists($this, $metodo)) {
                 $this->$metodo($valor);
             }
+    /**
+     * Devuelve un array con los valores visibles de este
+     * objeto.
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        $array = [];
+        // Mediante la función "get_object_vars" obtenemos el nombre
+        // de todos los atributos de la clase a la que pertenece el objeto.
+        // en forma de array. Recorremos este array para obtener un
+        // array con los índices equivalentes a los nombres y con los
+        // valores que dicho objeto tiene asignados.
+        foreach (get_object_vars($this) as $propiedad => $valor) {
+            // Si la propiedad está incluida en el array "noDevolver", simplemente continuamos.
+            if (in_array($propiedad, $this->noDevolver)) {
+                continue;
+            }
+
+            // Agregamos el valor usando como índice el nombre de la propiedad / atributo
+            $array[$propiedad] = $valor;
         }
+
+        // Devolvemos el array obtenido
+        return $array;
     }
 }

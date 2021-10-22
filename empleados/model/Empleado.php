@@ -37,6 +37,14 @@ class Empleado extends Persona
 
     protected $DNI;
 
+    public function __construct()
+    {
+        // Agregamos la columna userPassword al array de $noDevolver
+        // para evitar que se pueda filtrar de por error.
+        // Esto hace que sólo se pueda acceder al userPassword mediante
+        // el método "getUserPassword()"
+        $this->noDevolver[] = "userPassword";
+    }
     public function getDNI()
     {
         return $this->DNI;
