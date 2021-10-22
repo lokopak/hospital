@@ -8,7 +8,7 @@ class Paciente extends Persona
     const PACIENTE_ESTADO_POSTOPERATORIO = 3;
     const PACIENTE_ESTADO_UCI = 4;
 
-    protected $estados = [
+    protected static $estados = [
         self::PACIENTE_ESTADO_ALTA => "alta",
         self::PACIENTE_ESTADO_FALLECIDO => "fallecido",
         self::PACIENTE_ESTADO_PREOPERATORIO => "pre-operatorio",

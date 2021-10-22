@@ -18,7 +18,8 @@
         <section class="pb-5">
             <div class="container-fluid">
                 <!-- Contenido de la página -->
-                <?php require($contenido); ?>
+                <?php if (isset($contenido)) {
+                    require($contenido); }?>
             </div>
         </section>
         <?php require(__DIR__ . "/footer.php"); ?>
