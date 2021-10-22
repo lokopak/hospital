@@ -56,7 +56,10 @@ class TablaEmpleado extends Tabla
     }
 
     /**
+     * Devuelve el nombre de la clase que corresponde a
+     * un empleado dependiendo de su cargo.
      * 
+     * @return string
      */
     public function obtenerNombreClase($datos)
     {

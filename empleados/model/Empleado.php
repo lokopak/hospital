@@ -2,6 +2,14 @@
 
 require_once(__DIR__ . "/../../model/Persona.php");
 
+/**
+ * La clase Empleado representa a las entidades de los
+ * empleados de la tabla empleados de la base de datos
+ * y engloba a todos los posibles empleados del hospital.
+ * 
+ * La diferencia entre los distintos empleados se maneja
+ * mediante el atributo / propiedad "cargo"
+ */
 class Empleado extends Persona
 {
 
@@ -35,8 +43,35 @@ class Empleado extends Persona
         self::CARGO_EMPLEADO_ADMINISTRADOR => "administrador",
     ];
 
+    /**
+     * DNI del empleado
+     * (en este caso sirve además como identificación para acceder a la aplicación)
+     * 
+     * @var string
+     */
     protected $DNI;
 
+    /**
+     * Cargo asignado a este empleado.
+     * 
+     * @var int
+     */
+    protected $cargo;
+
+    /**
+     * Contraseña de acceso del empleado en la aplicación.
+     * 
+     * NOTA: Dicha contraseña se guarda encriptada en la base de datos
+     *       para evitar que en caso de filtración pueda ser empleada
+     *       por personas ajenas a la aplicación.
+     * 
+     * @var string
+     */
+    protected $userPassword;
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         // Agregamos la columna userPassword al array de $noDevolver
@@ -45,18 +80,34 @@ class Empleado extends Persona
         // el método "getUserPassword()"
         $this->noDevolver[] = "userPassword";
     }
+
+    /**
+     * Devuelve el DNI del empleado
+     * 
+     * @return string
+     */
     public function getDNI()
     {
         return $this->DNI;
     }
 
+    /**
+     * Cambia el DNI del empleado
+     * 
+     * @param string $DNI El nuevo DNI del empleado.
+     * 
+     * @return void
+     */
     public function setDNI($DNI)
     {
         $this->DNI = $DNI;
     }
 
-    protected $cargo;
-
+    /**
+     * Devuelve el cargo del empleado
+     * 
+     * @return int
+     */
     public function getCargo()
     {
         return $this->cargo;
@@ -83,6 +134,13 @@ class Empleado extends Persona
         return "desconocido";
     }
 
+    /**
+     * Cambia el cargo del empleado
+     * 
+     * @param int $cargo El nuevo cargo del empleado.
+     * 
+     * @return void
+     */
     public function setCargo($cargo)
     {
         // Protegemos la integridad de los datos en la base de datos impidiendo que un empleado tome un valor no permitido.
@@ -94,13 +152,34 @@ class Empleado extends Persona
         $this->cargo = $cargo;
     }
 
-    protected $userPassword;
+    /**
+     * Devuelve un array todos los cargos disponibles para asignar
+     * Esto nos facilita obtener y comprobar que cargos están disponibles o no.
+     * 
+     * @return array
+     */
+    public function getCargosDisponibles()
+    {
+        return $this->cargos;
+    }
 
+    /**
+     * Devuelve la contraseña del empleado
+     * 
+     * @return string
+     */
     public function getUserPassword()
     {
         return $this->userPassword;
     }
 
+    /**
+     * Cambia la contraseña del empleado
+     * 
+     * @param string $userPassword La nueva contraseña del empleado.
+     * 
+     * @return void
+     */
     public function setUserPassword($userPassword)
     {
         $this->userPassword = $userPassword;

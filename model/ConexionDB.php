@@ -54,6 +54,8 @@ class ConexionDB extends PDO
      * al mismo tiempo que abre la conexión con la base de datos.
      * 
      * @return \ConexionDB
+     * 
+     * @throws \Exception
      */
     private static function crearConexion()
     {
