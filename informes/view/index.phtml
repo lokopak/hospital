@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h3 class="h4 mb-0">Informes:</h3>
+        </div>
+        <div class="card-body">
+            <?php if (empty($informes)) { ?>
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="fa fa-info-circle fa-2x me-4"></i>
+                    <div>
+                        No hay ningún informe actualmente.
+                    </div>
+                </div>
+            <?php } else { ?>
+                <div class="table-responsive">
+                    <table class="table text-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nutricionista</th>
+                                <th scope="col">Paciente</th>
+                                <th scope="col">Celador</th>
+                                <th scope="col">Dieta</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Desayuno</th>
+                                <th scope="col">Primer Plato</th>
+                                <th scope="col">Segundo Plato</th>
+                                <th scope="col">Postre</th>
+                                <th scope="col">Merienda</th>
+                                <th scope="col">Cena Primer Plato</th>
+                                <th scope="col">Cena Segundo Plato</th>
+                                <th scope="col">Cena Postre</th>
+                                <th scope="col">Fecha Modificación</th>
+                                <th scope="col">Ultimo Editor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($informes as $informe) { ?>
+
+                                <tr>
+                                    <td><?= $informe->getId() ?></td>
+                                    <td><?= $informe->getIdNutricionista() ?></td>
+                                    <td><?= $informe->getIdPaciente() ?></td>
+                                    <td><?= $informe->getIdCelador() ?></td>
+                                    <td><?= $informe->getDieta() ?></td>
+                                    <td><?= $informe->getFecha() ?></td>
+                                    <td><?= $informe->getDesayuno() ?></td>
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
