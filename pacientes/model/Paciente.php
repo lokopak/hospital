@@ -1,10 +1,10 @@
 <?php
-
+require_once(__DIR__ . "/../../model/Persona.php");
 class Paciente extends Persona
 {
     protected $habitacion;
 
-    public function getHabiticion()
+    public function getHabitacion()
     {
         return $this->habitacion;
     }
