@@ -1,10 +1,88 @@
+<?php
+function imprimirDietaSinHijas($dieta, $cols = 3)
+{
+    return '<tr>
+    <td> ' . $dieta->getDescripcion() . '</td>
+    <td colspan="' . $cols . '"></td>
+    </tr>';
+}
+
+function getRowspan($dieta)
+{
+    $rows = count($dieta->getHijas());
+
+    if ($rows === 0) {
+        return 1;
+    }
+
+    foreach ($dieta->getHijas() as $hija) {
+        if (!empty($hija->getHijas())) {
+            $rows += count($hija->getHijas()) - 1;
+        }
+    }
+
+
+    return $rows;
+}
+
+function getColspan($dieta, $max, $min)
+{
+    if (empty($dieta->getHijas())) {
+        return $max;
+    }
+
+    return $min;
+}
+
+function imprimirNietas($dieta)
+{
+    $result = '<tr>';
+    $result .= '<td>' . $dieta->getDescripcion() . '</td>';
+    $result .= '</tr>';
+}
+
+function imiprimirHija($hija, $i)
+{
+    $result = '<tr>';
+    $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
+    if (count($hija->getHijas())) {
+        $nieta = $hija->getHijas()[0];
+        $result .= '<td>' . $nieta->getDescripcion() . '</td>';
+    }
+    $result .= '</tr>';
+
+
+    if (count($hija->getHijas())) {
+        for ($h = 1; $h < count($hija->getHijas()); $h++) {
+            $result .= imiprimirHija($hija->getHijas()[$h], $h);
+        }
+    }
+
+    return $result;
+}
+
+function imprimirDietaConHijas($dieta)
+{
+    $result = '<tr>';
+    $result .= '<td class="" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '">' . $dieta->getDescripcion() . '</td>';
+    $hija = $dieta->getHijas()[0];
+    $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
+    if (count($hija->getHijas())) {
+        $nieta = $hija->getHijas()[0];
+        $result .= '<td>' . $nieta->getDescripcion() . '</td>';
+    }
+    $result .= '</tr>';
+    return $result;
+}
+?>
+
 <div class="row">
     <div class="card">
         <div class="card-header border-bottom">
             <h3 class="h4 mb-0">Tablal de dietas:</h3>
         </div>
         <div class="card-body">
-            <?php if (empty($dietas['datos_dietas'])) { ?>
+            <?php if (empty($dietas)) { ?>
             <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <i class="fa fa-info-circle fa-2x me-4"></i>
                 <div>
@@ -13,7 +91,7 @@
             </div>
             <?php } else { ?>
             <div class="table-responsive">
-                <table class="table table-striped text-sm mb-0">
+                <table class="table text-sm mb-0">
                     <thead>
                         <tr>
                             <th scope="col">Categoría madre</th>
@@ -22,9 +100,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        </tr>
+                        <?php
+                            foreach ($dietas as $dieta) {
+                                if (empty($dieta->getHijas())) {
+                                    echo imprimirDietaSinHijas($dieta);
+                                } else {
+                                    echo imprimirDietaConHijas($dieta);
 
+                                    if (count($dieta->getHijas())) {
+                                        for ($h = 1; $h < count($dieta->getHijas()); $h++) {
+                                            echo imiprimirHija($dieta->getHijas()[$h], $h);
+                                            for ($j = 1; $j < count($dieta->getHijas()); $h++) {
+                                                if (count($dieta->getHijas($dieta->getHijas()[$h]->getHijas()))) {
+                                                    echo imprimirNietas($dieta->getHijas()[$h]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
                     </tbody>
                 </table>
             </div>
@@ -32,3 +127,14 @@
         </div>
     </div>
 </div>
+<?php return; ?>
+
+<!-- <?php if ($i === 0) { ?>
+<td rowspan="<?= 1 + count($dieta->getHijas()) * (1 * count($hija->getHijas())) ?>" class="border-end">
+    <?= $dieta->getDescripcion() ?></td>
+<?php } ?>
+<?php if ($j === 0) { ?>
+<td rowspan="<?= 1 + 1 * count($hija->getHijas()) ?>" class="border-end <?= $i % 2 === 0 ? 'bg-warning' : '' ?>">
+    <?= $i . ' ' . $hija->getDescripcion() ?></td>
+<?php } ?>
+<td class="bg-danger"><?= $i . ' ' . $nieta->getDescripcion() ?></td> -->

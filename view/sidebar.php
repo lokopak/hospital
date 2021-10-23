@@ -33,12 +33,20 @@
             </ul>
         </li>
         <li class="sidebar-item">
+            <a class="sidebar-link" href="#informesDietasDropdown" data-bs-toggle="collapse">
+                <i class="fa fa-area-chart me-xl-2"></i>Informes de dietas
+            </a>
+            <ul class="collapse list-unstyled " id="informesDietasDropdown">
+                <li><a class="sidebar-link" href="/informes/index.php">Informes</a></li>
+                <li><a class="sidebar-link" href="/informes/nuevo.php">Nuevo informe</a></li>
+            </ul>
+        </li>
+        <li class="sidebar-item">
             <a class="sidebar-link" href="#dietasDropdown" data-bs-toggle="collapse">
                 <i class="fa fa-coffee me-xl-2"></i>Dietas
             </a>
             <ul class="collapse list-unstyled " id="dietasDropdown">
-                <li><a class="sidebar-link" href="/informes/index.php">Informes</a></li>
-                <li><a class="sidebar-link" href="/informes/nuevo.php">Nuevo informe</a></li>
+                <li><a class="sidebar-link" href="/dietas/index.php">Ver dietas</a></li>
             </ul>
         </li>
     </ul>
