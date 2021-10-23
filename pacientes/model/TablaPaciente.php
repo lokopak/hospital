@@ -10,6 +10,8 @@ class TablaPaciente extends Tabla
      */
     public function __construct()
     {
+        // Llamamos al constructor de la clase Tabla para permitir
+        // que el objeto se instacie completamente.
         parent::__construct();
         // Asitnamos la tabla a la clase.
         $this->nombreTabla = "pacientes";
