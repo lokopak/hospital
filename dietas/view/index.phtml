@@ -1,12 +1,25 @@
 <?php
+
+/**
+ * Imprime una fila de la tabla con una dieta sin dietas hijas.
+ * 
+ * @param Dieta $dieta Dieta a imprimir
+ * @param int $cols [opcional] número de columnas a ocupar.
+ */
 function imprimirDietaSinHijas($dieta, $cols = 3)
 {
-    return '<tr>
+    echo '<tr>
     <td> ' . $dieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $dieta->getMadre() . ')</span></td>
     <td colspan="' . $cols . '"></td>
     </tr>';
 }
 
+/**
+ * Calcula el número de filas que debe ocupar una celda de la tabla
+ * dependiendo del número de hijas que tiene la dieta.
+ * 
+ * @param Dieta $dieta Dieta a imprimir
+ */
 function getRowspan($dieta)
 {
     $rows = 1;
@@ -24,6 +37,14 @@ function getRowspan($dieta)
     return $rows;
 }
 
+/**
+ * Calcula el número de columnas que debe ocupar una celda de la tabla
+ * dependiendo de si tiene hijas o no.
+ * 
+ * @param Dieta $dieta Dieta a imprimir
+ * @param int $max El número máximo de columnas que puede ocupar.
+ * @param int $min El número mínimo de columnas que debe ocupar.
+ */
 function getColspan($dieta, $max, $min)
 {
     if (empty($dieta->getHijas())) {
@@ -33,6 +54,17 @@ function getColspan($dieta, $max, $min)
     return $min;
 }
 
+
+/**
+ * Imprime una fila de la tabla con una dieta con dietas hijas.
+ * 
+ * @param Dieta $dieta Dieta a imprimir
+ * @param int $paso [opcional] El paso a seguir dentro de cada dieta.
+ *          @paso 0: Imprime la dieta y todas las primeras hijas / nietas (primera fila)
+ *          @paso 1: Imprime todas las hijas restantes de la dieta madre. Entre cada iteración del paso 1, se intercala el paso 2.
+ *          @paso 2: Imprime todas las dietas nietas restantes.
+ * @param int $indice [opcional] Ídice de la dieta dentro del array de hijas.
+ */
 function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 {
     if ($paso === 0) {
@@ -112,7 +144,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
                         <?php
                             foreach ($dietas as $dieta) {
                                 if (empty($dieta->getHijas())) {
-                                    echo imprimirDietaSinHijas($dieta);
+                                    imprimirDietaSinHijas($dieta);
                                 } else {
                                     imprimirDietaConHijas($dieta);
                                 }
