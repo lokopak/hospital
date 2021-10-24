@@ -1,6 +1,9 @@
 <?php
 
-$dietas = require(__DIR__ . "/config/dietas.config.php");
+require_once(__DIR__ . "/model/TablaDieta.php");
+$tablaDieta = new TablaDieta();
+
+$dietas = $tablaDieta->getDietas();
 
 $contenido = __DIR__ . "/view/index.phtml";
 

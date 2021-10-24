@@ -35,7 +35,7 @@ class TablaDieta
      * 
      * @var Dieta[]
      */
-    protected static $listaDietas = [];
+    protected $listaDietas = [];
 
     /**
      * Constructor
@@ -45,9 +45,7 @@ class TablaDieta
         // Si no hay ninguna dieta, provemos a cargarlas desde el archivo
         // Si todo ha ido bien solo será necesario hacerlo una vez por ejecución
         // de la aplicación.
-        if (empty(self::$listaDietas)) {
-            $this->cargarDietas();
-        }
+        $this->cargarDietas();
     }
 
     /**
@@ -79,7 +77,7 @@ class TablaDieta
             // De esta forma indicamos que es una clase madre y la recursividad hará el resto.
             $dieta = $this->generarDieta($indice, $valor);
 
-            self::$listaDietas[$indice] = $dieta;
+            $this->listaDietas[$indice] = $dieta;
         }
     }
 
@@ -121,7 +119,7 @@ class TablaDieta
             }
         }
 
-        return new Dieta($nombre, $descripción, $hijas);
+        return new Dieta($nombre, $descripción, $hijas, $madre);
     }
 
     /**
@@ -131,6 +129,6 @@ class TablaDieta
      */
     public function getDietas()
     {
-        return self::$listaDietas;
+        return $this->listaDietas;
     }
 }

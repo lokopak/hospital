@@ -2,22 +2,21 @@
 function imprimirDietaSinHijas($dieta, $cols = 3)
 {
     return '<tr>
-    <td> ' . $dieta->getDescripcion() . '</td>
+    <td> ' . $dieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $dieta->getMadre() . ')</span></td>
     <td colspan="' . $cols . '"></td>
     </tr>';
 }
 
 function getRowspan($dieta)
 {
-    $rows = count($dieta->getHijas());
+    $rows = 1;
+    if (!empty($dieta->getHijas())) {
+        $rows = count($dieta->getHijas());
 
-    if ($rows === 0) {
-        return 1;
-    }
-
-    foreach ($dieta->getHijas() as $hija) {
-        if (!empty($hija->getHijas())) {
-            $rows += count($hija->getHijas()) - 1;
+        foreach ($dieta->getHijas() as $hija) {
+            if (!empty($hija->getHijas())) {
+                $rows += count($hija->getHijas()) - 1;
+            }
         }
     }
 
@@ -34,52 +33,62 @@ function getColspan($dieta, $max, $min)
     return $min;
 }
 
-function imprimirNietas($dieta)
+function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 {
-    $result = '<tr>';
-    $result .= '<td>' . $dieta->getDescripcion() . '</td>';
-    $result .= '</tr>';
-}
+    if ($paso === 0) {
+        $result = '<tr>';
+        $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '">' . $dieta->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $dieta->getMadre() . ')</span></td>';
+        if (!empty(($hijas = $dieta->getHijas()))) {
+            $hija = $hijas[0];
+            $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $hija->getMadre() . ')</span></td>';
+            if (!empty(($nietas = $hija->getHijas()))) {
+                $nieta = $nietas[0];
+                $result .= '<td class="border-start">' . $nieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $nieta->getMadre() . ')</span></td>';
+            }
+            $result .= '</tr>';
+            echo $result;
 
-function imiprimirHija($hija, $i)
-{
-    $result = '<tr>';
-    $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
-    if (count($hija->getHijas())) {
-        $nieta = $hija->getHijas()[0];
-        $result .= '<td>' . $nieta->getDescripcion() . '</td>';
-    }
-    $result .= '</tr>';
-
-
-    if (count($hija->getHijas())) {
-        for ($h = 1; $h < count($hija->getHijas()); $h++) {
-            $result .= imiprimirHija($hija->getHijas()[$h], $h);
+            for ($j = 1; $j < count($nietas); $j++) {
+                imprimirDietaConHijas($hija, 2, $j);
+            }
+            imprimirDietaConHijas($dieta, 1);
+        } else {
+            $result .= '</tr>';
+            echo $result;
         }
-    }
+    } else if ($paso === 1) {
+        $hijas = $dieta->getHijas();
+        for ($i = 1; $i < count($hijas); $i++) {
+            $result = '<tr>';
+            $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$i]->getMadre() . ')</span></td>';
+            if (!empty(($nietas = $hijas[$i]->getHijas()))) {
+                $nieta = $nietas[0];
+                $result .= '<td class="border-start">' . $nieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $nieta->getMadre() . ')</span></td>';
+                $result .= '</tr>';
+                echo $result;
 
-    return $result;
-}
-
-function imprimirDietaConHijas($dieta)
-{
-    $result = '<tr>';
-    $result .= '<td class="" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '">' . $dieta->getDescripcion() . '</td>';
-    $hija = $dieta->getHijas()[0];
-    $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
-    if (count($hija->getHijas())) {
-        $nieta = $hija->getHijas()[0];
-        $result .= '<td>' . $nieta->getDescripcion() . '</td>';
+                for ($j = 1; $j < count($nietas); $j++) {
+                    imprimirDietaConHijas($hijas[$i], 2,  $j);
+                }
+            } else {
+                $result .= '</tr>';
+                echo $result;
+            }
+        }
+    } else {
+        $hijas = $dieta->getHijas();
+        $result = '<tr>';
+        $result .= '<td class="border-start">' . $hijas[$indice]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$indice]->getMadre() . ')</span></td>';
+        $result .= '</tr>';
+        echo $result;
     }
-    $result .= '</tr>';
-    return $result;
 }
 ?>
 
 <div class="row">
     <div class="card">
         <div class="card-header border-bottom">
-            <h3 class="h4 mb-0">Tablal de dietas:</h3>
+            <h3 class="h4 text-uppercase mb-0">Tabla de dietas:</h3>
         </div>
         <div class="card-body">
             <?php if (empty($dietas)) { ?>
@@ -105,18 +114,7 @@ function imprimirDietaConHijas($dieta)
                                 if (empty($dieta->getHijas())) {
                                     echo imprimirDietaSinHijas($dieta);
                                 } else {
-                                    echo imprimirDietaConHijas($dieta);
-
-                                    if (count($dieta->getHijas())) {
-                                        for ($h = 1; $h < count($dieta->getHijas()); $h++) {
-                                            echo imiprimirHija($dieta->getHijas()[$h], $h);
-                                            for ($j = 1; $j < count($dieta->getHijas()); $h++) {
-                                                if (count($dieta->getHijas($dieta->getHijas()[$h]->getHijas()))) {
-                                                    echo imprimirNietas($dieta->getHijas()[$h]);
-                                                }
-                                            }
-                                        }
-                                    }
+                                    imprimirDietaConHijas($dieta);
                                 }
                             }
                             ?>
@@ -128,13 +126,3 @@ function imprimirDietaConHijas($dieta)
     </div>
 </div>
 <?php return; ?>
-
-<!-- <?php if ($i === 0) { ?>
-<td rowspan="<?= 1 + count($dieta->getHijas()) * (1 * count($hija->getHijas())) ?>" class="border-end">
-    <?= $dieta->getDescripcion() ?></td>
-<?php } ?>
-<?php if ($j === 0) { ?>
-<td rowspan="<?= 1 + 1 * count($hija->getHijas()) ?>" class="border-end <?= $i % 2 === 0 ? 'bg-warning' : '' ?>">
-    <?= $i . ' ' . $hija->getDescripcion() ?></td>
-<?php } ?>
-<td class="bg-danger"><?= $i . ' ' . $nieta->getDescripcion() ?></td> -->

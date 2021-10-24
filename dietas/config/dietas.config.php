@@ -3,424 +3,462 @@
 return [
     'datos_dietas' => [
         'normal' => [
-            'nombre' => 'Normal',
+            'descripcion' => 'Normal',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ]
             ],
         ],
         'absoluta' => [
-            'nombre' => 'Absoluta'
+            'descripcion' => 'Absoluta'
         ],
         'astringente' => [
-            'nombre' => 'Astringente',
+            'descripcion' => 'Astringente',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal',
+                    'descripcion' => 'Con sal',
                     'hijas' => [
                         'astringente_hemodialisis' => [
-                            'nombre' => 'Astringente hemodiálisis'
+                            'descripcion' => 'Astringente hemodiálisis'
                         ]
                     ]
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal',
+                    'descripcion' => 'Sin sal',
                     'hijas' => [
                         'astringente_hemodialisis' => [
-                            'nombre' => 'Astringente hemodiálisis'
+                            'descripcion' => 'Astringente hemodiálisis'
                         ],
                     ],
                 ],
             ],
         ],
         'baja_en_potasio' => [
-            'nombre' => 'Baja en potasio',
+            'descripcion' => 'Baja en potasio',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'baja_en_proteinas' => [
-            'nombre' => 'Baja en proteinas',
+            'descripcion' => 'Baja en proteinas',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal'
-                    ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal'
-                    ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal'
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'diabetica' => [
-            'nombre' => 'Diabética',
+            'descripcion' => 'Diabética',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'cal1500' => [
-                                'nombre' => '1500 calorías',
-                            ],
-                            'cal2000' => [
-                                'nombre' => '2000 calorías',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'cal1500' => [
+                            'descripcion' => '1500 calorías',
+                        ],
+                        'cal2000' => [
+                            'descripcion' => '2000 calorías',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'cal1500' => [
-                                'nombre' => '1500 calorías',
-                            ],
-                            'cal2000' => [
-                                'nombre' => '2000 calorías',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'cal1500' => [
+                            'descripcion' => '1500 calorías',
                         ],
-                    ]
+                        'cal2000' => [
+                            'descripcion' => '2000 calorías',
+                        ],
+                    ],
                 ],
             ],
         ],
         'dieta_de_transicion' => [
-            'nombre' => 'Dieta de transición',
+            'descripcion' => 'Dieta de transición',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'basal_astringente' => [
-                                'nombre' => 'Basal astringente',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'basal_astringente' => [
+                            'descripcion' => 'Basal astringente',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'basal_astringente' => [
-                                'nombre' => 'Basal astringente',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'basal_astringente' => [
+                            'descripcion' => 'Basal astringente',
                         ],
-                    ]
+                    ],
                 ],
             ],
         ],
         'dieta_de_no_cerdo' => [
-            'nombre' => 'Dieta de no cerdo',
+            'descripcion' => 'Dieta de no cerdo',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ]
             ],
         ],
         'estricta_en_grasas' => [
-            'nombre' => 'Estricta en grasas',
+            'descripcion' => 'Estricta en grasas',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'grasas_1' => [
-                                'nombre' => 'Grasas 1',
-                            ],
-                            'grasas_2' => [
-                                'nombre' => 'Grasas 2',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'grasas_1' => [
+                            'descripcion' => 'Grasas 1',
+                        ],
+                        'grasas_2' => [
+                            'descripcion' => 'Grasas 2',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'grasas_1' => [
-                                'nombre' => 'Grasas 1',
-                            ],
-                            'grasas_2' => [
-                                'nombre' => 'Grasas 2',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'grasas_1' => [
+                            'descripcion' => 'Grasas 1',
+                        ],
+                        'grasas_2' => [
+                            'descripcion' => 'Grasas 2',
                         ],
                     ],
                 ],
             ],
         ],
         'facil_digestion' => [
-            'nombre' => 'Fácil digestion',
+            'descripcion' => 'Fácil digestion',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ]
             ],
         ],
         'facil_masticacion' => [
-            'nombre' => 'Fácil masticación',
+            'descripcion' => 'Fácil masticación',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ]
             ],
         ],
         'hemodialisis' => [
-            'nombre' => 'Hemodiálisis',
+            'descripcion' => 'Hemodiálisis',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ]
             ],
         ],
         'ileostomia' => [
-            'nombre' => 'Ileostómia',
+            'descripcion' => 'Ileostómia',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'ileostomia_1' => [
-                                'nombre' => 'Ileostómia 1',
-                            ],
-                            'ileostomia_2' => [
-                                'nombre' => 'Ileostómia 2',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'ileostomia_1' => [
+                            'descripcion' => 'Ileostómia 1',
+                        ],
+                        'ileostomia_2' => [
+                            'descripcion' => 'Ileostómia 2',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'ileostomia_1' => [
-                                'nombre' => 'Ileostómia 1',
-                            ],
-                            'ileostomia_2' => [
-                                'nombre' => 'Ileostómia 2',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'ileostomia_1' => [
+                            'descripcion' => 'Ileostómia 1',
                         ],
-                    ]
+                        'ileostomia_2' => [
+                            'descripcion' => 'Ileostómia 2',
+                        ],
+                    ],
                 ],
             ],
         ],
         'liquida' => [
-            'nombre' => 'Líquida',
+            'descripcion' => 'Líquida',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'liquida' => [
-                                'nombre' => 'Líquida',
-                            ],
-                            'astringente' => [
-                                'nombre' => 'Astringente',
-                            ],
-                            'bariatrica' => [
-                                'nombre' => 'Bariátrica',
-                            ],
-                            'fria' => [
-                                'nombre' => 'Fría',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'liquida' => [
+                            'descripcion' => 'Líquida',
+                        ],
+                        'astringente' => [
+                            'descripcion' => 'Astringente',
+                        ],
+                        'bariatrica' => [
+                            'descripcion' => 'Bariátrica',
+                        ],
+                        'fria' => [
+                            'descripcion' => 'Fría',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'liquida' => [
-                                'nombre' => 'Líquida',
-                            ],
-                            'astringente' => [
-                                'nombre' => 'Astringente',
-                            ],
-                            'bariatrica' => [
-                                'nombre' => 'Bariátrica',
-                            ],
-                            'fria' => [
-                                'nombre' => 'Fría',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'liquida' => [
+                            'descripcion' => 'Líquida',
                         ],
-                    ]
+                        'astringente' => [
+                            'descripcion' => 'Astringente',
+                        ],
+                        'bariatrica' => [
+                            'descripcion' => 'Bariátrica',
+                        ],
+                        'fria' => [
+                            'descripcion' => 'Fría',
+                        ],
+                    ],
                 ],
             ],
         ],
         'pediatrica' => [
-            'nombre' => 'Pediátrica',
+            'descripcion' => 'Pediátrica',
             'hijas' => [
-                'hijas' => [
-                    'con_sal' => [
-                        'nombre' => 'Con sal',
-                        'hijas' => [
-                            'pediatrica' => [
-                                'nombre' => 'Pediátrica',
-                            ],
-                            'cal1500' => [
-                                'nombre' => '1500 Calorías',
-                            ],
-                            'cal2000' => [
-                                'nombre' => '2000 Calorías',
-                            ],
-                            'facil_masticacion' => [
-                                'nombre' => 'Fácil masticación',
-                            ],
+                'con_sal' => [
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'pediatrica' => [
+                            'descripcion' => 'Pediátrica',
+                        ],
+                        'cal1500' => [
+                            'descripcion' => '1500 Calorías',
+                        ],
+                        'cal2000' => [
+                            'descripcion' => '2000 Calorías',
+                        ],
+                        'facil_masticacion' => [
+                            'descripcion' => 'Fácil masticación',
                         ],
                     ],
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'pediatrica' => [
-                                'nombre' => 'Pediátrica',
-                            ],
-                            'cal1500' => [
-                                'nombre' => '1500 Calorías',
-                            ],
-                            'cal2000' => [
-                                'nombre' => '2000 Calorías',
-                            ],
-                            'facil_masticacion' => [
-                                'nombre' => 'Fácil masticación',
-                            ],
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'pediatrica' => [
+                            'descripcion' => 'Pediátrica',
                         ],
-                    ]
+                        'cal1500' => [
+                            'descripcion' => '1500 Calorías',
+                        ],
+                        'cal2000' => [
+                            'descripcion' => '2000 Calorías',
+                        ],
+                        'facil_masticacion' => [
+                            'descripcion' => 'Fácil masticación',
+                        ],
+                    ],
                 ],
             ],
         ],
         'pobre_grasa_colesterol' => [
-            'nombre' => 'Pobre en grasa y colesterol',
+            'descripcion' => 'Pobre en grasa y colesterol',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'pobre_residuos' => [
-            'nombre' => 'Pobre en residuos',
+            'descripcion' => 'Pobre en residuos',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'proteccion_hepatica' => [
-            'nombre' => 'Protección hepática',
+            'descripcion' => 'Protección hepática',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'proteccion_gastrica' => [
-            'nombre' => 'Protección gástrica',
+            'descripcion' => 'Protección gástrica',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'pure_pediatrico' => [
-            'nombre' => 'Estricta en grasas',
+            'descripcion' => 'Puré pediátrico',
             'hijas' => [
-                'hijas' => [
-                    'sin_sal' => [
-                        'nombre' => 'Sin sal',
-                        'hijas' => [
-                            'pediatrico_1' => [
-                                'nombre' => 'Pediátrico 1',
-                            ],
-                            'pediatrico_2' => [
-                                'nombre' => 'Pediátrico 2',
-                            ],
-                            'pediatrico_3' => [
-                                'nombre' => 'Pediátrico 3',
-                            ],
-                            'pediatrico_4' => [
-                                'nombre' => 'Pediátrico 4',
-                            ],
-                            'astringente_1' => [
-                                'nombre' => 'Pediátrico 1',
-                            ],
-                            'astringente_2' => [
-                                'nombre' => 'Pediátrico 2',
-                            ],
-                            'astringente_3' => [
-                                'nombre' => 'Pediátrico 3',
-                            ],
-                            'astringente_4' => [
-                                'nombre' => 'Pediátrico 4',
-                            ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'pediatrico_1' => [
+                            'descripcion' => 'Pediátrico 1',
+                        ],
+                        'pediatrico_2' => [
+                            'descripcion' => 'Pediátrico 2',
+                        ],
+                        'pediatrico_3' => [
+                            'descripcion' => 'Pediátrico 3',
+                        ],
+                        'pediatrico_4' => [
+                            'descripcion' => 'Pediátrico 4',
+                        ],
+                        'astringente_1' => [
+                            'descripcion' => 'Astringente 1',
+                        ],
+                        'astringente_2' => [
+                            'descripcion' => 'Astringente 2',
+                        ],
+                        'astringente_3' => [
+                            'descripcion' => 'Astringente 3',
+                        ],
+                        'astringente_4' => [
+                            'descripcion' => 'Astringente 4',
                         ],
                     ],
                 ],
             ],
         ],
         'sin_gluten' => [
-            'nombre' => 'Sin gluten',
+            'descripcion' => 'Sin gluten',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'triturada' => [
-            'nombre' => 'Triturada', 'hijas' => ['hijas' => ['nombre' => '']]
-        ],
-        'urologia' => [
-            'nombre' => 'Urología',
+            'descripcion' => 'Triturada',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal',
+                    'hijas' => [
+                        'basal' => [
+                            'descripcion' => 'Basal',
+                        ],
+                        'astringente' => [
+                            'descripcion' => 'Astringente',
+                        ],
+                        'bariatrica' => [
+                            'descripcion' => 'Bariátrica',
+                        ],
+                        'dialisis' => [
+                            'descripcion' => 'Diálisis',
+                        ],
+                        'dialisis_astringente' => [
+                            'descripcion' => 'Diálisis astringente',
+                        ],
+                        'predialisis' => [
+                            'descripcion' => 'Prediálisis',
+                        ],
+                        'predialisis_astringente' => [
+                            'descripcion' => 'Prediálisis astringente',
+                        ],
+                    ],
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal',
+                    'hijas' => [
+                        'basal' => [
+                            'descripcion' => 'Basal',
+                        ],
+                        'astringente' => [
+                            'descripcion' => 'Astringente',
+                        ],
+                        'bariatrica' => [
+                            'descripcion' => 'Bariátrica',
+                        ],
+                        'dialisis' => [
+                            'descripcion' => 'Diálisis',
+                        ],
+                        'dialisis_astringente' => [
+                            'descripcion' => 'Diálisis astringente',
+                        ],
+                        'predialisis' => [
+                            'descripcion' => 'Prediálisis',
+                        ],
+                        'predialisis_astringente' => [
+                            'descripcion' => 'Prediálisis astringente',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'urologia' => [
+            'descripcion' => 'Urología',
+            'hijas' => [
+                'con_sal' => [
+                    'descripcion' => 'Con sal'
+                ],
+                'sin_sal' => [
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'vegetal' => [
-            'nombre' => 'Vegetal',
+            'descripcion' => 'Vegetal',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
         'ingreso' => [
-            'nombre' => 'Ingreso',
+            'descripcion' => 'Ingreso',
             'hijas' => [
                 'con_sal' => [
-                    'nombre' => 'Con sal'
+                    'descripcion' => 'Con sal'
                 ],
                 'sin_sal' => [
-                    'nombre' => 'Sin sal'
+                    'descripcion' => 'Sin sal'
                 ],
             ],
         ],
