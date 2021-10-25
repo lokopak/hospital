@@ -35,7 +35,7 @@ class Empleado extends Persona
      * Este array nos va a permitir trasladar un valor numérico de un cargo (generalmente obtenido desde la base de datos)
      * a uno nombre de cargo equivalente que podamos manejar y mostrar más fácilmente.
      */
-    protected $cargos = [
+    protected static $cargos = [
         self::CARGO_EMPLEADO_INACTIVO => "no empleado",
         self::CARGO_EMPLEADO_BASE => "empleado",
         self::CARGO_EMPLEADO_CELADOR => "celador",
@@ -153,17 +153,6 @@ class Empleado extends Persona
     }
 
     /**
-     * Devuelve un array todos los cargos disponibles para asignar
-     * Esto nos facilita obtener y comprobar que cargos están disponibles o no.
-     * 
-     * @return array
-     */
-    public function getCargosDisponibles()
-    {
-        return $this->cargos;
-    }
-
-    /**
      * Devuelve la contraseña del empleado
      * 
      * @return string
@@ -183,5 +172,16 @@ class Empleado extends Persona
     public function setUserPassword($userPassword)
     {
         $this->userPassword = $userPassword;
+    }
+
+    /**
+     * Devuelve un array todos los cargos disponibles para asignar
+     * Esto nos facilita obtener y comprobar que cargos están disponibles o no.
+     * 
+     * @return array
+     */
+    public static function getCargosDisponibles()
+    {
+        return self::$cargos;
     }
 }
