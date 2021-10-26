@@ -1,0 +1,21 @@
+{
+    "name": "dotpak/hospital_diet",
+    "description": "Simple student application",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Dotpak\\Hospital\\": "src/",
+            "Dotpak\\Hospital\\Dieta\\": "src/Dieta/src/",
+            "Dotpak\\Hospital\\Empleado\\": "src/Empleado/src/",
+            "Dotpak\\Hospital\\Http\\": "src/Http/src/",
+            "Dotpak\\Hospital\\Informe\\": "src/Informe/src/",
+            "Dotpak\\Hospital\\Mvc\\": "src/Application/src/",
+            "Dotpak\\Hospital\\Paciente\\": "src/Paciente/src/",
+            "Dotpak\\Hospital\\Router\\": "src/Router/src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3"
+    }
+}
