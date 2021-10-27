@@ -38,7 +38,7 @@
             </a>
             <ul class="collapse list-unstyled " id="informesDietasDropdown">
                 <li><a class="sidebar-link" href="/informes/index.php">Informes</a></li>
-                <li><a class="sidebar-link" href="/informes/nuevo.php">Nuevo informe</a></li>
+                <li><a class="sidebar-link" href="/informes/crear.php">Nuevo informe</a></li>
             </ul>
         </li>
         <li class="sidebar-item">

@@ -1,5 +1,5 @@
-<?php 
-require_once (__DIR__."/model/Paciente.php");
+<?php
+require_once(__DIR__ . "/model/Paciente.php");
 $estados = Paciente::getEstados();
 
 
@@ -12,8 +12,9 @@ $estados = Paciente::getEstados();
 function imprimirDietaSinHijas($dieta, $cols = 3)
 {
     echo '<tr>
-    <td> ' . $dieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $dieta->getMadre() . ')</span></td>
-    <td colspan="' . $cols . '"></td>
+    <td colspan="' . $cols . '">' . $dieta->getDescripcion() . '</td>
+    <td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>
+            
     </tr>';
 }
 
@@ -72,19 +73,23 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 {
     if ($paso === 0) {
         $result = '<tr>';
-        $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '"> '.$dieta->getNombre().'</td>';
+        $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '"> ' . $dieta->getNombre() . '</td>';
         if (!empty(($hijas = $dieta->getHijas()))) {
             $hija = $hijas[0];
             $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
             if (!empty(($nietas = $hija->getHijas()))) {
                 $nieta = $nietas[0];
-                $result .= '<td class="border-start"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault">' . $nieta->getDescripcion()  . '</label></td>';
+                $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+            } else {
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $hija->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
             }
+
             $result .= '</tr>';
             echo $result;
 
             for ($j = 1; $j < count($nietas); $j++) {
-                imprimirDietaConHijas($hija, 2, $j);
+                imprimirDietaConHijas($nietas[$j], 2, $j);
             }
             imprimirDietaConHijas($dieta, 1);
         } else {
@@ -98,21 +103,24 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$i]->getMadre() . ')</span></td>';
             if (!empty(($nietas = $hijas[$i]->getHijas()))) {
                 $nieta = $nietas[0];
-                $result .= '<td class="border-start"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault">' . $nieta->getDescripcion()  . '</label></td>';
+                $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
 
                 for ($j = 1; $j < count($nietas); $j++) {
-                    imprimirDietaConHijas($hijas[$i], 2,  $j);
+                    imprimirDietaConHijas($nietas[$j], 2,  $j);
                 }
             } else {
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $hijas[$i]->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
             }
         }
     } else {
         $result = '<tr>';
-        $result .= '<td class="border-start"><input class="form-check-input" type="radio" value="'. $dieta->getNombre().'" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault">' . $dieta->getDescripcion()  . '</label></td>';
+        $result .= '<td class="border-start">' . $dieta->getDescripcion()  . '</td>';
+        $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
         $result .= '</tr>';
         echo $result;
     }
@@ -121,6 +129,6 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 
 
 
-$contenido = __DIR__."/view/altaPacientes.php";
+$contenido = __DIR__ . "/view/altaPacientes.php";
 
-return require_once (__DIR__."/../view/pagina.phtml");
+return require_once(__DIR__ . "/../view/pagina.phtml");
