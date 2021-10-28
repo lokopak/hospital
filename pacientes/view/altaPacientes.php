@@ -11,8 +11,7 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="nombre">Nombre</label>
-                                <input class="form-control" id="nombre" type="text" name="nombre"
-                                    aria-describedby="Nombre">
+                                <input class="form-control" id="nombre" type="text" name="nombre" aria-describedby="Nombre">
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="apellidos">Apellidos</label>
@@ -20,20 +19,22 @@
                             </div>
                         </div>
                         <div class="row"></div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="habitacion">Habitación</label>
-                            <input class="form-control" id="habitacion" name="habitacion" type="text">
+                        <div class="row">
+                            <div class="col-4 mb-3">
+                                <label class="form-label" for="habitacion">Habitación</label>
+                                <input class="form-control" id="habitacion" name="habitacion" type="text">
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label class="form-label" for="estado">Estado</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option selected value="-1">Estado del paciente...</option>
+                                    <?php foreach ($estados as $indice => $estado) { ?>
+                                        <option value="<?= $indice ?>"><?= ucfirst($estado) ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" for="estado">Estado</label>
-                            <select class="form-select" id="estado" name="estado">
-                                <option selected value="-1">decide</option>
-                                <?php foreach ($estados as $indice => $estado) { ?>
-                                <option value="<?= $indice ?>"><?= ucfirst($estado) ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="submit">Enviar</button>
                     </div>
                 </div>
             </div>
