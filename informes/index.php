@@ -16,4 +16,4 @@ $informes = $conexion->buscarTodos(['id', 'idNutricionista', 'idPaciente', 'idCe
 $contenido = __DIR__ . "/view/index.phtml";
 
 // Y mostramos la página entera.
-return require(__DIR__ . "/../view/pagina.phtml");
+require(__DIR__ . "/../view/pagina.phtml");

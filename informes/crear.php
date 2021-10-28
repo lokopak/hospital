@@ -1,15 +1,14 @@
 <?php
 
+require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaInforme.php");
 
-if ($_POST) {
-    $desayuno = $_POST['desayuno'];
+if (Peticion::esPost()) {
+    $datos = Peticion::obtenerPost();
 
-    $tablaInformes = new TablaInforme();
-
-    $tablaInformes->insertar(["desayuno" => $desayuno]);
+    print_r(["datos" => $datos]);
 }
 
-$contenido = __DIR__ . "/view/crear.php";
+$contenido = __DIR__ . "/view/crear.phtml";
 
-return require_once(__DIR__ . "/../view/pagina.phtml");
+require_once(__DIR__ . "/../view/pagina.phtml");

@@ -15,7 +15,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body collapse" id="collapseTabla">
+        <div class="card-body <?= (isset($collapsable) ? 'collapse' : '') ?>" id="collapseTabla">
             <?php if (empty($dietas)) { ?>
             <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <i class="fa fa-info-circle fa-2x me-4"></i>
@@ -31,7 +31,7 @@
                             <th scope="col">Categoría madre</th>
                             <th scope="col">Hijas 1</th>
                             <th scope="col">Hijas 2</th>
-                            <?php if ($collapsable) { ?>
+                            <?php if (isset($collapsable)) { ?>
                             <th scope="col" style="width: 3rem;"></th>
                             <?php } ?>
                         </tr>

@@ -30,6 +30,10 @@ class TablaInforme extends Tabla
         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
         $resultado = $this->obtenerTodos($columnas);
 
+        if (!$resultado) {
+            return [];
+        }
+
         $infrormes = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
         foreach ($resultado as $datos) {
@@ -44,5 +48,12 @@ class TablaInforme extends Tabla
 
         // Devolvemos el array generado con todos los objetos encontrados.
         return $infrormes;
+    }
+
+    /**
+     * 
+     */
+    public function insertar($datos)
+    {
     }
 }
