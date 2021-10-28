@@ -19,13 +19,19 @@
             <div class="container-fluid">
                 <!-- Contenido de la página -->
                 <?php if (isset($contenido)) {
-                    require($contenido); }?>
+                    require($contenido);
+                } ?>
             </div>
         </section>
         <?php require(__DIR__ . "/footer.php"); ?>
 
     </div>
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <?php
+    require_once(__DIR__ . "/service/InyectorScript.php");
+    // Inyectamos los posibles scripts que se hayan agregado durante la ejecución de la aplicación.
+    InyectorScript::getInstancia()->inyectarScripts();
+    ?>
 </body>
 
 </html>

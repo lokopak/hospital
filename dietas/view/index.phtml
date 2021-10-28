@@ -9,10 +9,40 @@
             </div>
             <div class="ms-auto">
 
+                <?php if (isset($collapsable)) { ?>
                 <button class="btn btn-primary ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTabla" aria-expanded="false" aria-controls="collapseTabla">
+                    data-bs-target="#collapseTabla" aria-expanded="false" aria-controls="collapseTabla"
+                    id="botonDietaCambiarVista">
                     Ver
                 </button>
+
+                <?php
+                    require_once __DIR__ . "/../../view/service/InyectorScript.php";
+
+                    $script = "<script>
+                        (function(){
+                            var tablaDietaColapsada = true;
+
+                            var botonDietaCambiarVista = document.getElementById('botonDietaCambiarVista');
+
+                            if (botonDietaCambiarVista) {
+                                botonDietaCambiarVista.addEventListener('click', function() {
+                                    tablaDietaColapsada = !tablaDietaColapsada;
+
+                                    if (tablaDietaColapsada) {
+                                        botonDietaCambiarVista.innerText = 'Ver';
+                                    }
+                                    else {
+                                        botonDietaCambiarVista.innerText = 'Ocultar';
+                                    }
+                                });
+                            }
+                        })();
+                    </script>";
+
+                    InyectorScript::getInstancia()->agregarScript($script);
+                    ?>
+                <?php } ?>
             </div>
         </div>
         <div class="card-body <?= (isset($collapsable) ? 'collapse' : '') ?>" id="collapseTabla">
