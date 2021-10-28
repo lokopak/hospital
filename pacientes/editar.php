@@ -10,10 +10,10 @@ if (Peticion::getInstancia()->esPost()) {
     $datos = Peticion::getInstancia()->fromPost();
 
     // Convertimos todos los valores a su tipo correcto.
-    
-        // El resto de valores debe ser un integer.
-        $datos['estado'] = (int) $datos['estado'];
-    
+
+    // El resto de valores debe ser un integer.
+    $datos['estado'] = (int) $datos['estado'];
+
 
 
 
@@ -157,6 +157,6 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     }
 }
 
-$contenido = __DIR__ . "/view/crear.phtml";
+$contenido = __DIR__ . "/view/editar.phtml";
 
 require_once(__DIR__ . "/../view/pagina.phtml");
