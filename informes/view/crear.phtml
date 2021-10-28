@@ -1,20 +1,268 @@
 <div class="row">
-    <!-- Basic Form-->
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header border-bottom">
-                <h3 class="h4 mb-0">Crear Informe</h3>
-            </div>
-            <div class="card-body">
-                <form method="POST" action="<?= $_SERVER['PHP_SELF'] ?>">
-                    <div class="mb-3">
-                        <label class="form-label" for="desayuno">Desayuno</label>
-                        <input class="form-control" id="desayuno" type="text" name="desayuno">
-
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h3 class="h4 mb-0">Crear Informe de seguimiento de dieta del paciente</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="<?= $_SERVER['PHP_SELF'] ?>">
+                <div class="row border-bottom">
+                    <div class="col-2 py-3"></div>
+                    <div class="col-2 text-center border-top border-start py-3"><img src="/assets/images/plato_nada.png"
+                            alt="" class="img-fluid"></div>
+                    <div class="col-2 text-center border-top border-start py-3"><img
+                            src="/assets/images/plato_casi_nada.png" alt="" class="img-fluid"></div>
+                    <div class="col-2 text-center border-top border-start py-3"><img
+                            src="/assets/images/plato_mitad.png" alt="" class="img-fluid"></div>
+                    <div class="col-2 text-center border-top border-start py-3"><img
+                            src="/assets/images/plato_casi_todo.png" alt="" class="img-fluid"></div>
+                    <div class="col-2 text-center border-top border-start border-end py-3"><img
+                            src="/assets/images/plato_todo.png" alt="" class="img-fluid"></div>
+                </div>
+                <div class="row border-top border-bottom border-start border-end bg-secondary text-white">
+                    <div class="col-2 py-2"></div>
+                    <div class="col-2 text-center border-start py-2"><span>Nada</span></div>
+                    <div class="col-2 text-center border-start py-2"><span>Casi nada</span></div>
+                    <div class="col-2 text-center border-start py-2"><span>La mitad</span></div>
+                    <div class="col-2 text-center border-start py-2"><span>Casi todo</span></div>
+                    <div class="col-2 text-center border-start py-2"><span>Todo</span></div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 py-3"><span>desayuno</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="desayuno" value="0">
+                        </div>
                     </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="desayuno" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="desayuno" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="desayuno" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="desayuno" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 py-3"><span>Comida</span></div>
+                    <div class="col-10 bg-secondary"></div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>1.er. Plato</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida1" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida1" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida1" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida1" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida1" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>2<sup>o</sup> Plato</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida2" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida2" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida2" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida2" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida2" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>Postre</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida3" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida3" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida3" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida3" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="comida3" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 py-3"><span>Merienda</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="merienda" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="merienda" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="merienda" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="merienda" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="merienda" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 py-3"><span>Cena</span></div>
+                    <div class="col-10 bg-secondary"></div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>1<sup>er</sup> Plato</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena1" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena1" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena1" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena1" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena1" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>2<sup>o</sup> Plato</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena2" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena2" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena2" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena2" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena2" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-bottom border-start border-end">
+                    <div class="col-2 text-end py-3"><span>Postre</span></div>
+                    <div class="col-2 border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena3" value="0">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena3" value="1">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena3" value="2">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena3" value="3">
+                        </div>
+                    </div>
+                    <div class="col-2 text-center border-start py-3">
+                        <div class="form-check text-center">
+                            <input class="form-check-input float-none" type="radio" name="cena3" value="4">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+
                     <button class="btn btn-primary" type="submit">Enviar</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

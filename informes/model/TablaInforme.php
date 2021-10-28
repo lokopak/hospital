@@ -49,11 +49,4 @@ class TablaInforme extends Tabla
         // Devolvemos el array generado con todos los objetos encontrados.
         return $infrormes;
     }
-
-    /**
-     * 
-     */
-    public function insertar($datos)
-    {
-    }
 }

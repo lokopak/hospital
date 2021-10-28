@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS pacientes (
 
 CREATE TABLE IF NOT EXISTS informes (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    idNutricionista int(11) NOT NULL,
     idPaciente int(11) NOT NULL,
     idCelador int(11) NOT NULL,
     dieta tinyint(1) NOT NULL,
@@ -43,12 +42,10 @@ CREATE TABLE IF NOT EXISTS informes (
     cena1 tinyint(1) NOT NULL,
     cena2 tinyint(1) NOT NULL,
     cena3 tinyint(1) NOT NULL,
-    fechaModificacion TIMESTAMP NOT NULL,
+    fechaModificacion DATETIME,
     ultimoEditor int(11) NOT NULL,
-    INDEX informes_nutricionista_index (idNutricionista),
     INDEX informes_paciente_index (idPaciente),
     INDEX informes_celador_index (idCelador),
-    CONSTRAINT fk_nutricionista FOREIGN KEY (idNutricionista) REFERENCES empleados(id),
     CONSTRAINT fk_paciente FOREIGN KEY (idPaciente) REFERENCES pacientes(id),
     CONSTRAINT fk_celador FOREIGN KEY (idCelador) REFERENCES empleados(id)
 );
