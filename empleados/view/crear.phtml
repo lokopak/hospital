@@ -23,7 +23,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="cargo">Cargo</label>
                     <select class="form-select" id="cargo" name="cargo">
-                        <option selected value="-1">decide</option>
+                        <option selected value="0">Seleccionar el cargo</option>
                         <?php foreach ($cargos as $indice => $cargo) { ?>
                         <option value="<?= $indice ?>"><?= ucfirst($cargo) ?></option>
                         <?php } ?>

@@ -20,7 +20,7 @@
             </a>
             <ul class="collapse list-unstyled " id="empleadosDropdown">
                 <li><a class="sidebar-link" href="/empleados/index.php">Listado de empleados</a></li>
-                <li><a class="sidebar-link" href="/empleados/alta.php">Alta nuevo empleado</a></li>
+                <li><a class="sidebar-link" href="/empleados/crear.php">Alta nuevo empleado</a></li>
             </ul>
         </li>
         <li class="sidebar-item">

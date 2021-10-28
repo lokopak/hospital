@@ -31,7 +31,7 @@
                             <td><?= $empleado->getNombre() ?></td>
                             <td><?= $empleado->getApellidos() ?></td>
                             <td><?= $empleado->getDNI() ?></td>
-                            <td><?= $empleado->getCargo() ?></td>
+                            <td><?= ucfirst($empleado->getNombreCargo())?></td>
                         </tr>
 
                         <?php } ?>

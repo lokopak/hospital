@@ -86,7 +86,6 @@ abstract class Tabla
         $columnas = implode(',', array_keys($datos));
         $valores = implode(',', array_fill(0, count($datos), '?'));
         $query = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->nombreTabla, $columnas, $valores);
-        var_dump($query);
         $stmt = $this->conexion->prepare($query);
         $stmt->execute(array_values($datos));
         $stmt = null;

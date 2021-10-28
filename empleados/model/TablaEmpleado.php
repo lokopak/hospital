@@ -76,10 +76,4 @@ class TablaEmpleado extends Tabla
                 return Empleado::class;
         }
     }
-
-    public function insertar($datos)
-    {
-        $query = "INSERT INTO " . $this->nombreTabla . " (desayuso) VALUES (\"" . $datos['desayuno'] . "\")";
-        $this->conexion->exec($query);
-    }
 }

@@ -126,8 +126,8 @@ class Empleado extends Persona
         }
 
         // Si el cargo está entre los especificados en esta clase, devolvemos el nombre correspondiente.
-        if (isset($this->cargos[$cargo])) {
-            return $this->cargos[$cargo];
+        if (isset(static::$cargos[$cargo])) {
+            return static::$cargos[$cargo];
         }
 
         // En caso de no estarlo...
