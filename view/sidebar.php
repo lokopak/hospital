@@ -29,7 +29,7 @@
             </a>
             <ul class="collapse list-unstyled " id="pacientesDropdown">
                 <li><a class="sidebar-link" href="/pacientes/index.php">Listado de pacientes</a></li>
-                <li><a class="sidebar-link" href="/pacientes/alta.php">Alta nuevo paciente</a></li>
+                <li><a class="sidebar-link" href="/pacientes/crear.php">Alta nuevo paciente</a></li>
             </ul>
         </li>
         <li class="sidebar-item">

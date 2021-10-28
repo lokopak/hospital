@@ -30,7 +30,7 @@ abstract class Entidad implements ArraySerializable
      * concepto se pueda alterar la PRIMARY KEY.
      */
     protected $noRellenar = [
-        'id'
+        // 'id'
     ];
 
     /**
