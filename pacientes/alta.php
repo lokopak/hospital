@@ -129,6 +129,6 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 
 
 
-$contenido = __DIR__ . "/view/altaPacientes.php";
+$contenido = __DIR__ . "/view/crear.php";
 
 return require_once(__DIR__ . "/../view/pagina.phtml");
