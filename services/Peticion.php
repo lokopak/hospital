@@ -61,6 +61,19 @@ class Peticion
     }
 
     /**
+     * Devuelve la únca instancia que se puede crear de esta
+     * clase. Crea la instancia en caso de no haberse creado ya.
+     */
+    public static function getInstancia()
+    {
+        if (!static::$instance) {
+            static::$instance = new Peticion();
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * Recoge todos los valores que vienen desde el método GET.
      * 
      * @param array $post Valores recividos.
@@ -134,6 +147,11 @@ class Peticion
         return $defecto;
     }
 
+    /**
+     * Devuelve el método de la petición actual.
+     * 
+     * @return string.
+     */
     public function getMetodo()
     {
         return $this->metodo;
@@ -145,49 +163,8 @@ class Peticion
      * 
      * @return boolean Resultado de la comprobación.
      */
-    public static function esPost()
+    public function esPost()
     {
-        if (!static::$instance) {
-            static::$instance = new Peticion();
-        }
-        return static::$instance->getMetodo() === 'POST';
-    }
-
-    /**
-     * Devuelve los valores recibidos en el método POST, si los hay.
-     * Si se proporciona el nombre del parámetro, devuelve sólo
-     * el valor de ese parámetro.
-     * Si se proporciona un valor por defecto, en caso de no encontrar
-     * el parámetro indicado devolverá ese valor.
-     * 
-     * @param string $nombre [opcional] Nombre del parámetro
-     * @param mixed $defecto [opcional] Valor por defecto en caso de no encontrarse el valor solicitado.
-     */
-    public static function obtenerPost($nombre = null, $defecto = null)
-    {
-        if (!static::$instance) {
-            static::$instance = new Peticion();
-        }
-
-        return static::$instance->fromPost($nombre, $defecto);
-    }
-
-    /**
-     * Devuelve los valores recibidos en el método GET, si los hay.
-     * Si se proporciona el nombre del parámetro, devuelve sólo
-     * el valor de ese parámetro.
-     * Si se proporciona un valor por defecto, en caso de no encontrar
-     * el parámetro indicado devolverá ese valor.
-     * 
-     * @param string $nombre [opcional] Nombre del parámetro
-     * @param mixed $defecto [opcional] Valor por defecto en caso de no encontrarse el valor solicitado.
-     */
-    public static function obtenerGet($nombre = null, $defecto = null)
-    {
-        if (!static::$instance) {
-            static::$instance = new Peticion();
-        }
-
-        return static::$instance->fromGet($nombre, $defecto);
+        return $this->metodo === 'POST';
     }
 }
