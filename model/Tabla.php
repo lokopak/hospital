@@ -92,4 +92,26 @@ abstract class Tabla
 
         return $this->conexion->lastInsertId();;
     }
+    public function buscarUno($id){
+        
+            // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
+            $query = sprintf('SELECT * FROM %s WHERE id = %d', $this->nombreTabla, $id);
+
+            // Preparamos la declaración
+            $stmt  = $this->conexion->prepare($query);
+            // Y ejecutamos la query.
+            $stmt->execute();
+
+            // Recogemos todas las filas encontradas en forma de array asociativo.
+            $resultado = $stmt-> fetch(PDO::FETCH_ASSOC);
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
+
+            // Devolvemos el resultado
+            return $resultado;
+        
+
+        return null;
+
+    }
 }
