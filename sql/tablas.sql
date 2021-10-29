@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS pacientes (
     habitacion varchar(9) NOT NULL,
     dieta tinyint(1) NOT NULL DEfAULT 0,
     estado tinyint(1) NOT NULL,
+    fechaNacimiento DATE NOT NULL,
     fechaRegistro TIMESTAMP NOT NULL DEFAULT NOW(),
     fechaSalida TIMESTAMP,
     INDEX paciente_nombre_apellidos_index (nombre,apellidos)
