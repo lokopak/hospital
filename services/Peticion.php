@@ -48,13 +48,15 @@ class Peticion
      */
     private function __construct()
     {
+        // Guardamos el método recibido para facilitar acceder a él.
         $this->metodo = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 
-        // Si hay get:
+        // Si hay get, recogemos los parámetros recividos.
         if ($_GET) {
             $this->setGet($_GET);
         }
 
+        // Si hay post, recogemos los parámetros recividos.
         if ($_POST) {
             $this->setPost($_POST);
         }
@@ -63,6 +65,8 @@ class Peticion
     /**
      * Devuelve la únca instancia que se puede crear de esta
      * clase. Crea la instancia en caso de no haberse creado ya.
+     * 
+     * @return Peticion
      */
     public static function getInstancia()
     {
@@ -76,7 +80,7 @@ class Peticion
     /**
      * Recoge todos los valores que vienen desde el método GET.
      * 
-     * @param array $post Valores recividos.
+     * @param array $post Valores recividos en la query de la url.
      * 
      * @return void
      */
@@ -97,23 +101,30 @@ class Peticion
      */
     public function fromGet($nombre = null, $defecto = null)
     {
+        // Si no se ha recibido GET, devolvemos un array vacío.
         if ($this->get === null) {
+            // Creamos un array vacío para prevenir errores.
             $this->get = new ArrayObject();
         }
 
+        // Si no se ha indicado nombre del parámetro, devolemos una copia del array entero.
         if ($nombre === null) {
             return $this->get->getArrayCopy();
         }
 
+        // Si se ha proporcionado nombre de parámetro y el parámetro se encuentra en el array del post, lo devolvemos.
         if ($this->get->offsetExists($nombre)) {
             return $this->get->offsetGet($nombre);
         }
 
+        // En caso contrario, devolvemos valor por defecto 
         return $defecto;
     }
 
     /**
      * Recoge todos los valores que vienen desde el método POST
+     * 
+     * @param mixed $post El array que contiene el POST recibido en la petición.
      */
     private function setPost($post)
     {
@@ -132,18 +143,23 @@ class Peticion
      */
     public function fromPost($nombre = null, $defecto = null)
     {
+        // Si no se ha recibido POST, devolvemos un array vacío.
         if ($this->post === null) {
+            // Creamos un array vacío para prevenir errores.
             $this->post = new ArrayObject();
         }
 
+        // Si no se ha indicado nombre del parámetro, devolemos una copia del array entero.
         if ($nombre === null) {
             return $this->post->getArrayCopy();
         }
 
-        if ($this->get->offsetExists($nombre)) {
+        // Si se ha proporcionado nombre de parámetro y el parámetro se encuentra en el array del post, lo devolvemos.
+        if ($this->post->offsetExists($nombre)) {
             return $this->post->offsetGet($nombre);
         }
 
+        // En caso contrario, devolvemos valor por defecto 
         return $defecto;
     }
 

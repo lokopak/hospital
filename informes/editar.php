@@ -19,22 +19,27 @@ if (Peticion::getInstancia()->esPost()) {
         $datos[$indice] = (int) $dato;
     }
 
-    $datos['idEmpleado'] = 1;
-    $datos['idPaciente'] = 1;
-    $datos['fecha'] = (new DateTime())->format('Y/m/d H:i:s');
+    // Fecha de la última edición.
+    $datos['fechaModificacion'] = (new DateTime())->format('Y/m/d H:i:s');
+    // Aquí recogeríamos la id del empleado que está realizando la edición desde la sessión.
+    $datos['ultimoEditor'] = 1;
 
     $tablaInformes = new TablaInforme();
 
-    $idInforme = $tablaInformes->insertar($datos);
+    $idInforme = $tablaInformes->actualizar($datos);
 
     if ($idInforme > 0) {
-        header("Location: /informes/editar.php?idInforme=" . $idInforme);
+        echo '
+        <div class="alert alert-success" role="alert">
+          Informe editado correctamente.
+        </div>';
     } else {
         echo '
         <div class="alert alert-warning" role="alert">
           Algo ha fallado.
         </div>';
     }
+} else {
 }
 
 $contenido = __DIR__ . "/view/crear.phtml";
