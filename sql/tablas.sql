@@ -52,3 +52,9 @@ CREATE TABLE IF NOT EXISTS informes (
     CONSTRAINT fk_ultimo_editor FOREIGN KEY (ultimoEditor) REFERENCES empleados(id)
 );
 
+
+INSERT INTO `empleados` (`id`, `nombre`, `apellidos`, `DNI`, `cargo`, `userPassword`) VALUES
+(1, 'Frigiddo', 'Faldoib Meldid', '12345678D', 2, ''),
+(2, 'Judds', 'Maldif Fldud', '12345678A', 3, ''),
+(3, 'Meiekdy', 'Musodo Ldkdfifie', '12345656P', 2, ''),
+(4, 'Refokri', 'Grudifu Flaldif', '23456734F', 4, ''); 
