@@ -2,9 +2,6 @@
 
 require_once(__DIR__ . "/../../model/Tabla.php");
 require_once(__DIR__ . "/Empleado.php");
-require_once(__DIR__ . "/../../administrador/model/Administrador.php");
-require_once(__DIR__ . "/../../celador/model/Celador.php");
-require_once(__DIR__ . "/../../nutricionista/model/Nutricionista.php");
 
 class TablaEmpleado extends Tabla
 {
@@ -37,9 +34,9 @@ class TablaEmpleado extends Tabla
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
         foreach ($resultado as $datos) {
             // Para facilitar el uso de los objetos, obtenemos el nombre de la clase correspondiente en base a su cargo.
-            $clase = $this->obtenerNombreClase($datos);
+
             // Instanciamos el nuevo objeto
-            $empleado = new $clase();
+            $empleado = new Empleado();
             // Antes de seguir, removemos el userPassword del array, para evitar que se pueda filtrar.
             if (isset($datos['userPassword'])) {
                 unset($datos['userPassword']);

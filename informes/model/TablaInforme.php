@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__ . "/../../model/Tabla.php");
+require_once(__DIR__ . "/../../empleados/model/Empleado.php");
+require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
 require_once(__DIR__ . "/Informe.php");
 
 class TablaInforme extends Tabla
@@ -28,25 +30,53 @@ class TablaInforme extends Tabla
     public function buscarTodos($columnas = [])
     {
         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
-        $resultado = $this->obtenerTodos($columnas);
+        // $resultado = $this->obtenerTodos($columnas);
+        $query = sprintf('SELECT informes.*,
+            empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
+            pacientes.id as idEPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
+            FROM %s
+            LEFT JOIN empleados ON empleados.id = informes.idCelador
+            LEFT JOIN pacientes ON pacientes.id = informes.idPaciente
+            ORDER BY id ASC', $this->nombreTabla);
+
+        $resultado = $stmt  = $this->conexion->prepare($query);
+
+        $stmt->execute();
 
         if (!$resultado) {
             return [];
         }
 
-        $infrormes = [];
+        $informes = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
         foreach ($resultado as $datos) {
             // Instanciamos el nuevo objeto
-            $infrorme = new Informe();
+            $informe = new Informe();
             // Rellenamos todos los atributos incluidos en el array en el objeto.
-            $infrorme->rellenarConArray($datos);
+            $informe->rellenarConArray($datos);
+
+            $paciente = new Paciente();
+            $paciente->rellenarConArray([
+                'id' => $datos['idPaciente'],
+                'nombre' => $datos['nombrePaciente'],
+                'apellidos' => $datos['apellidosPaciente']
+            ]);
+
+            $empleado = new Empleado();
+            $empleado->rellenarConArray([
+                'id' => $datos['idEmpleado'],
+                'nombre' => $datos['nombreEmpleado'],
+                'apellidos' => $datos['apellidosEmpleado']
+            ]);
 
             // Agregamos el nuevo objeto al array
-            $infrormes[] = $infrorme;
+            $informes[] = [
+                'informe' => $informe,
+                'paciente' => $paciente,
+                'empleado' => $empleado
+            ];
         }
-
         // Devolvemos el array generado con todos los objetos encontrados.
-        return $infrormes;
+        return $informes;
     }
 }

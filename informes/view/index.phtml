@@ -5,62 +5,42 @@
         </div>
         <div class="card-body">
             <?php if (empty($informes)) { ?>
-                <div class="alert alert-primary d-flex align-items-center" role="alert">
-                    <i class="fa fa-info-circle fa-2x me-4"></i>
-                    <div>
-                        No hay ningún informe actualmente.
-                    </div>
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <i class="fa fa-info-circle fa-2x me-4"></i>
+                <div>
+                    No hay ningún informe actualmente.
                 </div>
+            </div>
             <?php } else { ?>
-                <div class="table-responsive">
-                    <table class="table text-sm mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nutricionista</th>
-                                <th scope="col">Paciente</th>
-                                <th scope="col">Celador</th>
-                                <th scope="col">Dieta</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Desayuno</th>
-                                <th scope="col">Primer Plato</th>
-                                <th scope="col">Segundo Plato</th>
-                                <th scope="col">Postre</th>
-                                <th scope="col">Merienda</th>
-                                <th scope="col">Cena Primer Plato</th>
-                                <th scope="col">Cena Segundo Plato</th>
-                                <th scope="col">Cena Postre</th>
-                                <th scope="col">Fecha Modificación</th>
-                                <th scope="col">Último Editor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($informes as $informe) { ?>
+            <div class="table-responsive">
+                <table class="table text-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Paciente</th>
+                            <th scope="col">Celador</th>
+                            <th scope="col">Dieta</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($informes as $dato) { ?>
 
-                                <tr>
-                                    <td><?= $informe->getId() ?></td>
-                                    <td><?= $informe->getIdNutricionista() ?></td>
-                                    <td><?= $informe->getIdPaciente() ?></td>
-                                    <td><?= $informe->getIdCelador() ?></td>
-                                    <td><?= $informe->getDieta() ?></td>
-                                    <td><?= $informe->getFecha() ?></td>
-                                    <td><?= $informe->getDesayuno() ?></td>
-                                    <td><?= $informe->getComida1() ?></td>
-                                    <td><?= $informe->getComida2() ?></td>
-                                    <td><?= $informe->getComida3() ?></td>
-                                    <td><?= $informe->getMerienda() ?></td>
-                                    <td><?= $informe->getCena1() ?></td>
-                                    <td><?= $informe->getCena2() ?></td>
-                                    <td><?= $informe->getCena3() ?></td>
-                                    <td><?= $informe->getFechaModificacion() ?></td>
-                                    <td><?= $informe->getUltimoEditor() ?></td>
-                                </tr>
+                        <tr>
+                            <td><?= $dato['informe']->getId() ?></td>
+                            <td><?= sprintf("%s %s", $dato['paciente']->getNombre(), $dato['paciente']->getApellidos()) ?>
+                            </td>
+                            <td><?= sprintf("%s %s", $dato['empleado']->getNombre(), $dato['empleado']->getApellidos()) ?>
+                            </td>
+                            <td><?= $dato['informe']->getDieta() ?></td>
+                            <td><?= $dato['informe']->getFecha() ?></td>
+                        </tr>
 
-                            <?php } ?>
+                        <?php } ?>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+            </div>
             <?php } ?>
         </div>
     </div>
