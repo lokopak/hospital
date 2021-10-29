@@ -5,9 +5,9 @@
             <div class="card-header border-bottom">
                 <h3 class="h4 mb-0">Datos empleados</h3>
             </div>
+            <?php if ($empleado) :?>
             <div class="card-body">
                 <p class="text-sm">Por favor, inserte los datos del empleado.</p>
-
                 <div class="mb-3">
                     <label class="form-label" for="nombre">Nombre</label>
                     <input class="form-control" id="nombre" name="nombre" value="<?= $empleado->getNombre() ?>" type="text" aria-describedby="Nombre">
@@ -32,6 +32,9 @@
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <input type="hidden" value= "<?=$empleado->getId()?>">
             </div>
+            <?php else:?>
+                <h3>No hay empleado</h3>
+            <?php endif; ?>
         </div>
     </div>
 </form>
