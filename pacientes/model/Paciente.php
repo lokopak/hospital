@@ -119,7 +119,7 @@ class Paciente extends Persona
      */
     public function getEstado()
     {
-        return $this->estado;
+        return (int) $this->estado;
     }
 
     /**
