@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaPaciente.php");
 require_once(__DIR__ . "/model/Paciente.php");
+$tablaPacientes = new TablaPaciente();
 
 if (Peticion::getInstancia()->esPost()) {
 
@@ -17,7 +18,7 @@ if (Peticion::getInstancia()->esPost()) {
 
 
 
-    $tablaPacientes = new TablaPaciente();
+    
 
     $idPaciente = $tablaPacientes->insertar($datos);
 
@@ -34,6 +35,18 @@ require_once(__DIR__ . "/model/Paciente.php");
 $estados = Paciente::getEstados();
 
 
+$idPaciente = Peticion::getInstancia()->fromGet('idPaciente');
+if ($idPaciente == null) {
+    echo "error";
+}
+$datosPaciente = $tablaPacientes->buscarUno($idPaciente);
+if ($datosPaciente == null) {
+    echo "error";
+} else {
+    $paciente = new Paciente();
+    $paciente->rellenarConArray($datosPaciente);
+}
+
 /**
  * Imprime una fila de la tabla con una dieta sin dietas hijas.
  * 
@@ -42,9 +55,10 @@ $estados = Paciente::getEstados();
  */
 function imprimirDietaSinHijas($dieta, $cols = 3)
 {
+    global $paciente;
     echo '<tr>
     <td colspan="' . $cols . '">' . $dieta->getDescripcion() . '</td>
-    <td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>
+    <td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '"  ' . ($paciente->getDieta() === $dieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>
             
     </tr>';
 }
@@ -102,6 +116,7 @@ function getColspan($dieta, $max, $min)
  */
 function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 {
+    global $paciente;
     if ($paso === 0) {
         $result = '<tr>';
         $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '"> ' . $dieta->getNombre() . '</td>';
@@ -111,9 +126,9 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             if (!empty(($nietas = $hija->getHijas()))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
-                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '"  ' . ($paciente->getDieta() === $nieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
             } else {
-                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $hija->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $hija->getMadre() . '"  ' . ($paciente->getDieta() === $hija->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
             }
 
             $result .= '</tr>';
@@ -135,7 +150,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             if (!empty(($nietas = $hijas[$i]->getHijas()))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
-                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" ' . ($paciente->getDieta() === $nieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
 
@@ -143,7 +158,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
                     imprimirDietaConHijas($nietas[$j], 2,  $j);
                 }
             } else {
-                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $hijas[$i]->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $hijas[$i]->getMadre() . '" ' . ($paciente->getDieta() === $hijas[$i]->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
             }
@@ -151,7 +166,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     } else {
         $result = '<tr>';
         $result .= '<td class="border-start">' . $dieta->getDescripcion()  . '</td>';
-        $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+        $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" '. ($paciente->getDieta() === $dieta->getMadre() ? 'checked' :  '') .' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
         $result .= '</tr>';
         echo $result;
     }
