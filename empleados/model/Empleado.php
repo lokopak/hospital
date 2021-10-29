@@ -24,7 +24,7 @@ class Empleado extends Persona
     // desde la propia aplicación, pero de momento lo dejamos como algo fijo.
     const CARGO_EMPLEADO_INACTIVO = 0;
     const CARGO_EMPLEADO_BASE = 1;
-    const CARGO_EMPLEADO_CELADOR = 3;
+    const CARGO_EMPLEADO_CELADOR = 2;
     const CARGO_EMPLEADO_NUTRICIONISTA = 3;
     const CARGO_EMPLEADO_ADMINISTRADOR = 4;
 
