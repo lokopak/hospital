@@ -5,40 +5,44 @@
         </div>
         <div class="card-body">
             <?php if (empty($empleados)) { ?>
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-                <i class="fa fa-info-circle fa-2x me-4"></i>
-                <div>
-                    No hay ningún empleado registrado actualmente.
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="fa fa-info-circle fa-2x me-4"></i>
+                    <div>
+                        No hay ningún empleado registrado actualmente.
+                    </div>
                 </div>
-            </div>
             <?php } else { ?>
-            <div class="table-responsive">
-                <table class="table text-sm mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">DNI</th>
-                            <th scope="col">Cargo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($empleados as $empleado) { ?>
+                <div class="table-responsive">
+                    <table class="table text-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Cargo</th>
+                                <th scope="col"></th>
 
-                        <tr>
-                            <td><?= $empleado->getId() ?></td>
-                            <td><?= $empleado->getNombre() ?></td>
-                            <td><?= $empleado->getApellidos() ?></td>
-                            <td><?= $empleado->getDNI() ?></td>
-                            <td><?= ucfirst($empleado->getNombreCargo())?></td>
-                        </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($empleados as $empleado) { ?>
 
-                        <?php } ?>
+                                <tr>
+                                    <td><?= $empleado->getId() ?></td>
+                                    <td><?= $empleado->getNombre() ?></td>
+                                    <td><?= $empleado->getApellidos() ?></td>
+                                    <td><?= $empleado->getDNI() ?></td>
+                                    <td><?= ucfirst($empleado->getNombreCargo()) ?></td>
+                                    <td><a class="btn btn-primary" href="/empleados/editar.php?idEmpleado=<?= $empleado->getId() ?>" role="button">Editar</a></td>
+                               
+                                </tr>
 
-                    </tbody>
-                </table>
-            </div>
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
             <?php } ?>
         </div>
     </div>
