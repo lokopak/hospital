@@ -70,7 +70,8 @@ abstract class Tabla
             // Devolvemos el resultado
             return $resultado;
         } catch (Exception $e) {
-            // Excepción
+            require_once(__DIR__ . "/../../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
         }
 
         return null;
@@ -83,24 +84,29 @@ abstract class Tabla
      */
     public function insertar($datos)
     {
-        // Recopilamos todas los índices del array en un string con la forma: "columna1,columna2,columna3...."
-        $columnas = implode(',', array_keys($datos));
-        // Creamos un string relleno de '?', uno por cada valor incluido en el array, con la forma "?,?,?..." que nos servirá de placeholders para incluir los valores en la query.
-        $valores = implode(',', array_fill(0, count($datos), '?'));
+        try {
+            // Recopilamos todas los índices del array en un string con la forma: "columna1,columna2,columna3...."
+            $columnas = implode(',', array_keys($datos));
+            // Creamos un string relleno de '?', uno por cada valor incluido en el array, con la forma "?,?,?..." que nos servirá de placeholders para incluir los valores en la query.
+            $valores = implode(',', array_fill(0, count($datos), '?'));
 
-        // Construimos la query incluyendo el string de las columnas y el de los placeholders donde irán los valores.
-        $query = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->nombreTabla, $columnas, $valores);
+            // Construimos la query incluyendo el string de las columnas y el de los placeholders donde irán los valores.
+            $query = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->nombreTabla, $columnas, $valores);
 
-        // Terminamos de preparar la query
-        $stmt = $this->conexion->prepare($query);
+            // Terminamos de preparar la query
+            $stmt = $this->conexion->prepare($query);
 
-        // Ejecutamos la query pasando un array que contiene únicamente los valores que se insertarán en los placeholders.
-        $stmt->execute(array_values($datos));
-        // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-        $stmt = null;
+            // Ejecutamos la query pasando un array que contiene únicamente los valores que se insertarán en los placeholders.
+            $stmt->execute(array_values($datos));
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
 
-        // Recogemos y devolvemos la id asignada al elemento recien insertado.
-        return $this->conexion->lastInsertId();;
+            // Recogemos y devolvemos la id asignada al elemento recien insertado.
+            return $this->conexion->lastInsertId();
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
     }
 
     /**
@@ -114,23 +120,27 @@ abstract class Tabla
      */
     public function buscarUno($id)
     {
+        try {
+            // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
+            $query = sprintf('SELECT * FROM %s WHERE id = ?', $this->nombreTabla);
 
-        // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
-        $query = sprintf('SELECT * FROM %s WHERE id = ?', $this->nombreTabla);
+            // Preparamos la declaración
+            $stmt  = $this->conexion->prepare($query);
+            // Y ejecutamos la query.
+            $stmt->execute([$id]);
 
-        // Preparamos la declaración
-        $stmt  = $this->conexion->prepare($query);
-        // Y ejecutamos la query.
-        $stmt->execute([$id]);
+            // Recogemos todas las filas encontradas en forma de array asociativo.
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Recogemos todas las filas encontradas en forma de array asociativo.
-        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
 
-        // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-        $stmt = null;
-
-        // Devolvemos el resultado
-        return $resultado;
+            // Devolvemos el resultado
+            return $resultado;
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
     }
 
     public function actualizar($datos)
