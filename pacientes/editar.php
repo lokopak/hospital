@@ -3,6 +3,8 @@
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaPaciente.php");
 require_once(__DIR__ . "/model/Paciente.php");
+require_once(__DIR__ . "/../services/AppError.php");
+
 $tablaPacientes = new TablaPaciente();
 
 if (Peticion::getInstancia()->esPost()) {
@@ -15,14 +17,32 @@ if (Peticion::getInstancia()->esPost()) {
     // El resto de valores debe ser un integer.
     $datos['estado'] = (int) $datos['estado'];
 
+    // Si no se ha proporcionado una ide de paciente, la petición no puede procesarse correctamente. Mostramos un error.
+    if (!isset($datos['idPaciente'])) {
+        return (new AppError('Petición invalida', 'La petición no incluye los datos necesarios para ser procesada.'))->mostrarError();
+    }
 
+    // Recogemos la id del paciente en una variable separada y nos aseguramos que es del tipo correcto.
+    $idPaciente = (int) $datos['idPaciente'];
+    // Eliminamos esta entrada de los datos, no va a usarse.
+    unset($datos['idPaciente']);
 
+    // Comprobamos si el paciente existe
+    $paciente = $tablaPacientes->buscarUno($idPaciente);
 
-    
+    // Mostramos el error 'no encontrado'
+    if (null === $paciente) {
+        return (new AppError('No encontrado', 'No se ha encontrado el elemento indicado.', AppError::ERROR_NO_ENCONTRADO))->mostrarError();
+    }
 
-    $idPaciente = $tablaPacientes->insertar($datos);
+    $resultado = $tablaPacientes->actualizar($idPaciente, $datos);
 
-    if ($idPaciente > 0) {
+    // Si se ha recibido un error desde la tabla, lo mostramos.
+    if ($resultado instanceof AppError) {
+        return $resultado->mostrarError();
+    }
+
+    if ($resultado > 0) {
         header("Location: /pacientes/editar.php?idPaciente=" . $idPaciente);
     } else {
         echo '
@@ -174,3 +194,4 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 
 $contenido = __DIR__ . "/view/editar.phtml";
 
+require_once(__DIR__ . "/../view/pagina.phtml");
