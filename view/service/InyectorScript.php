@@ -14,6 +14,10 @@ class InyectorScript
      */
     protected static $instancia;
 
+    /**
+     * Array que contiene todos los scripts que se inyectarán 
+     * al final de la plantilla de la página.
+     */
     protected $scripts = [];
 
     /**
