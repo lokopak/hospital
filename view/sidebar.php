@@ -4,13 +4,13 @@
                 src="/assets/images/person-no-image.png" alt="person">
             <h2 class="h5 text-white text-uppercase mb-0">Señor Usuario</h2>
             <p class="text-sm mb-0 text-muted">Cargo en hospital</p>
-        </div><a class="brand-small text-center" href="index.html">
+        </div><a class="brand-small text-center" href="/index.php">
             <p class="h1 m-0">HC</p>
         </a>
     </div>
     <ul class="list-unstyled">
         <li class="sidebar-item">
-            <a class="sidebar-link" href="index.html">
+            <a class="sidebar-link" href="/index.php">
                 <i class="fa fa-home me-xl-2"></i>Inicio
             </a>
         </li>
@@ -38,7 +38,6 @@
             </a>
             <ul class="collapse list-unstyled " id="informesDietasDropdown">
                 <li><a class="sidebar-link" href="/informes/index.php">Informes</a></li>
-                <li><a class="sidebar-link" href="/informes/crear.php">Nuevo informe</a></li>
             </ul>
         </li>
         <li class="sidebar-item">
