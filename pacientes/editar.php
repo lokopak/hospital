@@ -58,7 +58,7 @@ function imprimirDietaSinHijas($dieta, $cols = 3)
     global $paciente;
     echo '<tr>
     <td colspan="' . $cols . '">' . $dieta->getDescripcion() . '</td>
-    <td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '"  ' . ($paciente->getDieta() === $dieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>
+    <td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getNombre() . '"  ' . ($paciente->getDieta() === $dieta->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>
             
     </tr>';
 }
@@ -126,9 +126,9 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             if (!empty(($nietas = $hija->getHijas()))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
-                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '"  ' . ($paciente->getDieta() === $nieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '"  ' . ($paciente->getDieta() === $nieta->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
             } else {
-                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $hija->getMadre() . '"  ' . ($paciente->getDieta() === $hija->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $hija->getNombre() . '"  ' . ($paciente->getDieta() === $hija->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
             }
 
             $result .= '</tr>';
@@ -146,11 +146,11 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
         $hijas = $dieta->getHijas();
         for ($i = 1; $i < count($hijas); $i++) {
             $result = '<tr>';
-            $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$i]->getMadre() . ')</span></td>';
+            $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$i]->getNombre() . ')</span></td>';
             if (!empty(($nietas = $hijas[$i]->getHijas()))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
-                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getMadre() . '" ' . ($paciente->getDieta() === $nieta->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '" ' . ($paciente->getDieta() === $nieta->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
 
@@ -158,7 +158,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
                     imprimirDietaConHijas($nietas[$j], 2,  $j);
                 }
             } else {
-                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $hijas[$i]->getMadre() . '" ' . ($paciente->getDieta() === $hijas[$i]->getMadre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+                $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $hijas[$i]->getNombre() . '" ' . ($paciente->getDieta() === $hijas[$i]->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
                 $result .= '</tr>';
                 echo $result;
             }
@@ -166,7 +166,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     } else {
         $result = '<tr>';
         $result .= '<td class="border-start">' . $dieta->getDescripcion()  . '</td>';
-        $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getMadre() . '" '. ($paciente->getDieta() === $dieta->getMadre() ? 'checked' :  '') .' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
+        $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $dieta->getNombre() . '" ' . ($paciente->getDieta() === $dieta->getNombre() ? 'checked' :  '') . ' id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
         $result .= '</tr>';
         echo $result;
     }
@@ -174,4 +174,3 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
 
 $contenido = __DIR__ . "/view/editar.phtml";
 
-require_once(__DIR__ . "/../view/pagina.phtml");
