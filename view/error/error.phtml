@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h1 class="text-danger"><?= $error->getTitulo() ?></h1>
+        <h3>
+            <?= $error->getMensaje() ?>
+        </h3>
+        <?php if ($error->getExcepcion()) : ?>
+        <?= $error->getExcepcion()->getMessage() ?>
+        <?php endif; ?>
+        <p>Vuelve a la página de inicio o ponte en contacto con nosotros</p>
+    </div>
+</div>
