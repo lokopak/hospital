@@ -38,9 +38,16 @@ class TablaDieta
     protected $listaDietas = [];
 
     /**
+     * Instancia del único objeto que se puede crear de esta clase.
+     * 
+     * @var TablaDieta
+     */
+    protected static $instancia;
+
+    /**
      * Constructor
      */
-    public function __construct()
+    private function __construct()
     {
         // Si no hay ninguna dieta, provemos a cargarlas desde el archivo
         // Si todo ha ido bien solo será necesario hacerlo una vez por ejecución
@@ -102,9 +109,7 @@ class TablaDieta
         // esta dieta insertando entre el nombre de la madre y el de la dieta hija un carácter '@'.
         // Esto nos dará como nombre de madre algo así 'nombreAbuela@nombreMadre'
         if (null !== $madre) {
-            $madre = sprintf("%s@%s", $madre, $nombre);
-        } else {
-            $madre = $nombre;
+            $nombre = sprintf("%s@%s", $madre, $nombre);
         }
 
         $hijas = [];
@@ -115,7 +120,7 @@ class TablaDieta
             // Recorremos todas las hijas encontradas en el array de hijas
             foreach ($datos['hijas'] as $indice => $valores) {
                 // Generamos una nueva Dieta y la guardamos en el array de hijas. En 
-                $hijas[] = $this->generarDieta($indice, $valores, $madre);
+                $hijas[] = $this->generarDieta($indice, $valores, $nombre);
             }
         }
 
@@ -130,5 +135,36 @@ class TablaDieta
     public function getDietas()
     {
         return $this->listaDietas;
+    }
+
+    /**
+     * Devuelve la instancia del único objeto
+     * que se puede crear de esta clase.
+     * 
+     * @return TablaDieta
+     */
+    public static function getInstancia()
+    {
+        if (!static::$instancia) {
+            static::$instancia = new TablaDieta();
+        }
+
+        return static::$instancia;
+    }
+
+    /**
+     * Devuelve la dieta que corresponde al nombre indicado.
+     * 
+     * @param string $nombre Nombre de la dieta.
+     * 
+     * @return Dieta|null
+     */
+    public function getDietaPorNombre($nombre)
+    {
+        if (isset($this->listaDietas[$nombre])) {
+            return $this->listaDietas[$nombre];
+        }
+
+        return null;
     }
 }
