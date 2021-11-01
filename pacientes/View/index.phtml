@@ -4,50 +4,57 @@
             <h3 class="h4 mb-0">Listado pacientes:</h3>
         </div>
         <div class="card-body">
-            <?php if (empty($pacientes)) { ?>
-                <div class="alert alert-primary d-flex align-items-center" role="alert">
-                    <i class="fa fa-info-circle fa-2x me-4"></i>
-                    <div>
-                        No hay ningún paciente registrado actualmente.
-                    </div>
+            <?php if (empty($pacientes)) : ?>
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <i class="fa fa-info-circle fa-2x me-4"></i>
+                <div>
+                    No hay ningún paciente registrado actualmente.
                 </div>
-            <?php } else { ?>
-                <div class="table-responsive">
-                    <table class="table text-sm mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id de paciente</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellidos</th>
-                                <th scope="col">Nº habitación</th>
-                                <th scope="col">Dieta</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Fecha de registro</th>
-                                <th scope="col">Fecha de salida</th>
-                                <th scope="col">Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($pacientes as $paciente) { ?>
+            </div>
+            <?php else : ?>
+            <div class="table-responsive">
+                <table class="table text-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Nº habitación</th>
+                            <th scope="col">Dieta</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha de registro</th>
+                            <th scope="col">Fecha de salida</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($pacientes as $paciente) : ?>
 
-                                <tr>
-                                    <td><?= $paciente->getId() ?></td>
-                                    <td><?= $paciente->getNombre() ?></td>
-                                    <td><?= $paciente->getApellidos() ?></td>
-                                    <td><?= $paciente->getHabitacion() ?></td>
-                                    <td><?= $paciente->getDieta() ?></td>
-                                    <td><?= $paciente->getEstado() ?></td>
-                                    <td><?= $paciente->getFechaRegistro() ?></td>
-                                    <td><?= $paciente->getfechaSalida() ?></td>
-                                    <td><a href="/pacientes/editar.php?idPaciente=<?= $idpaciente->getId();?>">Editar</a></td>
-                                </tr>
+                        <tr>
+                            <td class="align-middle"><?= $paciente->getId() ?></td>
+                            <td class="align-middle"><?= $paciente->getNombre() ?></td>
+                            <td class="align-middle"><?= $paciente->getApellidos() ?></td>
+                            <td class="align-middle"><?= $paciente->getHabitacion() ?></td>
+                            <td class="align-middle"><?= $paciente->getDieta() ?></td>
+                            <td class="align-middle"><?= $paciente->getEstado() ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaRegistro() ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaSalida() ?></td>
+                            <td class="align-middle">
+                                <a class="btn btn-primary rounded-circle align-middle"
+                                    href="/pacientes/editar.php?idPaciente=<?= $paciente->getId(); ?>"><i
+                                        class="fa fa-edit"></i></a>
+                                <a class="btn btn-outline-primary rounded-circle"
+                                    href="/informes/index.php?idPaciente=<?= $paciente->getId(); ?>"><i
+                                        class="fa fa-file-text-o"></i></a>
+                            </td>
+                        </tr>
 
-                            <?php } ?>
+                        <?php endforeach; ?>
 
-                        </tbody>
-                    </table>
-                </div>
-            <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
