@@ -47,7 +47,7 @@ abstract class Entidad implements ArraySerializable
      */
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class Entidad implements ArraySerializable
      * 
      * @return void
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         // Para proteger la integridad de la base de datos,
         // impedimos que si sa está asignada la id, no se pueda
