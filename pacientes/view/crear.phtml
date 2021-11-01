@@ -5,20 +5,20 @@
                 <div class="card">
                     <div class="card-header border-bottom">
                         <h3 class="h4 mb-0">Datos Paciente</h3>
+                        <p class="text-sm">Por favor, inserte los datos del paciente.</p>
                     </div>
                     <div class="card-body">
-                        <p class="text-sm">Por favor, inserte los datos del paciente.</p>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="nombre">Nombre</label>
-                                <input class="form-control" id="nombre" type="text" name="nombre" aria-describedby="Nombre">
+                                <input class="form-control" id="nombre" type="text" name="nombre"
+                                    aria-describedby="Nombre">
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="apellidos">Apellidos</label>
                                 <input class="form-control" id="apellidos" name="apellidos" type="text">
                             </div>
                         </div>
-                        <div class="row"></div>
                         <div class="row">
                             <div class="col-4 mb-3">
                                 <label class="form-label" for="habitacion">Habitación</label>
@@ -29,11 +29,12 @@
                                 <select class="form-select" id="estado" name="estado">
                                     <option selected value="-1">Estado del paciente...</option>
                                     <?php foreach ($estados as $indice => $estado) { ?>
-                                        <option value="<?= $indice ?>"><?= ucfirst($estado) ?></option>
+                                    <option value="<?= $indice ?>"><?= ucfirst($estado) ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
                         </div>
+                        <input type="hidden" name="idPaciente" value="<?= $idPaciente ?>">
                         <button class="btn btn-primary" type="submit">Enviar</button>
                     </div>
                 </div>
@@ -42,8 +43,7 @@
 
         <?php
         require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
-        $tablaDietas = new TablaDieta();
-        $dietas = $tablaDietas->getDietas();
+        $dietas = TablaDieta::getInstancia()->getDietas();
         $collapsable = true;
         require_once(__DIR__ . "/../../dietas/view/index.phtml");
         ?>
