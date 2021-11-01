@@ -17,6 +17,13 @@ class Peticion
     protected $metodo = 'GET';
 
     /**
+     * Url a la que se raliza la peticion.
+     * 
+     * @var string
+     */
+    protected $uri;
+
+    /**
      * Almacena todos los datos que se reciben
      * en el método GET
      * 
@@ -50,6 +57,9 @@ class Peticion
     {
         // Guardamos el método recibido para facilitar acceder a él.
         $this->metodo = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+
+        // Recogemos la url de la petición.
+        $this->setUri(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
 
         // Si hay get, recogemos los parámetros recividos.
         if ($_GET) {
@@ -87,6 +97,28 @@ class Peticion
     private function setGet($get)
     {
         $this->get = new ArrayObject($get, ArrayObject::ARRAY_AS_PROPS);
+    }
+
+    /**
+     * Fija el valor de la uri de la petición.
+     * 
+     * @param string $uri
+     * 
+     * @return void
+     */
+    private function setUri($uri)
+    {
+        $this->uri = (string) $uri;
+    }
+
+    /**
+     * Devuelve la url de la peitición.
+     * 
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
     }
 
     /**
