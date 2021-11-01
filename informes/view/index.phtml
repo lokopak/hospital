@@ -1,7 +1,13 @@
 <div class="row">
     <div class="card">
-        <div class="card-header border-bottom">
-            <h3 class="h4 mb-0">Informes:</h3>
+        <div class="card-header border-bottom d-flex">
+            <div class="card-title">
+                <h3 class="h4 mb-0">Informes:</h3>
+            </div>
+            <?php if (null !== $idPaciente) : ?>
+            <div class="ms-auto"><a href="/informes/crear.php?idPaciente=<?= $idPaciente ?>" class="btn btn-primary"><i
+                        class="fa fa-plus me-2"></i>Nuevo informe</a></div>
+            <?php endif; ?>
         </div>
         <div class="card-body">
             <?php if (empty($informes)) { ?>
@@ -20,20 +26,31 @@
                             <th scope="col">Paciente</th>
                             <th scope="col">Celador</th>
                             <th scope="col">Dieta</th>
-                            <th scope="col">Fecha</th>
+                            <th scope="col">Fecha / Hora</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($informes as $dato) { ?>
+                        <?php foreach ($informes as $informe) { ?>
 
                         <tr>
-                            <td><?= $dato['informe']->getId() ?></td>
-                            <td><?= sprintf("%s %s", $dato['paciente']->getNombre(), $dato['paciente']->getApellidos()) ?>
+                            <td class="align-middle"><?= $informe->getId() ?></td>
+                            <td class="align-middle">
+                                <?= sprintf("%s %s", $informe->getPaciente()->getNombre(), $informe->getPaciente()->getApellidos()) ?>
                             </td>
-                            <td><?= sprintf("%s %s", $dato['empleado']->getNombre(), $dato['empleado']->getApellidos()) ?>
+                            <td class="align-middle">
+                                <?= sprintf("%s %s", $informe->getEmpleado()->getNombre(), $informe->getEmpleado()->getApellidos()) ?>
                             </td>
-                            <td><?= $dato['informe']->getDieta() ?></td>
-                            <td><?= $dato['informe']->getFecha() ?></td>
+                            <td class="align-middle">
+                                <?php if ($informe->getDieta() !== null) : ?>
+                                <?= $informe->getDieta()->getDescripcion() ?>
+                                <?php else : ?>
+                                Sin asignar
+                                <?php endif; ?>
+                            </td>
+                            <td class="align-middle"><?= $informe->getFecha()->format('d/m/Y H:i:s') ?></td>
+                            <td class="align-middle"><a href="/informes/editar.php?idInforme=<?= $informe->getId() ?>"
+                                    class="btn btn-primary rounded-circle"><i class="fa fa-pencil"></i></a></td>
                         </tr>
 
                         <?php } ?>

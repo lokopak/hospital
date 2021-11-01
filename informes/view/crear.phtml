@@ -1,10 +1,14 @@
 <div class="row">
     <div class="card">
         <div class="card-header border-bottom">
-            <h3 class="h4 mb-0">Crear Informe de seguimiento de dieta del paciente</h3>
+            <h3 class="h4 mb-0">Crear informe de seguimiento de dieta del paciente</h3>
+            <div class="card-title">
+                <h6>Paciente:
+                    <?= $paciente->getNombre() ?> <?= $paciente->getApellidos() ?> </h6>
+            </div>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?= $_SERVER['PHP_SELF'] ?>">
+            <form method="POST" action="/informes/crear.php">
                 <div class="row border-bottom">
                     <div class="col-2 py-3"></div>
                     <div class="col-2 text-center border-top border-start py-3"><img src="/assets/images/plato_nada.png"
@@ -259,7 +263,8 @@
                     </div>
                 </div>
                 <div class="mt-3">
-
+                    <input type="hidden" name="dieta" value="<?= $paciente->getDieta()->getNombre() ?>">
+                    <input type="hidden" name="idPaciente" value="<?= $idPaciente ?>">
                     <button class="btn btn-primary" type="submit">Enviar</button>
                 </div>
             </form>
