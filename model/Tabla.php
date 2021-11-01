@@ -143,7 +143,50 @@ abstract class Tabla
         }
     }
 
-    public function actualizar($datos)
+    /**
+     * Actualiza los datos de un elemento en la tabla correspondiente.
+     * 
+     * @param array $datos
+     * 
+     * @return boolean
+     */
+    public function actualizar($id, $datos)
     {
+        try {
+            // Construimos la query incluyendo el string de las columnas y el de los placeholders donde irán los valores.
+            $query = sprintf("UPDATE %s SET ", $this->nombreTabla);
+
+            // Recorremos los campos indicados en el array de datos para generar cada columna y poder asignar valores.
+            $i = 0;
+            foreach ($datos as $indice => $valor) {
+                // Vamos a ignorar aquí la id por seguridad.
+                if ($indice === 'id') {
+                    $i++; // No la contamos, pero hay que tenerla en cuenta.
+                    continue;
+                }
+                // Aquí de momento sólo nos hace falta el índice
+                $query .= sprintf("%s = ?", $indice);
+                // Si no es el último, agregamos una coma
+                if ($i < (count($datos) - 1)) {
+                    $query .= ', ';
+                }
+                $i++;
+            }
+            // Importante agregar el término where para no liarla pardísima.
+            $query .= sprintf(" WHERE id = %d", $id);
+
+            // Terminamos de preparar la query
+            $stmt = $this->conexion->prepare($query);
+
+            // Ejecutamos la query pasando un array que contiene únicamente los valores que se insertarán en los placeholders.
+            $resultado = $stmt->execute(array_values($datos));
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
+
+            return $resultado;
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
     }
 }
