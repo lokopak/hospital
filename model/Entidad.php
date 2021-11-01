@@ -136,6 +136,16 @@ abstract class Entidad implements ArraySerializable
                 continue;
             }
 
+            // Convertimos de forma recursiva los parámetros que correspondan a otro objeto.
+            if ($valor instanceof Entidad) {
+                $valor = $valor->toArray();
+            }
+
+            // Convertimos las DateTimes en string con formato.
+            if ($valor instanceof DateTime) {
+                $valor = $valor->format("d/m/Y H:i:s");
+            }
+
             // Agregamos el valor usando como índice el nombre de la propiedad / atributo
             $array[$propiedad] = $valor;
         }
