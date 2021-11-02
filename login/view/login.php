@@ -20,8 +20,8 @@
                                 <div class="row">
                                     <div class="col-lg-7 mx-auto">
                                         <div class="input-material-group mb-3">
-                                            <input class="input-material" id="DNI" type="text" name="DNI"
-                                                autocomplete="off" required data-validate-field="DNI">
+                                            <input class="input-material" id="username" type="text" name="username"
+                                                autocomplete="off" required data-validate-field="username">
                                             <label class="label-material" for="login-username">Usuario</label>
                                         </div>
                                         <div class="input-material-group mb-4">
