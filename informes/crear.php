@@ -17,7 +17,7 @@ if (Peticion::getInstancia()->esPost()) {
     // Convertimos todos los valores a su tipo correcto.
     foreach ($datos as $indice => $dato) {
         // La fecha debe permanecer de momento como string
-        if (strpos('fecha', $indice) !== false) {
+        if (strpos('fecha', $indice) !== false || strpos('dieta', $indice) !== false) {
             continue;
         }
 
