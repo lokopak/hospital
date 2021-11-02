@@ -434,7 +434,7 @@ class Informe extends Entidad
             $this->setPaciente($array['paciente']);
         }
         if (isset($array['empleado'])) {
-            $this->setPaciente($array['empleado']);
+            $this->setEmpleado($array['empleado']);
         }
         if (isset($array['dieta'])) {
             $this->setDieta($array['dieta']);
