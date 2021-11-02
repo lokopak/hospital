@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__ . "/ConexionDB.php");
-
 abstract class Tabla
 {
 
@@ -70,7 +69,7 @@ abstract class Tabla
             // Devolvemos el resultado
             return $resultado;
         } catch (Exception $e) {
-            require_once(__DIR__ . "/../../services/AppError.php");
+            require_once(__DIR__ . "/../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
         }
 
@@ -104,7 +103,7 @@ abstract class Tabla
             // Recogemos y devolvemos la id asignada al elemento recien insertado.
             return $this->conexion->lastInsertId();
         } catch (PDOException $e) {
-            require_once(__DIR__ . "/../../services/AppError.php");
+            require_once(__DIR__ . "/../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
         }
     }

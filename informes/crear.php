@@ -88,6 +88,11 @@ else {
         return (new AppError('No encontrado', 'No se ha encontrado el elemento buscado.', AppError::ERROR_NO_ENCONTRADO))->mostrarError();
     }
 
+    // Si se ha producido un error durante la inserción, simplemente mostramos el error.
+    if ($datosPaciente instanceof AppError) {
+        return $datosPaciente->mostrarError();
+    }
+
     if (isset($datosPaciente['dieta'])) {
         $dieta = TablaDieta::getInstancia()->getDietaPorNombre($datosPaciente['dieta']);
         $datosPaciente['dieta'] = $dieta;

@@ -15,11 +15,19 @@ if (Peticion::getInstancia()->esPost()) {
         $datos['estado'] = (int) $datos['estado'];
     
 
+    $id = (int) $datos['idPaciente'];
 
+    $datos['id'] = $id;
+    unset($datos['idPaciente']);
 
     $tablaPacientes = new TablaPaciente();
 
     $idPaciente = $tablaPacientes->insertar($datos);
+
+    // Si se ha producido un error durante la inserción, simplemente mostramos el error.
+    if ($idPaciente instanceof AppError) {
+        return $idPaciente->mostrarError();
+    }
 
     if ($idPaciente > 0) {
         header("Location: /pacientes/editar.php?idPaciente=" . $idPaciente);
