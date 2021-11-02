@@ -21,15 +21,24 @@
                     <input class="form-control" id="DNI" name="DNI" type="text">
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="userPassword">Contraseña</label>
+                    <input class="form-control" id="userPassword" name="userPassword" type="password">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="confirm_password">Confirmar Contraseña</label>
+                    <input class="form-control" id="confirm_password" name="confirm_password" type="password">
+                   
+                </div>
+                <div class="mb-3">
                     <label class="form-label" for="cargo">Cargo</label>
                     <select class="form-select" id="cargo" name="cargo">
                         <option selected value="0">Seleccionar el cargo</option>
                         <?php foreach ($cargos as $indice => $cargo) { ?>
-                        <option value="<?= $indice ?>"><?= ucfirst($cargo) ?></option>
+                            <option value="<?= $indice ?>"><?= ucfirst($cargo) ?></option>
                         <?php } ?>
                     </select>
                 </div>
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-primary" type="submit">Enviar</button>
             </div>
         </div>
     </div>
