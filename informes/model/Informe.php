@@ -163,7 +163,7 @@ class Informe extends Entidad
      */
     public function setDieta($dieta)
     {
-        $this->dieta = (string) $dieta;
+        $this->dieta = $dieta;
     }
 
     /**
