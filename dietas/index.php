@@ -1,9 +1,8 @@
 <?php
 
 require_once(__DIR__ . "/model/TablaDieta.php");
-$tablaDieta = new TablaDieta();
 
-$dietas = $tablaDieta->getDietas();
+$dietas = TablaDieta::getInstancia()->getDietas();
 
 /**
  * Imprime una fila de la tabla con una dieta sin dietas hijas.
