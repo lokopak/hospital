@@ -16,17 +16,17 @@
                                 </h1>
                                 <p class="text-gray-500 fw-light">Introduce las credenciales de acceso.</p>
                             </header>
-                            <form class="login-form" method="get" action="/hospital/login/login.php">
+                            <form class="login-form" method="post" action="/login/login.php">
                                 <div class="row">
                                     <div class="col-lg-7 mx-auto">
                                         <div class="input-material-group mb-3">
-                                            <input class="input-material" id="DNI" type="text" name="DNI"
-                                                autocomplete="off" required data-validate-field="DNI">
+                                            <input class="input-material" id="username" type="text" name="username"
+                                                autocomplete="off" required data-validate-field="username">
                                             <label class="label-material" for="login-username">Usuario</label>
                                         </div>
                                         <div class="input-material-group mb-4">
                                             <input class="input-material" id="login-password" type="password"
-                                                name="password" required data-validate-field="password">
+                                                name="userPassword" required data-validate-field="userPassword">
                                             <label class="label-material" for="login-password">Contraseña</label>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <script src="/hospital/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
