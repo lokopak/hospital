@@ -1,3 +1,6 @@
+<?php
+require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
+?>
 <div class="row">
     <div class="card">
         <div class="card-header border-bottom">
@@ -35,7 +38,9 @@
                             <td class="align-middle"><?= $paciente->getNombre() ?></td>
                             <td class="align-middle"><?= $paciente->getApellidos() ?></td>
                             <td class="align-middle"><?= $paciente->getHabitacion() ?></td>
-                            <td class="align-middle"><?= $paciente->getDieta() ?></td>
+                            <td class="align-middle">
+                                <?= TablaDieta::getInstancia()->getDietaPorNombre($paciente->getDieta())->getDescripcion() ?>
+                            </td>
                             <td class="align-middle"><?= $paciente->getEstado() ?></td>
                             <td class="align-middle"><?= $paciente->getFechaRegistro() ?></td>
                             <td class="align-middle"><?= $paciente->getFechaSalida() ?></td>
