@@ -117,11 +117,26 @@ abstract class Tabla
      * 
      * @return mixed
      */
-    public function buscarUno($id)
+    public function buscarUno($id, $busqueda = null, $columnas = [])
     {
         try {
+            // Comprobamos si se ha recibido valores para las columnas
+            if (empty($columnas)) {
+                // En caso de no haberse recibido o de recibir un array vacío, obtenemos todas las columnas
+                $cols = '*';
+            } else {
+                // En caso contrario convertimos el array en un string con todos los valores separados por comas.
+                $cols = implode(',', $columnas);
+            }
+
+            // Comprobamos si se ha recibido valores para las columnas
+            if (is_null($busqueda)) {
+                // En caso de no haberse recibido o de recibir un array vacío, obtenemos todas las columnas
+                $busqueda = 'id';
+            }
+
             // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
-            $query = sprintf('SELECT * FROM %s WHERE id = ?', $this->nombreTabla);
+            $query = sprintf('SELECT %s FROM %s WHERE %s = ?', $cols, $this->nombreTabla, $busqueda);
 
             // Preparamos la declaración
             $stmt  = $this->conexion->prepare($query);
