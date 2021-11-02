@@ -2,6 +2,10 @@
 require_once(__DIR__ . "/model/TablaInforme.php");
 require_once(__DIR__ . "/../services/AppError.php");
 require_once(__DIR__ . "/../services/Peticion.php");
+require_once(__DIR__ . "/../services/Sesion.php");
+
+Sesion::sesionIniciada();
+
 
 /**
  * Este archivo funciona como controlador de la página de inicio de informes.
