@@ -24,7 +24,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Paciente</th>
-                            <th scope="col">Celador</th>
+                            <th scope="col">Empleado</th>
                             <th scope="col">Dieta</th>
                             <th scope="col">Fecha / Hora</th>
                             <th scope="col"></th>
@@ -43,7 +43,7 @@
                             </td>
                             <td class="align-middle">
                                 <?php if ($informe->getDieta() !== null) : ?>
-                                <?= $informe->getDieta()->getDescripcion() ?>
+                                <?= $informe->getDieta()->getNombre() ?>
                                 <?php else : ?>
                                 Sin asignar
                                 <?php endif; ?>

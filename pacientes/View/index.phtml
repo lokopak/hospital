@@ -39,7 +39,11 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
                             <td class="align-middle"><?= $paciente->getApellidos() ?></td>
                             <td class="align-middle"><?= $paciente->getHabitacion() ?></td>
                             <td class="align-middle">
-                                <?= TablaDieta::getInstancia()->getDietaPorNombre($paciente->getDieta())->getDescripcion() ?>
+                                <?php if ($paciente->getDieta()) : ?>
+                                <?= $paciente->getDieta() ?>
+                                <?php else : ?>
+                                Sin asignar
+                                <?php endif; ?>
                             </td>
                             <td class="align-middle"><?= $paciente->getEstado() ?></td>
                             <td class="align-middle"><?= $paciente->getFechaRegistro() ?></td>

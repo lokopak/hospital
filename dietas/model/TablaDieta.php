@@ -120,7 +120,8 @@ class TablaDieta
             // Recorremos todas las hijas encontradas en el array de hijas
             foreach ($datos['hijas'] as $indice => $valores) {
                 // Generamos una nueva Dieta y la guardamos en el array de hijas. En 
-                $hijas[] = $this->generarDieta($indice, $valores, $nombre);
+                $hija = $this->generarDieta($indice, $valores, $nombre);
+                $hijas[$hija->getNombre()] = $hija;
             }
         }
 
@@ -159,10 +160,42 @@ class TablaDieta
      * 
      * @return Dieta|null
      */
-    public function getDietaPorNombre($nombre)
+    public function getDietaPorNombre($nombre, $dietas = [])
     {
-        if (isset($this->listaDietas[$nombre])) {
-            return $this->listaDietas[$nombre];
+        // Verificamos que el nombre no es un string vacío
+        $nombre = trim($nombre);
+        if (empty($nombre)) {
+            return null;
+        }
+
+        // Dividimos el nombre de la dieta en sub-nombres
+        $nombres = explode('@', $nombre);
+
+        // Si no se proporciona un array de dietas (buscamos una dieta hija1 o hija2) buscamos en el array general.
+        if (empty($dietas)) {
+            $dietas = $this->listaDietas;
+        }
+
+        if (isset($dietas[$nombres[0]])) {
+            $dieta = $dietas[$nombres[0]];
+            if (count($nombres) > 1 && $dieta->tieneHijas()) {
+                foreach ($dieta->getHijas() as $hija) {
+                    // Si hemos encontrado la dieta que buscábamos, la devolvemos.
+                    if (strcmp($hija->getNombre(), $nombre) === 0) {
+                        return $hija;
+                    }
+                    if (count($nombres) > 1 && $hija->tieneHijas()) {
+                        foreach ($hija->getHijas() as $nieta) {
+                            // Si hemos encontrado la dieta que buscábamos, la devolvemos.
+                            if (strcmp($nieta->getNombre(), $nombre) === 0) {
+                                return $nieta;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return $dieta;
         }
 
         return null;
