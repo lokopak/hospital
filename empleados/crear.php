@@ -34,18 +34,18 @@ if (Peticion::getInstancia()->esPost()) {
     }
 
     //if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
-        $datos['userPassword'] = password_hash($password, PASSWORD_DEFAULT);
+    $datos['userPassword'] = password_hash($password, PASSWORD_DEFAULT);
     //}
 
     $tablaEmpelados = new TablaEmpleado();
-    
+
     $idEmpleado = $tablaEmpelados->insertar($datos);
-        if ($idEmpleado instanceof AppError){
-            $idEmpleado-> mostrarError();
-        }
+    if ($idEmpleado instanceof AppError) {
+        $idEmpleado->mostrarError();
+    }
 
     if ($idEmpleado > 0) {
-        // header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
+        header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
     } else {
         return AppError::error('Error inesperado', 'No se ha podido crear el nuevo empleado.');
     }
