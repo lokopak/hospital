@@ -19,4 +19,19 @@ class Sesion
     {
         return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
     }
+    public static function iniciarSesion($loggedin, $id, $username)
+    {
+        session_set_cookie_params(3600);
+        session_start();
+
+        $_SESSION["loggedin"] = $loggedin;
+        $_SESSION["id"] = $id;
+        $_SESSION["username"] = $username;
+    }
+    public static function desconectar()
+    {
+        session_start();
+        $_SESSION = array();
+        session_destroy();
+    }
 }

@@ -43,11 +43,8 @@ if (Peticion::getInstancia()->esPost()) {
                         $hashed_password = $row["userPassword"];
 
                         if (password_verify($password, $hashed_password)) {
-                            session_start();
-
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;
+                            require_once(__DIR__ . "/../services/Sesion.php");
+                            Sesion::iniciarSesion(true,$id,$username);
 
                             header("location: /index.php");
                         } else {
