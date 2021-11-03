@@ -162,9 +162,6 @@ class TablaDieta
      */
     public function getDietaPorNombre($nombre, $dietas = [])
     {
-        print_r('<pre>');
-        print_r([$nombre, $dietas]);
-        print_r('</pre>');
         // Verificamos que el nombre no es un string vacío
         $nombre = trim($nombre);
         if (empty($nombre)) {
