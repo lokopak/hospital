@@ -113,10 +113,10 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     if ($paso === 0) {
         $result = '<tr>';
         $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '"> ' . $dieta->getDescripcion() . '</td>';
-        if (!empty(($hijas = $dieta->getHijas()))) {
+        if (!empty(($hijas = array_values($dieta->getHijas())))) {
             $hija = $hijas[0];
             $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '</td>';
-            if (!empty(($nietas = $hija->getHijas()))) {
+            if (!empty(($nietas = array_values($hija->getHijas())))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
                 $result .= '<td class="border-start border-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
@@ -136,11 +136,11 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             echo $result;
         }
     } else if ($paso === 1) {
-        $hijas = $dieta->getHijas();
+        $hijas = array_values($dieta->getHijas());
         for ($i = 1; $i < count($hijas); $i++) {
             $result = '<tr>';
             $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '</td>';
-            if (!empty(($nietas = $hijas[$i]->getHijas()))) {
+            if (!empty(($nietas = array_values($hijas[$i]->getHijas())))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion()  . '</td>';
                 $result .= '<td class="border-start boder-end bg-warning"><input class="form-check-input" type="radio" value="' . $nieta->getNombre() . '" id="dieta" name="dieta"> <label class="form-check-label" for="flexCheckDefault"></label></td>';
