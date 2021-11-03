@@ -74,10 +74,10 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     if ($paso === 0) {
         $result = '<tr>';
         $result .= '<td class="border-end" rowspan="' . getRowspan($dieta) . '" colspan="' . getColspan($dieta, 3, 1) . '">' . $dieta->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $dieta->getMadre() . ')</span></td>';
-        if (!empty(($hijas = $dieta->getHijas()))) {
+        if (!empty(($hijas = array_values($dieta->getHijas())))) {
             $hija = $hijas[0];
             $result .= '<td rowspan="' . getRowspan($hija) . '" colspan="' . getColspan($hija, 2, 1) . '">' . $hija->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $hija->getMadre() . ')</span></td>';
-            if (!empty(($nietas = $hija->getHijas()))) {
+            if (!empty(($nietas = array_values($hija->getHijas())))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $nieta->getMadre() . ')</span></td>';
             }
@@ -93,11 +93,11 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             echo $result;
         }
     } else if ($paso === 1) {
-        $hijas = $dieta->getHijas();
+        $hijas = array_values($dieta->getHijas());
         for ($i = 1; $i < count($hijas); $i++) {
             $result = '<tr>';
             $result .= '<td class="" rowspan="' . getRowspan($hijas[$i]) . '" colspan="' . getColspan($hijas[$i], 2, 1) . '">' . $hijas[$i]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$i]->getMadre() . ')</span></td>';
-            if (!empty(($nietas = $hijas[$i]->getHijas()))) {
+            if (!empty(($nietas = array_values($hijas[$i]->getHijas())))) {
                 $nieta = $nietas[0];
                 $result .= '<td class="border-start">' . $nieta->getDescripcion() . '<span class="text-muted fst-italic ms-3">(id: ' . $nieta->getMadre() . ')</span></td>';
                 $result .= '</tr>';
@@ -112,7 +112,7 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
             }
         }
     } else {
-        $hijas = $dieta->getHijas();
+        $hijas = array_values($dieta->getHijas());
         $result = '<tr>';
         $result .= '<td class="border-start">' . $hijas[$indice]->getDescripcion()  . '<span class="text-muted fst-italic ms-3">(id: ' . $hijas[$indice]->getMadre() . ')</span></td>';
         $result .= '</tr>';
