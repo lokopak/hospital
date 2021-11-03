@@ -180,4 +180,15 @@ class Dieta
         unset($this->hijas[$hija->getNombre()]);
         return false;
     }
+
+    /**
+     * Función de ayuda para determinar si una dieta tiene hijas
+     * o no.
+     * 
+     * @return boolean
+     */
+    public function tieneHijas()
+    {
+        return (count($this->getHijas()) > 0);
+    }
 }
