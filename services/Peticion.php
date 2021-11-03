@@ -59,7 +59,7 @@ class Peticion
         $this->metodo = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 
         // Recogemos la url de la petición.
-        $this->setUri(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
+        $this->setUri(isset($_SERVER['REQUEST_URI']) ? trim($_SERVER['REQUEST_URI']) : '');
 
         // Si hay get, recogemos los parámetros recividos.
         if ($_GET) {
@@ -108,7 +108,7 @@ class Peticion
      */
     private function setUri($uri)
     {
-        $this->uri = (string) $uri;
+        $this->uri = $uri;
     }
 
     /**
