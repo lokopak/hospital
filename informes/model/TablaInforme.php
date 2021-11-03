@@ -115,7 +115,7 @@ class TablaInforme extends Tabla
      * 
      * @return mixed
      */
-    public function buscarUno($id)
+    public function buscarUno($id, $busqueda = null, $columnas = [])
     {
         try {
             // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
