@@ -11,7 +11,7 @@ if (Peticion::getInstancia()->esPost()) {
     $password = Peticion::getInstancia()->fromPost("userPassword");
     $username = Peticion::getInstancia()->fromPost("username");
 
-    if ($password === null) {
+    if ($username === null) {
         $username_err = "Por favor, introduzca el usuario.";
     } else {
         $username = $username;
