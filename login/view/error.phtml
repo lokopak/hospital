@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<?php require(__DIR__ . "/../../view/head.php"); ?>
+
+<body>
+    <div class="login-page d-flex align-items-center bg-gray-100">
+        <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <header class="text-center mb-5">
+                                <h1 class="text-xxl text-gray-400 text-uppercase">
+                                    HOSPITALIS <strong class="text-primary">CONSULTING</strong>
+                                </h1>
+                                <p class="text-gray-500 fw-light">Introduce las credenciales de acceso.</p>
+                            </header>
+
+                            <?php if (isset($error)) : ?>
+                            <h1 class="text-danger"><?= $error->getTitulo() ?></h1>
+                            <h3>
+                                <?= $error->getMensaje() ?>
+                            </h3>
+                            <?php if ($error->getExcepcion()) : ?>
+                            <?= $error->getExcepcion()->getMessage() ?>
+                            <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/assets/vendor/just-validate/js/just-validate.min.js"></script>
+    <script src="/assets/vendor/overlayscrollbars/js/OverlayScrollbars.min.js"></script>
+    <script src="/assets/js/front.js"></script>
+</body>
+
+</html>
