@@ -97,10 +97,11 @@ class Autentificacion
                 // Alguna ha liado el empleado y no tiene acceso... se lo decimos para que sienta la presión...
                 return ['resultado' => false, 'mensaje' => 'Este usuario no tiene acceso actualmente. Pongase en contacto con los administradores del sistema.'];
             }
-
             // Comprobamos que las contraseñas concuerdan.
             if (password_verify($password, $usuario['userPassword'])) {
-                $this->contenedor->agregar('username', $usuario);
+                $this->contenedor->agregar('username', $username);
+                print_r(['Autentificacion::autentificar' => $this->contenedor]);
+                print_r("<br>");
                 // Login correcto, adelante!!!
                 return ['resultado' => true, 'mensaje' => 'Autentificación correcta'];
             }
