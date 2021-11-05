@@ -1,13 +1,16 @@
 <?php
 
 require_once __DIR__ . "/../../services/Sesion.php";
+require_once __DIR__ . "/../../sesion/service/ContenedorSesion.php";
 
 class Autentificacion
 {
     /**
-     * Este variabl
+     * Contenedor con los datos relativos a la identidad del usuario.
+     * 
+     * @var \ContenedorSesion
      */
-    protected $session;
+    protected $contenedor;
 
     /**
      * Instancia única de esta clase.
@@ -30,6 +33,7 @@ class Autentificacion
      */
     private function __construct()
     {
+        // Creamos el contenedor que tendrá los datos de la sesión.
         $this->contenedor = new ContenedorSesion('AppAuth', Sesion::getInstancia());
     }
 
@@ -96,6 +100,7 @@ class Autentificacion
 
             // Comprobamos que las contraseñas concuerdan.
             if (password_verify($password, $usuario['userPassword'])) {
+                $this->contenedor->agregar('username', $usuario);
                 // Login correcto, adelante!!!
                 return ['resultado' => true, 'mensaje' => 'Autentificación correcta'];
             }
@@ -105,5 +110,25 @@ class Autentificacion
         } catch (Exception $e) {
             return new AppError("Error inesperado", "Se ha producido un error grave y no se ha podido llevar a cabo la acción solicitada.");
         }
+    }
+
+    /**
+     * Desconecta al usuario de la aplicación.
+     * 
+     * @return void
+     */
+    public function desconectar()
+    {
+        $this->contenedor->vaciar();
+    }
+
+    /**
+     * Comprueba si el usuario está identificado en la aplicación
+     * 
+     * @return bool
+     */
+    public function identificado()
+    {
+        return !$this->contenedor->vacio();
     }
 }
