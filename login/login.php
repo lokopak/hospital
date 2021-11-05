@@ -44,7 +44,7 @@ if (Peticion::getInstancia()->esPost()) {
 
                         if (password_verify($password, $hashed_password)) {
                             require_once(__DIR__ . "/../services/Sesion.php");
-                            Sesion::iniciarSesion(true,$id,$username);
+                            Sesion::getInstancia()->iniciarSesion(true, $id, $username);
 
                             header("location: /index.php");
                         } else {

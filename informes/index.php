@@ -4,7 +4,7 @@ require_once(__DIR__ . "/../services/AppError.php");
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/../services/Sesion.php");
 
-Sesion::sesionIniciada();
+Sesion::getInstancia()->sesionIniciada();
 
 
 /**
