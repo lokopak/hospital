@@ -1,11 +1,13 @@
 <?php
 
+require_once __DIR__ . "/../../services/Sesion.php";
+
 class Autentificacion
 {
     /**
      * Este variabl
      */
-    protected $contenedor;
+    protected $session;
 
     /**
      * Instancia única de esta clase.
@@ -28,6 +30,7 @@ class Autentificacion
      */
     private function __construct()
     {
+        $this->contenedor = new ContenedorSesion('AppAuth', Sesion::getInstancia());
     }
 
     /**
