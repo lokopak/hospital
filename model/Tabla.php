@@ -20,11 +20,17 @@ abstract class Tabla
 
     /**
      * Constructor.
+     * 
+     * @throws Exception.
      */
     public function __construct()
     {
         // Creamos la conexión con la base de datos para no tener que manejarnos con ella más.
         $this->conexion = ConexionDB::getConexion();
+
+        if ($this->conexion instanceof AppError) {
+            throw new Exception("No se ha podido establecer la conexión con la base de datos.");
+        }
     }
 
     /**
