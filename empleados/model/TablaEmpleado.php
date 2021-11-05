@@ -7,6 +7,8 @@ class TablaEmpleado extends Tabla
 {
     /**
      * Constructor.
+     * 
+     * @throws Exception
      */
     public function __construct()
     {
