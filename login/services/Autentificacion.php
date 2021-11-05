@@ -48,7 +48,16 @@ class Autentificacion
     }
 
     /**
-     * Realiza un intento de login
+     * Realiza un intento de login.
+     * 
+     * Devuelve un array con dos ídices:
+     * 
+     * 
+     * @param string $username Nombre de usuario
+     * @param string $password Contraseña
+     * 
+     * @return mixed
+     * 
      */
     public function autentificar($username, $password)
     {
@@ -73,23 +82,23 @@ class Autentificacion
             // Si el usuario no existe en la base de datos, no se puede hacer nada.
             if (null === $usuario || false === $usuario) {
                 // Devolvemos este mensaje para evitar dar pistas de si el usuario existe o no.
-                return [false, 'El usuario o contraseña incorrecto'];
+                return ['resultado' => false, 'mensaje' => 'El usuario o contraseña incorrecto'];
             }
 
             // Comprobamos que el usuario está activado y tiene acceso a la aplicación.
             if ($usuario['cargo'] === Empleado::CARGO_EMPLEADO_INACTIVO) {
                 // Alguna ha liado el empleado y no tiene acceso... se lo decimos para que sienta la presión...
-                return [false, 'Este usuario no tiene acceso actualmente. Pongase en contacto con los administradores del sistema.'];
+                return ['resultado' => false, 'mensaje' => 'Este usuario no tiene acceso actualmente. Pongase en contacto con los administradores del sistema.'];
             }
 
             // Comprobamos que las contraseñas concuerdan.
             if (password_verify($password, $usuario['userPassword'])) {
                 // Login correcto, adelante!!!
-                return [true, 'Autentificación correcta'];
+                return ['resultado' => true, 'mensaje' => 'Autentificación correcta'];
             }
 
             // De nuevo, si la contraseña no es correcta, mostramos el mismo mensaje para no dar pistas.
-            return [false, 'El usuario o contraseña incorrecto'];
+            return ['resultado' => false, 'mensaje' => 'El usuario o contraseña incorrecto'];
         } catch (Exception $e) {
             return new AppError("Error inesperado", "Se ha producido un error grave y no se ha podido llevar a cabo la acción solicitada.");
         }

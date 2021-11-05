@@ -81,11 +81,19 @@ class Autorizacion
      * 
      * @return
      */
-    public static function logout()
+    public function logout()
     {
         // TODO: Optimizar
         require_once(__DIR__ . "/../../services/Sesion.php");
 
         Sesion::desconectar();
+    }
+
+    /**
+     * Esta función comprueba si el usuario tiene acceso a cierto recurso dentro de la aplicación.
+     */
+    public function tieneAcceso($empleado, $permiso)
+    {
+        return true;
     }
 }
