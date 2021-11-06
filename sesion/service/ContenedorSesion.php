@@ -33,7 +33,6 @@ class ContenedorSesion extends ArrayObject
         $this->setNombre($nombre);
         $this->setSesion($sesion);
 
-        print_r($this->sesion);
         $datos = [];
         // Si existen datos de este contenedor en la sesión, los recogemos.
         if ($this->sesion->contiene($this->nombre)) {
@@ -78,6 +77,16 @@ class ContenedorSesion extends ArrayObject
     }
 
     /**
+     * Devuelve el gestor de sesiones asociado a este contenedor.
+     * 
+     * @return \Sesion
+     */
+    public function getSesion()
+    {
+        return $this->sesion;
+    }
+
+    /**
      * Vaciamos los datos de este contenedor, eliminando los datos de la
      * sesión.
      * 
@@ -98,7 +107,7 @@ class ContenedorSesion extends ArrayObject
      */
     public function vacio()
     {
-        return !isset($this->sesion->{$this->name});
+        return is_null($this->sesion->obtener($this->nombre));
     }
 
     /**
@@ -113,7 +122,7 @@ class ContenedorSesion extends ArrayObject
      */
     public function agregar($nombre, $valor)
     {
-        $this->offsetSet($nombre, serialize($valor));
+        $this->offsetSet($nombre, $valor);
 
         // Nos aseguramos que la sesión guarda los valores de este contenedor.
 
@@ -122,5 +131,16 @@ class ContenedorSesion extends ArrayObject
         } else {
             $this->sesion->agregar($this->nombre, $this->getArrayCopy());
         }
+    }
+
+    /**
+     * Devuelve el contenido de este contenedor almacenado
+     * en la sesión
+     * 
+     * @return mixed
+     */
+    public function leer()
+    {
+        return $this->sesion->obtener($this->nombre);
     }
 }
