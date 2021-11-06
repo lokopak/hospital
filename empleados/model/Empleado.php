@@ -116,7 +116,7 @@ class Empleado extends Persona
     /**
      * Devuelve el nombre del cargo asignado al objeto.
      * 
-     * @return stirng
+     * @return string
      */
     public function getNombreCargo($cargo = null)
     {
