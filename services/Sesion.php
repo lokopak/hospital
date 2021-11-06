@@ -33,24 +33,25 @@ class Sesion
             if ($datosViejos instanceof ArrayObject) {
                 $datosViejos = $datosViejos->toArray();
             }
-
-            // Iniciazliamos las sesiones.
-            session_start();
-
-            // Si la sesión contenia datos antiguos, combinamos los datos antiguos con los nuevos.
-            if (!empty($datosViejos) && is_array($datosViejos)) {
-                $_SESSION = $this->combinarDatos($datosViejos, $_SESSION);
-            }
-
-            // Iniciamos los datos del contenedor, el array y demás incluidos en este.
-            // Aquí queremos que los valores se guarden como propiedades del objeto y que el iterador de este sea un ArrayIterator.
-            $this->sesion = new ArrayObject($_SESSION, ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
-
-            // Ahora convertimos el super global $_SESSION en este objeto, de forma que podamos interactuar directamente con ella de forma segura.
-            $_SESSION = $this->sesion;
-        } else {
-            $this->sesion = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
         }
+
+        // Iniciazliamos las sesiones.
+        session_start();
+
+        // Si la sesión contenia datos antiguos, combinamos los datos antiguos con los nuevos.
+        if (!empty($datosViejos) && is_array($datosViejos)) {
+            $_SESSION = $this->combinarDatos($datosViejos, $_SESSION);
+        }
+
+
+        // Iniciamos los datos del contenedor, el array y demás incluidos en este.
+        // Aquí queremos que los valores se guarden como propiedades del objeto y que el iterador de este sea un ArrayIterator.
+        $this->sesion = new ArrayObject($_SESSION, ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
+
+        // Ahora convertimos el super global $_SESSION en este objeto, de forma que podamos interactuar directamente con ella de forma segura.
+        $_SESSION = $this->sesion;
+
+        register_shutdown_function([$this, 'grabarAlCerrar']);
     }
 
     /**
@@ -75,7 +76,7 @@ class Sesion
     public function obtener($nombre)
     {
         if ($this->sesion->offsetExists($nombre)) {
-            return unserialize($this->sesion->offsetGet($nombre));
+            return $this->sesion->offsetGet($nombre);
         }
 
         return null;
@@ -91,12 +92,7 @@ class Sesion
      */
     public function agregar($nombre, $datos)
     {
-        // El array existe, no se puede agregar.
-        if ($this->sesion->offsetExists($nombre)) {
-            return;
-        }
-
-        $this->sesion->offsetSet($nombre, serialize($datos));
+        $this->sesion->offsetSet($nombre, $datos);
     }
 
     /**
@@ -115,13 +111,13 @@ class Sesion
         }
 
         // Recogemos los datos ya almacenados en el campo.
-        $datosViejos = unserialize($this->sesion->offsetGet($nombre));
+        $datosViejos = $this->sesion->offsetGet($nombre);
 
         // Combinamos los datos nuevos con los antiguos, actualizando las entradas ya existentes.
         $datos = $this->combinarDatos($datosViejos, $datos);
 
         // Guardamos los nuevos datos en la sesion
-        $this->sesion->offsetSet($nombre, serialize($datos));
+        $this->sesion->offsetSet($nombre, $datos);
     }
 
     /**
@@ -256,5 +252,14 @@ class Sesion
         session_destroy();
 
         $this->sesion = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
+    }
+
+    public function grabarAlCerrar()
+    {
+        $_SESSION = $this->sesion->getArrayCopy();
+
+        session_write_close();
+
+        $this->sesion = new ArrayObject($_SESSION, ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
     }
 }
