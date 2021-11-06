@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../../services/Sesion.php";
 require_once __DIR__ . "/../../sesion/service/ContenedorSesion.php";
+require_once __DIR__ . "/../../empleados/model/TablaEmpleado.php";
 
 class Autentificacion
 {
@@ -25,6 +26,8 @@ class Autentificacion
      * @var string
      */
     protected $columnaIdentificacion = 'DNI';
+
+    protected $usuarioActual;
 
     /**
      * Constructor.
@@ -79,7 +82,7 @@ class Autentificacion
             /**
              * Extraemos los datos necesarios para realizar el login. Necesitamos el cargo para comprobar que el usuario está activado.
              */
-            $usuario = $tablaEmpleados->buscarUno($username, $this->columnaIdentificacion, ['id', 'DNI', 'userPassword', 'cargo']);
+            $usuario = $tablaEmpleados->buscarUno($username, $this->columnaIdentificacion, ['id', 'DNI', 'nombre', 'apellidos', 'userPassword', 'cargo']);
 
             // Si se ha producido un error en la base de datos, simplemente devolvemos el error.
             if ($usuario instanceof AppError) {
@@ -97,11 +100,14 @@ class Autentificacion
                 // Alguna ha liado el empleado y no tiene acceso... se lo decimos para que sienta la presión...
                 return ['resultado' => false, 'mensaje' => 'Este usuario no tiene acceso actualmente. Pongase en contacto con los administradores del sistema.'];
             }
+
             // Comprobamos que las contraseñas concuerdan.
             if (password_verify($password, $usuario['userPassword'])) {
+                // Agregamos la identidad del usuario a almacenamiento de la sesión.
                 $this->contenedor->agregar('username', $username);
-                print_r(['Autentificacion::autentificar' => $this->contenedor]);
-                print_r("<br>");
+                $this->usuarioActual = new Empleado();
+                unset($usuario['userPassword']);
+                $this->usuarioActual->rellenarConArray($usuario);
                 // Login correcto, adelante!!!
                 return ['resultado' => true, 'mensaje' => 'Autentificación correcta'];
             }
@@ -131,5 +137,48 @@ class Autentificacion
     public function identificado()
     {
         return !$this->contenedor->vacio();
+    }
+
+    /**
+     * Devuelve la identidad del usuario.
+     * 
+     * @return mixed
+     */
+    public function obtenerIdentidad()
+    {
+        if ($this->contenedor->vacio()) {
+            return null;
+        }
+
+        return $this->contenedor->leer();
+    }
+
+    /**
+     * Devuelve los datos del usuario actual.
+     * 
+     * @return \Empleado
+     */
+    public function usuarioActual()
+    {
+        if (isset($this->usuario)) {
+            return $this->usuario;
+        }
+
+        if ($this->identificado()) {
+            $identidad = $this->obtenerIdentidad();
+            $tablaEmpleados = new TablaEmpleado();
+            $datosUsuario = $tablaEmpleados->buscarUno($identidad['username'], $this->columnaIdentificacion, ['id', 'DNI', 'nombre', 'apellidos', 'cargo']);
+
+            if ($datosUsuario === null || $datosUsuario === false) {
+                throw new Exception("No se ha encontrado el usuario con este nombre de usuario");
+            }
+
+            $this->usuarioActual = new Empleado();
+            $this->usuarioActual->rellenarConArray($datosUsuario);
+
+            return $this->usuarioActual;
+        }
+
+        return null;
     }
 }

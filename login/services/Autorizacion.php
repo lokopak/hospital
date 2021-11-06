@@ -96,4 +96,19 @@ class Autorizacion
     {
         return true;
     }
+
+    /**
+     * Comprueba si el usuario está autentificado o no.
+     * 
+     * @return bool
+     */
+    public function tieneIdentidad()
+    {
+        return $this->autentificador->identificado();
+    }
+
+    public function obtenerIdentidad()
+    {
+        return $this->autentificador->obtenerIdentidad();
+    }
 }
