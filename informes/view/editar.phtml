@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . "/../model/Informe.php";
+?>
+
 <div class="row">
     <div class="card">
         <div class="card-header border-bottom">
@@ -19,8 +23,9 @@
             <form method="POST" action="/informes/editar.php?idInforme=<?= $informe->getId() ?>">
                 <div class="row border-bottom">
                     <div class="col-2 py-3"></div>
-                    <div class="col-2 text-center border-top border-start py-3"><img src="/assets/images/plato_nada.png"
-                            alt="" class="img-fluid"></div>
+                    <div class="col-2 text-center border-top border-start py-3">
+                        <img src="/assets/images/plato_nada.png" alt="" class="img-fluid">
+                    </div>
                     <div class="col-2 text-center border-top border-start py-3"><img
                             src="/assets/images/plato_casi_nada.png" alt="" class="img-fluid"></div>
                     <div class="col-2 text-center border-top border-start py-3"><img
@@ -42,32 +47,37 @@
                     <div class="col-2 py-3"><span>Desayuno</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="desayuno" value="0"
-                                <?= (!is_null($informe->getDesayuno()) && 0 === (int) $informe->getDesayuno() ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="desayuno"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (Informe::INFORME_CONSUMIDO_NADA === (int) $informe->getDesayuno() ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="desayuno" value="1"
-                                <?= ((int) $informe->getDesayuno() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="desayuno"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getDesayuno() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="desayuno" value="2"
-                                <?= ((int) $informe->getDesayuno() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="desayuno"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getDesayuno() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="desayuno" value="3"
-                                <?= ((int) $informe->getDesayuno() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="desayuno"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getDesayuno() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="desayuno" value="4"
-                                <?= ((int) $informe->getDesayuno() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="desayuno"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getDesayuno() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -79,32 +89,37 @@
                     <div class="col-2 text-end py-3"><span>1.er. Plato</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida1" value="0"
-                                <?= (!is_null($informe->getComida1()) && (int) $informe->getComida1() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida1"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getComida1()) && (int) $informe->getComida1() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida1" value="1"
-                                <?= ((int) $informe->getComida1() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida1"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getComida1() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida1" value="2"
-                                <?= ((int) $informe->getComida1() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida1"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getComida1() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida1" value="3"
-                                <?= ((int) $informe->getComida1() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida1"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getComida1() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida1" value="4"
-                                <?= ((int) $informe->getComida1() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida1"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getComida1() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -112,32 +127,37 @@
                     <div class="col-2 text-end py-3"><span>2<sup>o</sup> Plato</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida2" value="0"
-                                <?= (!is_null($informe->getComida2()) && (int) $informe->getComida2() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida2"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getComida2()) && (int) $informe->getComida2() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida2" value="1"
-                                <?= ((int) $informe->getComida2() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida2"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getComida2() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida2" value="2"
-                                <?= ((int) $informe->getComida2() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida2"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getComida2() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida2" value="3"
-                                <?= ((int) $informe->getComida2() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida2"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getComida2() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida2" value="4"
-                                <?= ((int) $informe->getComida2() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida2"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getComida2() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -145,32 +165,37 @@
                     <div class="col-2 text-end py-3"><span>Postre</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida3" value="0"
-                                <?= (!is_null($informe->getComida3()) && (int) $informe->getComida3() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida3"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getComida3()) && (int) $informe->getComida3() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida3" value="1"
-                                <?= ((int) $informe->getComida3() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida3"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getComida3() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida3" value="2"
-                                <?= ((int) $informe->getComida3() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida3"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getComida3() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida3" value="3"
-                                <?= ((int) $informe->getComida3() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida3"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getComida3() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="comida3" value="4"
-                                <?= ((int) $informe->getComida3() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="comida3"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getComida3() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -178,32 +203,37 @@
                     <div class="col-2 py-3"><span>Merienda</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="merienda" value="0"
-                                <?= (!is_null($informe->getMerienda()) && (int) $informe->getMerienda() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="merienda"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getMerienda()) && (int) $informe->getMerienda() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="merienda" value="1"
-                                <?= ((int) $informe->getMerienda() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="merienda"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getMerienda() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="merienda" value="2"
-                                <?= ((int) $informe->getMerienda() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="merienda"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getMerienda() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="merienda" value="3"
-                                <?= ((int) $informe->getMerienda() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="merienda"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getMerienda() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="merienda" value="4"
-                                <?= ((int) $informe->getMerienda() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="merienda"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getMerienda() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -215,32 +245,37 @@
                     <div class="col-2 text-end py-3"><span>1<sup>er</sup> Plato</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena1" value="0"
-                                <?= (!is_null($informe->getCena1()) && (int) $informe->getCena1() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena1"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getCena1()) && (int) $informe->getCena1() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena1" value="1"
-                                <?= ((int) $informe->getCena1() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena1"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getCena1() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena1" value="2"
-                                <?= ((int) $informe->getCena1() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena1"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getCena1() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena1" value="3"
-                                <?= ((int) $informe->getCena1() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena1"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getCena1() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena1" value="4"
-                                <?= ((int) $informe->getCena1() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena1"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getCena1() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -248,32 +283,37 @@
                     <div class="col-2 text-end py-3"><span>2<sup>o</sup> Plato</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena2" value="0"
-                                <?= (!is_null($informe->getCena2()) && (int) $informe->getCena2() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena2"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getCena2()) && (int) $informe->getCena2() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena2" value="1"
-                                <?= ((int) $informe->getCena2() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena2"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getCena2() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena2" value="2"
-                                <?= ((int) $informe->getCena2() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena2"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getCena2() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena2" value="3"
-                                <?= ((int) $informe->getCena2() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena2"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getCena2() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena2" value="4"
-                                <?= ((int) $informe->getCena2() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena2"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getCena2() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>
@@ -281,32 +321,37 @@
                     <div class="col-2 text-end py-3"><span>Postre</span></div>
                     <div class="col-2 border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena3" value="0"
-                                <?= (!is_null($informe->getCena3()) && (int) $informe->getCena3() === 0 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena3"
+                                value="<?= Informe::INFORME_CONSUMIDO_NADA ?>"
+                                <?= (!is_null($informe->getCena3()) && (int) $informe->getCena3() === Informe::INFORME_CONSUMIDO_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena3" value="1"
-                                <?= ((int) $informe->getCena3() === 1 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena3"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_NADA ?>"
+                                <?= ((int) $informe->getCena3() === Informe::INFORME_CONSUMIDO_CASI_NADA ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena3" value="2"
-                                <?= ((int) $informe->getCena3() === 2 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena3"
+                                value="<?= Informe::INFORME_CONSUMIDO_MITAD ?>"
+                                <?= ((int) $informe->getCena3() === Informe::INFORME_CONSUMIDO_MITAD ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena3" value="3"
-                                <?= ((int) $informe->getCena3() === 3 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena3"
+                                value="<?= Informe::INFORME_CONSUMIDO_CASI_TODO ?>"
+                                <?= ((int) $informe->getCena3() === Informe::INFORME_CONSUMIDO_CASI_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                     <div class="col-2 text-center border-start py-3">
                         <div class="form-check text-center">
-                            <input class="form-check-input float-none" type="radio" name="cena3" value="4"
-                                <?= ((int) $informe->getCena3() === 4 ? 'checked' : '') ?>>
+                            <input class="form-check-input float-none" type="radio" name="cena3"
+                                value="<?= Informe::INFORME_CONSUMIDO_TODO ?>"
+                                <?= ((int) $informe->getCena3() === Informe::INFORME_CONSUMIDO_TODO ? 'checked' : '') ?>>
                         </div>
                     </div>
                 </div>

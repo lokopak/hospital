@@ -2,6 +2,23 @@
 require_once(__DIR__ . "/../../model/Persona.php");
 class Informe extends Entidad
 {
+    // Constantes para determinar el nivel de consumo en cada comida.
+    const INFORME_CONSUMIDO_NADA      = 1;
+    const INFORME_CONSUMIDO_CASI_NADA = 2;
+    const INFORME_CONSUMIDO_MITAD     = 3;
+    const INFORME_CONSUMIDO_CASI_TODO = 4;
+    const INFORME_CONSUMIDO_TODO      = 5;
+
+    /**
+     * Enlace entre los distintos niveles de consumo y sus correspondientes textos.
+     */
+    protected static $consumos = [
+        self::INFORME_CONSUMIDO_NADA      => 'nada',
+        self::INFORME_CONSUMIDO_CASI_NADA => 'casi nada',
+        self::INFORME_CONSUMIDO_MITAD     => 'la mitad',
+        self::INFORME_CONSUMIDO_CASI_TODO => 'casi todo',
+        self::INFORME_CONSUMIDO_TODO      => 'todo',
+    ];
 
     /**
      * Paciente al que se refiere el informe
@@ -406,6 +423,30 @@ class Informe extends Entidad
     public function setUltimoEditor($ultimoEditor)
     {
         $this->ultimoEditor = $ultimoEditor;
+    }
+
+    /**
+     * Devuelve los distintos valores de consumos para los informes.
+     * 
+     * @return array
+     */
+    public static function getConsumos()
+    {
+        return static::$consumos;
+    }
+
+    /**
+     * Devuelve el texto equivalente para un consumo.
+     * 
+     * @return string
+     */
+    public static function getConsumo($consumo)
+    {
+        if (isset(static::$consumos[$consumo])) {
+            return static::$consumos[$consumo];
+        }
+
+        return 'desconocido';
     }
 
     /**
