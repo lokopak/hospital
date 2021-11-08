@@ -1,14 +1,25 @@
 <?php
 require_once __DIR__ . "/../services/Peticion.php";
+require_once __DIR__ . "/../login/services/Autentificacion.php";
 
 $url = Peticion::getInstancia()->getUri();
+
+$usuario = Autentificacion::getInstancia()->usuarioActual();
 ?>
 <nav class="side-navbar">
     <div class="sidebar-header d-flex align-items-center justify-content-center p-3 mb-3">
         <div class="sidenav-header-inner text-center"><img class="img-fluid rounded-circle avatar mb-3"
                 src="/assets/images/person-no-image.png" alt="person">
+            <?php if (null !== $usuario) : ?>
+            <h2 class="h5 text-white text-uppercase mb-0"><?= $usuario->getNombre() ?></h2>
+            <?php else : ?>
             <h2 class="h5 text-white text-uppercase mb-0">Señor Usuario</h2>
+            <?php endif; ?>
+            <?php if (null !== $usuario) : ?>
+            <p class="text-sm mb-0 text-muted"><?= ucfirst($usuario->getNombreCargo()) ?></p>
+            <?php else : ?>
             <p class="text-sm mb-0 text-muted">Cargo en hospital</p>
+            <?php endif; ?>
         </div><a class="brand-small text-center" href="/index.php">
             <p class="h1 m-0">HC</p>
         </a>
