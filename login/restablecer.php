@@ -7,7 +7,7 @@ $tablaEmpelados = new TablaEmpleado();
 if (Peticion::getInstancia()->esPost()) {
     $newPasswordErr = $newConfirmPasswordErr = $usuarioErr = $loginErr = "";
 
-    $usuario = Peticion::getInstancia()->fromPost("userName");
+    $usuario = Peticion::getInstancia()->fromPost("DNI");
     if ($usuario === null || empty($usuario)) {
         $usuarioErr = "Por favor, introduzca un usuario correcto.";
     } else {

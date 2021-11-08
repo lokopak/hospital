@@ -20,19 +20,18 @@
                                 <div class="row">
                                     <div class="col-lg-7 mx-auto">
                                         <div class="input-material-group mb-3">
-                                            <input class="input-material" id="username" type="text" name="username"
-                                                autocomplete="off" required data-validate-field="username">
+                                            <input class="input-material <?= (isset($loginErr) && !empty($loginErr) ? 'is-invalid' : '') ?>" id="username" type="text" name="username" autocomplete="off" required data-validate-field="username">
+                                            <div class="invalid-feedback"><?= (isset($loginErr) && !empty($loginErr) ? $loginErr : '') ?></div>
                                             <label class="label-material" for="login-username">Usuario</label>
                                         </div>
                                         <div class="input-material-group mb-4">
-                                            <input class="input-material" id="login-password" type="password"
-                                                name="userPassword" required data-validate-field="userPassword">
+                                            <input class="input-material <?= (isset($loginErr) && !empty($loginErr) ? 'is-invalid' : '') ?>" id="login-password" type="password" name="userPassword" required data-validate-field="userPassword">
+                                            <div class="invalid-feedback"><?= (isset($loginErr) && !empty($loginErr) ? $loginErr : '') ?></div>
                                             <label class="label-material" for="login-password">Contraseña</label>
                                         </div>
                                     </div>
                                     <div class="col-12 text-center">
-                                        <button class="btn btn-primary mb-3 rounded-pill" id="login"
-                                            type="submit">Entrar</button>
+                                        <button class="btn btn-primary mb-3 rounded-pill" id="login" type="submit">Entrar</button>
                                         <br>
                                         <a class="text-xs text-paleBlue" href="/login/restablecer.php">
                                             ¿Has olvidado la contraseña?
