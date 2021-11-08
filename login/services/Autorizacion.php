@@ -94,6 +94,7 @@ class Autorizacion
      */
     public function tieneAcceso($empleado, $permiso)
     {
+
         return true;
     }
 
@@ -107,6 +108,11 @@ class Autorizacion
         return $this->autentificador->identificado();
     }
 
+    /**
+     * Devuelve la identidad del usuario actual.
+     * 
+     * @return string
+     */
     public function obtenerIdentidad()
     {
         return $this->autentificador->obtenerIdentidad();

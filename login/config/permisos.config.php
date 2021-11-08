@@ -46,6 +46,7 @@ return [
         'grupo_empleados' => [
             // De momento a las personas que acceden a la aplicación y no están logeadas, no se les otorga ningún permiso.
             'invitado' => [
+                'padre' => null,
                 'permitido' => [],
             ],
             // Permisos para todos los empleados en general. Cualquier persona con acceso a la aplicación. Heredan los permisos de los invitados.
@@ -77,7 +78,7 @@ return [
             ],
             // Permisos exclusivos para los Administradores. Además de los que se incluyen aquí, heredan los permisos de los celadores.
             'administrador' => [
-                'padre' => ['nutricionista'], // En este caso se pone como array porque el administrador podría tener acceso a permisos de otros grupos.
+                'padre' => 'nutricionista',
                 'permitido' => [
                     'APP@TOTAL', // De momento le damos permiso total al administrador.
                 ],

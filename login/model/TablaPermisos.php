@@ -7,4 +7,5 @@
  */
 class TablaPermisos
 {
+    protected $grupos;
 }
