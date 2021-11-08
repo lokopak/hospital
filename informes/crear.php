@@ -68,6 +68,7 @@ if (Peticion::getInstancia()->esPost()) {
 
     // Si todo ha ido bien, redirigimos a la página correspondiente para editar el informe.
     if ($idInforme > 0) {
+        http_response_code(201);
         header("Location: /informes/editar.php?idInforme=" . $idInforme);
     } else {
         // Algo haya fallado.
