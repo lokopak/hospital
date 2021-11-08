@@ -1,5 +1,11 @@
 <?php
 
+require_once(__DIR__ . "/../login/services/Autorizacion.php");
+
+if (!Autorizacion::getInstancia()->tieneIdentidad()) {
+    header("location: /login/login.php");
+}
+
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaInforme.php");
 require_once(__DIR__ . "/model/Informe.php");
