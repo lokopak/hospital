@@ -1,5 +1,11 @@
 <?php
 
+require_once(__DIR__ . "/../login/services/Autorizacion.php");
+
+if (!Autorizacion::getInstancia()->tieneIdentidad()) {
+    header("location: /login/login.php");
+}
+
 require_once(__DIR__ . "/model/TablaDieta.php");
 
 $dietas = TablaDieta::getInstancia()->getDietas();
