@@ -1,4 +1,11 @@
 <?php
+
+require_once(__DIR__ . "/../login/services/Autorizacion.php");
+
+if (!Autorizacion::getInstancia()->tieneIdentidad()) {
+    header("location: /login/login.php");
+}
+
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaEmpleado.php");
 require_once(__DIR__ . "/model/Empleado.php");
@@ -24,17 +31,15 @@ if (Peticion::getInstancia()->esPost()) {
           Algo ha fallado.
         </div>';
     }
-}
-else{
-    $idEmpleado= Peticion::getInstancia()->fromGet("idEmpleado");
-    if ($idEmpleado == null ){
+} else {
+    $idEmpleado = Peticion::getInstancia()->fromGet("idEmpleado");
+    if ($idEmpleado == null) {
         echo " ERROR";
     }
-    $datosEmpleado= $tablaEmpelados->buscarUno($idEmpleado);
+    $datosEmpleado = $tablaEmpelados->buscarUno($idEmpleado);
     if ($datosEmpleado == null) {
         echo " ERROR";
-    }
-    else {
+    } else {
         $empleado = new Empleado();
         $empleado->rellenarConArray($datosEmpleado);
     }

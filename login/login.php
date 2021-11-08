@@ -2,6 +2,14 @@
 require_once(__DIR__ . "/../model/ConexionDB.php");
 require_once(__DIR__ . "/../services/Peticion.php");
 
+require_once(__DIR__ . "/../login/services/Autorizacion.php");
+
+// Sesion::getInstancia()->sesionIniciada();
+
+if (Autorizacion::getInstancia()->tieneIdentidad()) {
+    // El usuario ya está identificado. Prevenimos el reloging.
+    header("location: /index.php");
+}
 
 
 if (Peticion::getInstancia()->esPost()) {
@@ -41,11 +49,16 @@ if (Peticion::getInstancia()->esPost()) {
                         $id = $row["id"];
                         $username = $row["DNI"];
                         $hashedPassword = $row["userPassword"];
+                        require_once __DIR__ . "/services/Autorizacion.php";
+                        $resultado = Autorizacion::getInstancia()->login($username, $password);
 
-                        if (password_verify($password, $hashedPassword)) {
-                            require_once(__DIR__ . "/../services/Sesion.php");
-                            Sesion::getInstancia()->iniciarSesion(true, $id, $username);
+                        if ($resultado instanceof AppError) {
+                            return $resultado->mostrarError();
+                        }
 
+                        if (isset($resultado['resultado']) && $resultado['resultado'] === true) {
+                            // require_once(__DIR__ . "/../services/Sesion.php");
+                            // Sesion::getInstancia()->iniciarSesion(true, $id, $username);
                             header("location: /index.php");
                         } else {
 
