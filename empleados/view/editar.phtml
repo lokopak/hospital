@@ -5,16 +5,18 @@
             <div class="card-header border-bottom">
                 <h3 class="h4 mb-0">Datos empleados</h3>
             </div>
-            <?php if ($empleado) :?>
+            <?php if ($empleado) : ?>
             <div class="card-body">
                 <p class="text-sm">Por favor, inserte los datos del empleado.</p>
                 <div class="mb-3">
                     <label class="form-label" for="nombre">Nombre</label>
-                    <input class="form-control" id="nombre" name="nombre" value="<?= $empleado->getNombre() ?>" type="text" aria-describedby="Nombre">
+                    <input class="form-control" id="nombre" name="nombre" value="<?= $empleado->getNombre() ?>"
+                        type="text" aria-describedby="Nombre">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="apellidos">Apellidos</label>
-                    <input class="form-control" id="apellidos" name="apellidos" value="<?= $empleado->getApellidos() ?>" type="text">
+                    <input class="form-control" id="apellidos" name="apellidos" value="<?= $empleado->getApellidos() ?>"
+                        type="text">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="DNI">DNI</label>
@@ -23,17 +25,18 @@
                 <div class="mb-3">
                     <label class="form-label" for="cargo">Cargo</label>
                     <select class="form-select" id="cargo" name="cargo">
-                        <option  value="0">Seleccionar el cargo</option>
+                        <option value="0">Seleccionar el cargo</option>
                         <?php foreach ($cargos as $indice => $cargo) { ?>
-                            <option value="<?= $indice ?>"<?= ($empleado->getCargo()===$cargo ? "selected": '')?>><?= ucfirst($cargo) ?></option>
+                        <option value="<?= $indice ?>" <?= ($empleado->getCargo() === $cargo ? "selected" : '') ?>>
+                            <?= ucfirst($cargo) ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
-                <input type="hidden" value= "<?=$empleado->getId()?>">
+                <input type="hidden" value="<?= $empleado->getId() ?>" name="idEmpleado">
             </div>
-            <?php else:?>
-                <h3>No hay empleado</h3>
+            <?php else : ?>
+            <h3>No hay empleado</h3>
             <?php endif; ?>
         </div>
     </div>

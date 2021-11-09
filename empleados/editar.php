@@ -21,15 +21,26 @@ if (Peticion::getInstancia()->esPost()) {
     // El resto de valores debe ser un integer.
     $datos['cargo'] = (int) $datos['cargo'];
 
+    $idEmpleado = (int) $datos['idEmpleado'];
+    unset($datos['idEmpleado']);
 
     $resultado = $tablaEmpelados->actualizar($idEmpleado, $datos);
 
     if ($resultado instanceof AppError) {
         $resultado->mostrarError();
     }
+    if ($idEmpleado == null) {
+        echo " ERROR";
+    }
+    $datosEmpleado = $tablaEmpelados->buscarUno($idEmpleado);
+    if ($datosEmpleado == null) {
+        echo " ERROR";
+    } else {
+        $empleado = new Empleado();
+        $empleado->rellenarConArray($datosEmpleado);
+    }
 
-    if ($resultado > 0) {
-        header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
+    if ($resultado) {
     } else {
         echo '
         <div class="alert alert-warning" role="alert">
