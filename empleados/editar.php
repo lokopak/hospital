@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../login/services/Autorizacion.php");
+require_once __DIR__ . "/../services/AppError.php";
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
@@ -22,6 +23,10 @@ if (Peticion::getInstancia()->esPost()) {
 
 
     $idEmpleado = $tablaEmpelados->insertar($datos);
+
+    if ($idEmpleado instanceof AppError) {
+        $idEmpleado->mostrarError();
+    }
 
     if ($idEmpleado > 0) {
         header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
