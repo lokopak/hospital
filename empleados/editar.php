@@ -22,13 +22,13 @@ if (Peticion::getInstancia()->esPost()) {
     $datos['cargo'] = (int) $datos['cargo'];
 
 
-    $idEmpleado = $tablaEmpelados->insertar($datos);
+    $resultado = $tablaEmpelados->actualizar($idEmpleado, $datos);
 
-    if ($idEmpleado instanceof AppError) {
-        $idEmpleado->mostrarError();
+    if ($resultado instanceof AppError) {
+        $resultado->mostrarError();
     }
 
-    if ($idEmpleado > 0) {
+    if ($resultado > 0) {
         header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
     } else {
         echo '
