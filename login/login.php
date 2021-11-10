@@ -1,19 +1,15 @@
 <?php
-require_once(__DIR__ . "/../model/ConexionDB.php");
 require_once(__DIR__ . "/../services/Peticion.php");
 
 require_once(__DIR__ . "/../login/services/Autorizacion.php");
-
-// Sesion::getInstancia()->sesionIniciada();
+require_once(__DIR__ . "/../empleados/model/TablaEmpleado.php");
 
 if (Autorizacion::getInstancia()->tieneIdentidad()) {
     // El usuario ya está identificado. Prevenimos el reloging.
     header("location: /index.php");
 }
 
-
 if (Peticion::getInstancia()->esPost()) {
-    $conexion = ConexionDB::getConexion();
     $username = $password = "";
     $userNameErr = $passwordErr = $loginErr = "";
     $password = Peticion::getInstancia()->fromPost("userPassword");
@@ -25,7 +21,6 @@ if (Peticion::getInstancia()->esPost()) {
         $username = $username;
     }
 
-
     if ($password === null) {
         $passwordErr = "Por favor introduzca el password.";
     } else {
@@ -33,52 +28,28 @@ if (Peticion::getInstancia()->esPost()) {
     }
 
     if (empty($userNameErr) && empty($passwordErr)) {
+        $userData = (new TablaEmpleado())->buscarUno($username, 'DNI', ['id', 'DNI', 'userPassword']);
 
-        $sql = "SELECT id, DNI, userPassword FROM empleados WHERE DNI = :DNI";
-
-        if ($stmt = $conexion->prepare($sql)) {
-
-            $stmt->bindParam(":DNI", $paramUsername, PDO::PARAM_STR);
-
-            $paramUsername = $username;
-
-            if ($stmt->execute()) {
-
-                if ($stmt->rowCount() == 1) {
-                    if ($row = $stmt->fetch()) {
-                        $id = $row["id"];
-                        $username = $row["DNI"];
-                        $hashedPassword = $row["userPassword"];
-                        require_once __DIR__ . "/services/Autorizacion.php";
-                        $resultado = Autorizacion::getInstancia()->login($username, $password);
-
-                        if ($resultado instanceof AppError) {
-                            return $resultado->mostrarError();
-                        }
-
-                        if (isset($resultado['resultado']) && $resultado['resultado'] === true) {
-                            // require_once(__DIR__ . "/../services/Sesion.php");
-                            // Sesion::getInstancia()->iniciarSesion(true, $id, $username);
-                            header("location: /index.php");
-                        } else {
-
-                            $loginErr = "Usuario o contraseña incorrectos.";
-                        }
-                    }
-                } else {
-                    $loginErr = "Usuario o contraseña incorrectos.";
-                }
-            } else {
-                echo "Alguna cosa ha ido muy mal.";
-            }
-
-
-            unset($stmt);
+        // Se ha producido un error en la conexión
+        if ($userData instanceof AppError) {
+            return $userData->mostrarError();
         }
+
+        require_once __DIR__ . "/services/Autorizacion.php";
+        $resultado = Autorizacion::getInstancia()->login($username, $password);
+
+        if ($resultado instanceof AppError) {
+            return $resultado->mostrarError();
+        }
+
+        if (isset($resultado['resultado']) && $resultado['resultado'] === true) {
+            header("location: /index.php");
+        } else {
+            $loginErr = "Usuario o contraseña incorrectos.";
+        }
+    } else {
+        $loginErr = "Usuario o contraseña incorrectos.";
     }
-
-
-    unset($conexion);
 }
 
 require(__DIR__ . "/view/login.phtml");
