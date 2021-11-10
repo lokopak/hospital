@@ -29,7 +29,7 @@
                       <div class="card-body d-flex">
                           <i class="fa fa-users fa-2x"></i>
                           <div class="ms-3">
-                              <h3 class="h4 text-uppercase fw-normal">Defunciones de</h3>
+                              <h3 class="h4 text-uppercase fw-normal">Defunciones de Pacientes</h3>
                               <p class="text-gray-200 small">Últimos 7 días</p>
                               <p class="display-6 mb-0">2</p>
                           </div>
@@ -50,4 +50,33 @@
               </div>
           </div>
 
-        
+          <div class="row row-cols-2 row-cols-md-4 card-group g-4 mb-5">
+              <div class="col-3 mx-auto">
+                  <canvas id="pieChart" style="width: 300px; height: 300px; max-width: 100%"> </canvas>
+              </div>
+          </div>
+
+
+          <?php
+            require_once __DIR__ . "/service/InyectorScript.php";
+            $script = '<script src="/assets/vendor/chart.js/Chart.min.js"></script>';
+            InyectorScript::getInstancia()->agregarScript($script);
+            $script =
+                '<script>
+            var brandPrimary = "#33b35a";
+              var PIECHART = document.getElementById("pieChart");
+              var myPieChart = new Chart(PIECHART, {
+                  type: "doughnut",
+                  data: {
+                      labels: ["Nuevos pacientes", "Altas de pacientes", "Defunciones de pacientes", "Nuevos informes de pacientes"],
+                      datasets: [{
+                          data: [25, 15, 2, 50],
+                          borderWidth: [1, 1, 1, 1],
+                          backgroundColor: ["rgba(75,192,192,1)",brandPrimary, "#dc3545", "#FFCE56"],
+                          hoverBackgroundColor: ["rgba(75,192,192,1)",brandPrimary, "#dc3545", "#FFCE56"],
+                      }, ],
+                  },
+              });
+          </script>';
+            InyectorScript::getInstancia()->agregarScript($script);
+            ?>
