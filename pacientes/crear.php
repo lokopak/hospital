@@ -9,6 +9,11 @@ if (!Autorizacion::getInstancia()->tieneIdentidad()) {
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaPaciente.php");
 require_once(__DIR__ . "/model/Paciente.php");
+require_once(__DIR__ . "/../login/services/ControlAcceso.php");
+
+if (!(ControlAcceso::tieneAcceso('PACIENTES@EDITAR'))) {
+    header("location: /login/no-autorizado.php");
+}
 
 if (Peticion::getInstancia()->esPost()) {
 

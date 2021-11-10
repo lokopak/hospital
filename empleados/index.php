@@ -1,9 +1,13 @@
 <?php
 
 require_once(__DIR__ . "/../login/services/Autorizacion.php");
+require_once(__DIR__ . "/../login/services/ControlAcceso.php");
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
+}
+if (!(ControlAcceso::tieneAcceso('EMPLEADOS@VER'))) {
+    header("location: /login/no-autorizado.php");
 }
 
 require_once(__DIR__ . "/model/TablaEmpleado.php");
