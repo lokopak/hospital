@@ -43,7 +43,7 @@
                             <td class="align-middle">
                                 <?= sprintf("%s %s", $informe->getEmpleado()->getNombre(), $informe->getEmpleado()->getApellidos()) ?>
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle text-truncate" style="max-width: 30px;">
                                 <?php if ($informe->getDieta() !== null) : ?>
                                 <?= $informe->getDieta()->getNombre() ?>
                                 <?php else : ?>
