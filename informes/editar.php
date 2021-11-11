@@ -45,7 +45,7 @@ if (Peticion::getInstancia()->esPost()) {
     // Fecha de la última edición.
     $datos['fechaModificacion'] = (new DateTime())->format('Y/m/d H:i:s');
     // Aquí recogeríamos la id del empleado que está realizando la edición desde la sessión.
-    $datos['ultimoEditor'] = 1;
+    $datos['ultimoEditor'] = Autentificacion::getInstancia()->usuarioActual()->getId();
 
     // Recogemos la id en un variable a parte para manejarla por separado.
     $id = (int) $datos['idInforme'];

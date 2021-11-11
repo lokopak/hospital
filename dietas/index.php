@@ -43,7 +43,6 @@ function getRowspan($dieta)
         }
     }
 
-
     return $rows;
 }
 
