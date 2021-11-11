@@ -47,4 +47,48 @@ class TablaPaciente extends Tabla
         // Devolvemos el array generado con todos los objetos encontrados.
         return $pacientes;
     }
+
+    public function dummyData()
+    {
+        $min = (new DateTime('1950-01-01'))->getTimestamp();
+        $minRegistro = (new DateTime('2021-11-01'))->getTimestamp();
+        $ahora = time();
+
+        $letras = 'abcdefghijklmnopqrstuvwxyz';
+
+        $habitaciones = [];
+        require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
+        $dietas = array_values(TablaDieta::getInstancia()->getDietas());
+
+        for ($i = 0; $i < 1000; $i++) {
+            $nombre = substr(str_shuffle($letras), 0, rand(5, 10));
+            $apellid1 = substr(str_shuffle($letras), 0, rand(5, 10));
+            $apellid2 = substr(str_shuffle($letras), 0, rand(5, 10));
+
+            $habitacion = 0;
+            do {
+                $habitacion = rand(1, 2000);
+            } while (in_array($habitacion, $habitaciones));
+            $habitaciones[] = $habitacion;
+
+            $dieta = $dietas[rand(0, count($dietas) - 1)];
+
+            $estado = rand(Paciente::PACIENTE_ESTADO_ALTA, Paciente::PACIENTE_ESTADO_UCI);
+
+            $fechaNacimiento = new DateTime(date('Y-m-d', rand($min, $ahora)));
+            $fechaRegistro = new DateTime(date('Y-m-d', rand($minRegistro, $ahora)));
+
+            $this->insertar(
+                [
+                    'nombre' => ucfirst($nombre),
+                    'apellidos' => ucfirst($apellid1) . " " . ucfirst($apellid2),
+                    'habitacion' => $habitacion,
+                    'dieta' => $dieta->getNombre(),
+                    'estado' => $estado,
+                    'fechaNacimiento' => $fechaNacimiento->format('Y-m-d'),
+                    'fechaRegistro' => $fechaRegistro->format('Y-m-d')
+                ]
+            );
+        }
+    }
 }
