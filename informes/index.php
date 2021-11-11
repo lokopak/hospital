@@ -13,13 +13,13 @@ if (!(ControlAcceso::tieneAcceso('INFORMES@VER') || ControlAcceso::tieneAcceso('
     header("location: /login/no-autorizado.php");
 }
 
+require_once(__DIR__ . "/../login/services/Autentificacion.php");
+$empleado = Autentificacion::getInstancia()->usuarioActual();
+
 require_once(__DIR__ . "/model/TablaInforme.php");
 require_once(__DIR__ . "/../services/AppError.php");
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/../services/Sesion.php");
-
-
-
 
 /**
  * Este archivo funciona como controlador de la página de inicio de informes.
@@ -35,11 +35,18 @@ if (null !== $idPaciente) {
     $idPaciente = (int) $idPaciente;
 }
 
-// Realizamos la consulta para buscar el listado de informes pasándole sólo las columnas que queremos/necesitamos mostrar.
-$informes = $conexion->buscarTodos($idPaciente);
+$busqueda = ['limite' => 2];
+// Si no puede ver todos los informes, sólo mostramos los que son creados por el empleado
+if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
 
-if ($informes instanceof AppError) {
-    return $informes->mostrarError();
+    $busqueda['idEmpleado'] = $empleado->getId();
+}
+
+// Realizamos la consulta para buscar el listado de informes pasándole sólo las columnas que queremos/necesitamos mostrar.
+$resultado = $conexion->buscarTodos($idPaciente, $busqueda, true);
+
+if ($resultado instanceof AppError) {
+    return $resultado->mostrarError();
 }
 
 // Guardamos el path al archivo que tiene el contenido de la página.

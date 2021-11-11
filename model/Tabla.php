@@ -38,13 +38,15 @@ abstract class Tabla
      * cumplan los requisitos proporcionados para la búsqueda.
      * 
      * @param array $columnas [opcional] Las columnas que se van a querer obtener desde la tabla.
+     * @param array $busqueda [opcional] Parámetros de búsqueda
+     * @param bool $paginar [opcinonal] Indica si el resultado debe ser entregado por páginas o no.
      * 
      * @return array|null Un array con todos las entradas encontradas en forma de array.
      *                  O null en caso de fallo en la consulta.
      * 
      * @throws Exception
      */
-    public function obtenerTodos($columnas = [])
+    public function obtenerTodos($columnas = [], $busqueda = [], $paginar = false)
     {
         // Todas las interacciones con la base de datos através de PDO deben ir en un bloque try/catch para recoger las
         // posibles excepciones que estás lancen y evitar mostar datos que podrían poner en peligro la integridad
@@ -60,7 +62,22 @@ abstract class Tabla
             }
 
             // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
-            $query = sprintf('SELECT %s FROM %s ORDER BY id ASC', $cols, $this->nombreTabla);
+            $query = sprintf('SELECT %s FROM %s', $cols, $this->nombreTabla);
+
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['ordenPor'])) {
+                $busqueda['ordenPor'] = 'id';
+            }
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['orden'])) {
+                $busqueda['orden'] = 'ASC';
+            }
+
+            $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
+
+            if (isset($busqueda['limite'])) {
+                $query .= sprintf(' LIMIT %d', (int) $busqueda['limite']);
+            }
 
             // Preparamos la declaración
             $stmt  = $this->conexion->prepare($query);
@@ -81,6 +98,18 @@ abstract class Tabla
 
         return null;
     }
+
+    /**
+     * Busca todos los Empleados que se encuentran
+     * en la tabla 'pacientes' y que cumplen los requisitos
+     * establecidos por los parámetros de búsqueda.
+     * 
+     * @param array $columnas Array con las columnas que se 
+     *                        quieren obtener de la tabla.
+     *                     OJO: nunca se incluirá la columna userPassword en esta.
+     * @return mixed Array de objetos con los distintos pacientes encontrados.
+     */
+    public abstract function buscarTodos($columnas = [], $busqueda = [], $paginar = false);
 
     /**
      * Inserta los datos proporcionados en la tabla correspondiente.

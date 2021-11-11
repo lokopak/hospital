@@ -5,61 +5,69 @@
                 <h3 class="h4 mb-0">Informes:</h3>
             </div>
             <?php if (null !== $idPaciente) : ?>
-                <div class="ms-auto"><a href="/informes/crear.php?idPaciente=<?= $idPaciente ?>" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Nuevo informe</a></div>
+            <div class="ms-auto"><a href="/informes/crear.php?idPaciente=<?= $idPaciente ?>" class="btn btn-primary"><i
+                        class="fa fa-plus me-2"></i>Nuevo informe</a></div>
             <?php endif; ?>
         </div>
         <div class="card-body">
-            <?php if (empty($informes)) { ?>
-                <div class="alert alert-primary d-flex align-items-center" role="alert">
-                    <i class="fa fa-info-circle fa-2x me-4"></i>
-                    <div>
-                        No hay ningún informe actualmente.
-                    </div>
+            <?php if (empty($resultado)) { ?>
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <i class="fa fa-info-circle fa-2x me-4"></i>
+                <div>
+                    No hay ningún informe actualmente.
                 </div>
+            </div>
             <?php } else { ?>
-                <div class="table-responsive">
-                    <table class="table text-sm mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Paciente</th>
-                                <th scope="col">Empleado</th>
-                                <th scope="col">Dieta</th>
-                                <th scope="col">Fecha / Hora</th>
-                                <th scope="col"></th>
-                            </tr>
+            <div class="table-responsive">
+                <table class="table text-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Paciente</th>
+                            <th scope="col">Empleado</th>
+                            <th scope="col">Dieta</th>
+                            <th scope="col">Fecha / Hora</th>
+                            <th scope="col"></th>
+                        </tr>
 
-                        </thead>
-                        <tbody>
-                            <?php foreach ($informes as $informe) { ?>
-                                <?php
+                    </thead>
+                    <tbody>
+                        <?php foreach ($resultado->getElementos() as $informe) { ?>
+                        <?php
                                 if (ControlAcceso::tieneAcceso('INFORMES@VER_PROPIOS')) : ?>
-                                    <tr>
-                                        <td class="align-middle"><?= $informe->getId() ?></td>
-                                        <td class="align-middle">
-                                            <?= sprintf("%s %s", $informe->getPaciente()->getNombre(), $informe->getPaciente()->getApellidos()) ?>
-                                        </td>
-                                        <td class="align-middle">
-                                            <?= sprintf("%s %s", $informe->getEmpleado()->getNombre(), $informe->getEmpleado()->getApellidos()) ?>
-                                        </td>
-                                        <td class="align-middle">
-                                            <?php if ($informe->getDieta() !== null) : ?>
-                                                <?= $informe->getDieta()->getNombre() ?>
-                                            <?php else : ?>
-                                                Sin asignar
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="align-middle"><?= $informe->getFecha()->format('d/m/Y H:i:s') ?></td>
-                                        <td class="align-middle"><a href="/informes/editar.php?idInforme=<?= $informe->getId() ?>" class="btn btn-primary rounded-circle"><i class="fa fa-pencil"></i></a></td>
-                                    </tr>
+                        <tr>
+                            <td class="align-middle"><?= $informe->getId() ?></td>
+                            <td class="align-middle">
+                                <?= sprintf("%s %s", $informe->getPaciente()->getNombre(), $informe->getPaciente()->getApellidos()) ?>
+                            </td>
+                            <td class="align-middle">
+                                <?= sprintf("%s %s", $informe->getEmpleado()->getNombre(), $informe->getEmpleado()->getApellidos()) ?>
+                            </td>
+                            <td class="align-middle">
+                                <?php if ($informe->getDieta() !== null) : ?>
+                                <?= $informe->getDieta()->getNombre() ?>
+                                <?php else : ?>
+                                Sin asignar
                                 <?php endif; ?>
+                            </td>
+                            <td class="align-middle"><?= $informe->getFecha()->format('d/m/Y H:i:s') ?></td>
+                            <td class="align-middle"><a href="/informes/editar.php?idInforme=<?= $informe->getId() ?>"
+                                    class="btn btn-primary rounded-circle"><i class="fa fa-pencil"></i></a></td>
+                        </tr>
+                        <?php endif; ?>
 
-                            <?php } ?>
+                        <?php } ?>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+            </div>
             <?php } ?>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col my-3">
+        <?php $resultado->mostrarPaginador("informes"); ?>
     </div>
 </div>

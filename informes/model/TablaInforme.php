@@ -28,7 +28,7 @@ class TablaInforme extends Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos pacientes encontrados.
      */
-    public function buscarTodos($idPaciente = null)
+    public function buscarTodos($idPaciente = null, $busqueda = [], $paginar = false)
     {
         try {
             // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
@@ -42,8 +42,36 @@ class TablaInforme extends Tabla
 
             if (null !== $idPaciente) {
                 $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
+
+                if (isset($busqueda['idEmpleado'])) {
+                    $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+                }
+            } else if (isset($busqueda['idEmpleado'])) {
+                $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
             }
-            $query .= sprintf(' ORDER BY id ASC');
+
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['ordenPor'])) {
+                $busqueda['ordenPor'] = 'id';
+            }
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['orden'])) {
+                $busqueda['orden'] = 'ASC';
+            }
+
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['pagina'])) {
+                $busqueda['pagina'] = 1;
+            }
+
+            $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
+
+            // Generamos el límite si se indica
+            if (isset($busqueda['limite'])) {
+                $pagina = (int) $busqueda['pagina'];
+                $inicio = (int) $busqueda['limite'] * ($pagina - 1);
+                $query .= sprintf(' LIMIT %d, %d', $inicio, (int) $busqueda['limite']);
+            }
 
             $stmt  = $this->conexion->prepare($query);
 
@@ -98,8 +126,24 @@ class TablaInforme extends Tabla
                 $informes[] = $informe;
             }
 
-            // Devolvemos el array generado con todos los objetos encontrados.
-            return $informes;
+            require_once __DIR__ . "/../../services/paginador/Paginador.php";
+            $query = "SELECT id as total FROM informes";
+
+            if (null !== $idPaciente) {
+                $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
+
+                if (isset($busqueda['idEmpleado'])) {
+                    $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+                }
+            } else if (isset($busqueda['idEmpleado'])) {
+                $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+            }
+            $total = count($this->query($query));
+
+            if (!isset($busqueda['limite'])) {
+                $busqueda['limite'] = $total;
+            }
+            return new Paginador($busqueda['pagina'], $busqueda['limite'], $informes, $total);
         } catch (PDOException $e) {
             require_once(__DIR__ . "/../../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
