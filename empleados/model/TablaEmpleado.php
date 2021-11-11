@@ -75,4 +75,56 @@ class TablaEmpleado extends Tabla
                 return Empleado::class;
         }
     }
+
+    /**
+     * Genera una cantidad de empleados aleatorios para rellenar la base de datos.
+     * 
+     * @return void
+     */
+    public function dummyData()
+    {
+        $min = (new DateTime('1950-01-01'))->getTimestamp();
+        $minRegistro = (new DateTime('2021-01-01'))->getTimestamp();
+        $ahora = time();
+
+        $letras = 'abcdefghijklmnopqrstuvwxyz';
+        $numeros = '0123456789';
+
+        $query = 'INSERT INTO empleados (nombre, apellidos, DNI, cargo, userPassword) VALUES ';
+
+        $nutricionistas = 0;
+        $dnis = [];
+        for ($i = 0; $i < 40; $i++) {
+            $nombre = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellido1 = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellido2 = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellidos = sprintf("%s %s", $apellido1, $apellido2);
+
+            do {
+                $dni = sprintf('%s%s', substr(str_shuffle($numeros), 0, 8), strtoupper(substr($letras, rand(0, strlen($letras) - 2), 1)));
+            } while (in_array($dni, $dnis));
+            $dnis[] = $dni;
+
+            do {
+                $cargo = rand(Empleado::CARGO_EMPLEADO_INACTIVO, Empleado::CARGO_EMPLEADO_NUTRICIONISTA);
+                if ($cargo === Empleado::CARGO_EMPLEADO_NUTRICIONISTA) {
+                    $nutricionistas++;
+                }
+            } while ($cargo === Empleado::CARGO_EMPLEADO_NUTRICIONISTA && $nutricionistas < 1);
+
+            $query .= sprintf(
+                "('%s', '%s', '%s', %d, '%s'),",
+                $nombre,
+                $apellidos,
+                $dni,
+                $cargo,
+                password_hash('111111', PASSWORD_DEFAULT)
+            );
+        }
+
+        // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
+        $query = rtrim($query, ',');
+
+        $resultado = $this->query($query);
+    }
 }

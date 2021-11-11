@@ -209,4 +209,34 @@ abstract class Tabla
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
         }
     }
+
+    /**
+     * Ejecuta una query proporcionado.
+     * 
+     * @param string $query La query a ejecutar.
+     * 
+     * @return mixed
+     */
+    public function query($query)
+    {
+        try {
+
+            // Terminamos de preparar la query
+            $stmt = $this->conexion->prepare($query);
+
+            // Ejecutamos la query pasando un array que contiene únicamente los valores que se insertarán en los placeholders.
+            $resultado = $stmt->execute();
+
+            if (strpos($query, 'SELECT') !== false) {
+                $resultado = $stmt->fetchAll();
+            }
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
+
+            return $resultado;
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
+    }
 }

@@ -209,4 +209,68 @@ class TablaInforme extends Tabla
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
         }
     }
+
+    /**
+     * Genera una cantidad de informes aleatorios para rellenar la base de datos.
+     * 
+     * @return void
+     */
+    public function dummyData()
+    {
+        $minFecha = (new DateTime('2021-01-01'))->getTimestamp();
+        $ahora = time();
+
+        require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
+
+        $celadores = $this->query(sprintf('SELECT id FROM empleados WHERE cargo = %d', Empleado::CARGO_EMPLEADO_CELADOR));
+
+        $pacientes = $this->query('SELECT * FROM pacientes');
+
+        $query = 'INSERT INTO `informes` (`idPaciente`, `idEmpleado`, `dieta`, `fecha`, `desayuno`, `comida1`, `comida2`, `comida3`, `merienda`, `cena1`, `cena2`, `cena3`, `fechaModificacion`, `ultimoEditor`) VALUES ';
+
+        for ($i = 0; $i < 4000; $i++) {
+            $paciente = $pacientes[rand(0, count($pacientes) - 1)];
+            $celador = $celadores[rand(0, count($celadores) - 1)]['id'];
+
+            $dieta = $paciente['dieta'];
+
+            if ($paciente['estado'] == 0 || $paciente['estado'] == 1) {
+                $max = (new DateTime($paciente['fechaSalida']))->getTimestamp();
+                $fecha = new DateTime(date('Y-m-d H:i:s', rand($minFecha, $max)));
+            } else {
+                $fecha = new DateTime(date('Y-m-d H:i:s', rand($minFecha, $ahora)));
+            }
+
+            $desayuno = rand(1, 5);
+            $comida1 = rand(1, 5);
+            $comida2 = rand(1, 5);
+            $comida3 = rand(1, 5);
+            $merienda = rand(1, 5);
+            $cena1 = rand(1, 5);
+            $cena2 = rand(1, 5);
+            $cena3 = rand(1, 5);
+
+
+            $query .= sprintf(
+                "(%d, %d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, NULL, NULL),",
+                $paciente['id'],
+                $celador,
+                $dieta,
+                $fecha->format('Y-m-d H:i:s'),
+                $desayuno,
+                $comida1,
+                $comida2,
+                $comida3,
+                $merienda,
+                $cena1,
+                $cena2,
+                $cena3,
+            );
+        }
+
+        // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
+        $query = rtrim($query, ',');
+
+        $this->query($query);
+    }
 }

@@ -5,8 +5,8 @@
                       <div class="card-body d-flex">
                           <i class="fa fa-users fa-2x"></i>
                           <div class="ms-3">
-                              <h3 class="h4 text-uppercase fw-normal">Pacientes actuales</h3>
-                              <p class="text-gray-400 small">Total</p>
+                              <h3 class="h4 text-uppercase fw-normal">Pacientes nuevos</h3>
+                              <p class="text-gray-400 small">En los últimos 7 días</p>
                               <p class="display-6 mb-0"><?= $numeroPacientes ?></p>
                           </div>
                       </div>
@@ -18,7 +18,7 @@
                           <i class="fa fa-users fa-2x"></i>
                           <div class="ms-3">
                               <h3 class="h4 text-uppercase fw-normal">Altas de Pacientes</h3>
-                              <p class="text-gray-400 small">Total</p>
+                              <p class="text-gray-400 small">En los últimos 7 días</p>
                               <p class="display-6 mb-0"><?= $numeroAltaPacientes ?></p>
                           </div>
                       </div>
@@ -30,7 +30,7 @@
                           <i class="fa fa-users fa-2x"></i>
                           <div class="ms-3">
                               <h3 class="h4 text-uppercase fw-normal">Defunciones de Pacientes</h3>
-                              <p class="text-gray-200 small">Total</p>
+                              <p class="text-gray-200 small">En los últimos 7 días</p>
                               <p class="display-6 mb-0"><?= $numeroDefunciones ?></p>
                           </div>
                       </div>
@@ -41,8 +41,8 @@
                       <div class="card-body d-flex">
                           <i class="fa fa-users fa-2x"></i>
                           <div class="ms-3">
-                              <h3 class="h4 text-uppercase fw-normal">Número de informes </h3>
-                              <p class="text-gray-700 small">Total</p>
+                              <h3 class="h4 text-uppercase fw-normal">Nuevos informes</h3>
+                              <p class="text-gray-700 small">En los últimos 7 días</p>
                               <p class="display-6 mb-0"><?= $numeroInformes ?></p>
                           </div>
                       </div>
@@ -62,7 +62,7 @@
             $script = '<script src="/assets/vendor/chart.js/Chart.min.js"></script>';
             InyectorScript::getInstancia()->agregarScript($script);
             $script =
-            '<script>
+                '<script>
             var brandPrimary = "#33b35a";
               var PIECHART = document.getElementById("pieChart");
               var myPieChart = new Chart(PIECHART, {
@@ -70,7 +70,7 @@
                   data: {
                       labels: ["Pacientes actuales", "Altas de pacientes", "Defunciones pacientes", "Número de informes"],
                       datasets: [{
-                          data: ['. $numeroPacientes . ', ' . $numeroAltaPacientes . ',' . $numeroDefunciones . ', ' . $numeroInformes . '],
+                          data: [' . $numeroPacientes . ', ' . $numeroAltaPacientes . ',' . $numeroDefunciones . ', ' . $numeroInformes . '],
                           borderWidth: [1, 1, 1, 1],
                           backgroundColor: ["rgba(75,192,192,1)",brandPrimary, "#dc3545", "#FFCE56"],
                           hoverBackgroundColor: ["rgba(75,192,192,1)",brandPrimary, "#dc3545", "#FFCE56"],

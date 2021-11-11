@@ -48,10 +48,15 @@ class TablaPaciente extends Tabla
         return $pacientes;
     }
 
+    /**
+     * Genera una cantidad de pacientes aleatorios para popularizar la base de datos.
+     * 
+     * @return void
+     */
     public function dummyData()
     {
         $min = (new DateTime('1950-01-01'))->getTimestamp();
-        $minRegistro = (new DateTime('2021-11-01'))->getTimestamp();
+        $minRegistro = (new DateTime('2021-01-01'))->getTimestamp();
         $ahora = time();
 
         $letras = 'abcdefghijklmnopqrstuvwxyz';
@@ -60,10 +65,13 @@ class TablaPaciente extends Tabla
         require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
         $dietas = array_values(TablaDieta::getInstancia()->getDietas());
 
-        for ($i = 0; $i < 1000; $i++) {
-            $nombre = substr(str_shuffle($letras), 0, rand(5, 10));
-            $apellid1 = substr(str_shuffle($letras), 0, rand(5, 10));
-            $apellid2 = substr(str_shuffle($letras), 0, rand(5, 10));
+        $query = 'INSERT INTO pacientes (nombre, apellidos, habitacion, dieta, estado, fechaNacimiento, fechaRegistro, fechaSalida) VALUES ';
+
+        for ($i = 0; $i < 2000; $i++) {
+            $nombre = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellido1 = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellido2 = ucfirst(substr(str_shuffle($letras), 0, rand(5, 10)));
+            $apellidos = sprintf("%s %s", $apellido1, $apellido2);
 
             $habitacion = 0;
             do {
@@ -72,23 +80,37 @@ class TablaPaciente extends Tabla
             $habitaciones[] = $habitacion;
 
             $dieta = $dietas[rand(0, count($dietas) - 1)];
+            while ($dieta->tieneHijas()) {
+                $d = rand(0, count($dieta->getHijas()) - 1);
+                $dieta = array_values($dieta->getHijas())[$d];
+            }
 
             $estado = rand(Paciente::PACIENTE_ESTADO_ALTA, Paciente::PACIENTE_ESTADO_UCI);
 
             $fechaNacimiento = new DateTime(date('Y-m-d', rand($min, $ahora)));
-            $fechaRegistro = new DateTime(date('Y-m-d', rand($minRegistro, $ahora)));
+            $fechaRegistro = new DateTime(date('Y-m-d H:i:s', rand($minRegistro, $ahora)));
 
-            $this->insertar(
-                [
-                    'nombre' => ucfirst($nombre),
-                    'apellidos' => ucfirst($apellid1) . " " . ucfirst($apellid2),
-                    'habitacion' => $habitacion,
-                    'dieta' => $dieta->getNombre(),
-                    'estado' => $estado,
-                    'fechaNacimiento' => $fechaNacimiento->format('Y-m-d'),
-                    'fechaRegistro' => $fechaRegistro->format('Y-m-d')
-                ]
+            $fechaAlta = null;
+            if ($estado === Paciente::PACIENTE_ESTADO_ALTA || $estado === Paciente::PACIENTE_ESTADO_FALLECIDO) {
+                $fechaAlta = new DateTime(date('Y-m-d H:i:s', rand($fechaRegistro->getTimestamp(), $ahora)));
+            }
+
+            $query .= sprintf(
+                "('%s', '%s', %d, '%s', %d, '%s', '%s', %s ),",
+                $nombre,
+                $apellidos,
+                $habitacion,
+                $dieta->getNombre(),
+                $estado,
+                $fechaNacimiento->format('Y-m-d'),
+                $fechaRegistro->format('Y-m-d H:i:s'),
+                ($fechaAlta === null) ? 'NULL' : sprintf("'%s'", $fechaAlta->format('Y-m-d H:i:s'))
             );
         }
+
+        // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
+        $query = rtrim($query, ',');
+
+        $this->query($query);
     }
 }
