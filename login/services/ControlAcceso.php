@@ -71,6 +71,13 @@ class ControlAcceso
             return false;
         }
 
+        /**
+         * Con esto evitamos redundancia de código y damos acceso total a la aplicación.
+         */
+        if ($grupo->tienePermiso('APP@TOTAL')) {
+            return true;
+        }
+
         return $grupo->tienePermiso($permiso);
     }
 }

@@ -80,6 +80,8 @@ return [
             'administrador' => [
                 'padre' => 'nutricionista',
                 'permitido' => [
+                    'EMPLEADOS@VER',
+                    'EMPLEADOS@EDITAR',
                     'PACIENTES@EDITAR',
                     'APP@TOTAL', // De momento le damos permiso total al administrador.
                 ],
