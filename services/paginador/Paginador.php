@@ -30,6 +30,8 @@ class Paginador
      */
     protected $total;
 
+    protected $maxPaginas = 10;
+
     /**
      * Constructor
      * 
@@ -40,10 +42,10 @@ class Paginador
      */
     public function __construct($pagina, $limite, $elementos, $total)
     {
-        $this->pagina = $pagina;
-        $this->limite = $limite;
+        $this->pagina = (int) $pagina;
+        $this->limite = (int) $limite;
         $this->elementos = $elementos;
-        $this->total = $total;
+        $this->total = (int) $total;
     }
 
     public function getElementos()
@@ -74,6 +76,17 @@ class Paginador
         // La función 'ceil' redondea un número de forma que si es .5 o mayor redondea al más alto.
         // Como 'ceil' siempre devuelve un float (decimal), nos aseguramos de que el valor se convierte en un entero mediante (int)
         $numeroPaginas = (int) ceil($total / $limite);
+
+        $maxPaginas = $this->maxPaginas;
+        if ($numeroPaginas > $this->maxPaginas) {
+            $maxPaginas = $this->maxPaginas;
+        }
+
+        $minPagina = $this->pagina - ($maxPaginas / 2);
+        if ($minPagina < 1) {
+            $minPagina = 1;
+        }
+        $maxPagina = $this->pagina + ($maxPaginas / 2);
 
         // Si se han generado más de una página, mostramos el paginador.
         if ($numeroPaginas > 1) {

@@ -35,7 +35,15 @@ if (null !== $idPaciente) {
     $idPaciente = (int) $idPaciente;
 }
 
-$busqueda = ['limite' => 2];
+$pagina = Peticion::getInstancia()->fromGet('pagina');
+if (null === $pagina) {
+    $pagina = 1;
+}
+$limite = Peticion::getInstancia()->fromGet('limite');
+if (null === $limite) {
+    $limite = 20;
+}
+$busqueda = ['limite' => $limite, 'pagina' => $pagina];
 // Si no puede ver todos los informes, sólo mostramos los que son creados por el empleado
 if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
 

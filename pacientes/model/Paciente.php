@@ -169,7 +169,7 @@ class Paciente extends Persona
      * 
      * @return date
      */
-    public function getfechaSalida()
+    public function getFechaSalida()
     {
         return $this->fechaSalida;
     }
@@ -186,6 +186,9 @@ class Paciente extends Persona
         $this->fechaSalida = $fechaSalida;
     }
 
+    /**
+     * 
+     */
     public function getFechaNacimiento()
     {
         return $this->fechaNacimiento;

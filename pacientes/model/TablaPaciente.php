@@ -88,11 +88,15 @@ class TablaPaciente extends Tabla
             $estado = rand(Paciente::PACIENTE_ESTADO_ALTA, Paciente::PACIENTE_ESTADO_UCI);
 
             $fechaNacimiento = new DateTime(date('Y-m-d', rand($min, $ahora)));
+
             $fechaRegistro = new DateTime(date('Y-m-d H:i:s', rand($minRegistro, $ahora)));
+            $fecha = (new DateTime(date('Y-m-d H:i:s', $fechaRegistro->getTimestamp() + (60 * 60 * 24 * 30))))->getTimestamp();
+
+            $maxFecha = min($ahora, $fecha);
 
             $fechaAlta = null;
             if ($estado === Paciente::PACIENTE_ESTADO_ALTA || $estado === Paciente::PACIENTE_ESTADO_FALLECIDO) {
-                $fechaAlta = new DateTime(date('Y-m-d H:i:s', rand($fechaRegistro->getTimestamp(), $ahora)));
+                $fechaAlta = new DateTime(date('Y-m-d H:i:s', rand($fechaRegistro->getTimestamp(), $maxFecha)));
             }
 
             $query .= sprintf(

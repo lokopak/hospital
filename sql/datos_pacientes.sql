@@ -3,7 +3,6 @@ INSERT INTO `pacientes` (`id`, `nombre`, `apellidos`, `habitacion`, `dieta`, `es
 (1, 'Dradin', 'Faraic Chidlc', '23', 'absoluta', 2, '1988-12-01', '2021-11-03 08:03:00', NULL),
 (2, 'Vladri', 'Frudig Gradig', '24', 'baja_en_potasio', 3, '1974-03-11', '2021-11-03 08:09:45', NULL),
 (3, 'Agrdic', 'Nutric Bludy', '22', 'diabetica@sin_sal@cal2000', 3, '1999-05-22', '2021-11-03 08:14:23', NULL),
-(4, 'Hidjfe', 'Jirdi Bldrid', '12', 'absoluta', 4, '0000-00-00', '2001-11-03 08:45:02', NULL),
 (5, 'Kldird', 'Nindir Girld', '13', 'liquida@sin_sal@liquida', 4, '1992-06-15', '2021-11-03 08:47:09', NULL),
 (6, 'Libphu', 'Sidjxy Hkvcwdu', '1050', 'ileostomia@sin_sal@ileostomia_2', 4, '1955-08-22', '2021-08-01 11:10:45', NULL),
 (7, 'Pfwbu', 'Fiesnca Stkzh', '1728', 'proteccion_gastrica@con_sal', 3, '1978-02-22', '2021-05-28 02:37:16', NULL),

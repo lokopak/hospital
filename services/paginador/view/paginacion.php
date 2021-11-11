@@ -14,49 +14,47 @@
 <nav aria-label="Paginación">
     <ul class="pagination justify-content-center ">
         <?php
-        if ($this->pagina > 1) {
+        if ($numeroPaginas > $maxPaginas) : ?>
+        <li class="page-item<?= ($this->pagina > 1 ? '' : ' disabled') ?>">
+            <a class="page-link" href="<?= $link ?>&pagina=1">Primera</a>
+        </li>
+        <?php endif; ?>
+        <li class="page-item<?= ($this->pagina > 1 ? '' : ' disabled') ?>">
+            <a href="<?= $link ?>&pagina=<?= $this->pagina - 1 ?>" class="page-link">Anterior</a>
+        </li>
+        <?php
+        for ($i = $minPagina; $i < $maxPagina; $i++) {
+            // Es la página actual
+            if ($i === $this->pagina) {
+
         ?>
-        <li class="page-item">
-            <?php
-        } else {
-            // Es la primera página
-            ?>
-        <li class="page-item disabled">
-            <?php
-        }
-            ?>
-            <a href="<?= $link ?>&pagina=<?= $this->pagina - 1 ?>" class="page-link  btn-naranja">Anterior</a>
-        </li>
+        <li class="page-item disabled"><a class="page-link"
+                href="<?= $link ?>&pagina=<?= $this->pagina ?>"><?= $i ?></a></li>
         <?php
-            for ($i = 1; $i <= $numeroPaginas; $i++) {
-                // Es la página actual
-                if ($i === $this->pagina) {
-
-            ?>
-        <li class="page-item disabled"><a class="page-link  btn-naranja"
-                href="<?= $link ?>&pagina=<?= $i ?>"><?= $i ?></a></li>
-        <?php
-                } else {
-                ?>
-
-
-        <li class="page-item"><a class="page-link btn-naranja" href="<?= $link ?>&pagina=<?= $i ?>"><?= $i ?></a>
-        </li>
-        <?php
-                }
-            }
-            // Es la última página
-            if ($this->pagina === $numeroPaginas) {
-                ?>
-        <li class="page-item disabled">
-            <?php
             } else {
-                ?>
-        <li class="page-item">
-            <?php
-            }
-                ?>
-            <a class="page-link  btn-naranja" href="<?= $link ?>&pagina=<?= $this->pagina + 1 ?>">Siguiente</a>
+            ?>
+
+
+        <li class="page-item"><a class="page-link" href="<?= $link ?>&pagina=<?= $this->pagina ?>"><?= $i ?></a>
         </li>
+        <?php
+            }
+        }
+        ?>
+        <?php
+        if ($i === $maxPaginas && $numeroPaginas > $maxPagina) : ?>
+        <li class="page-item disabled">
+            <span class="page-link">...</span>
+        </li>
+        <?php endif; ?>
+        <li class="page-item<?= ($i === $maxPaginas) ? ' disabled' : '' ?>">
+            <a class="page-link" href="<?= $link ?>&pagina=<?= $this->pagina + 1 ?>">Siguiente</a>
+        </li>
+        <?php
+        if ($numeroPaginas > $maxPaginas) : ?>
+        <li class="page-item">
+            <a class="page-link" href="<?= $link ?>&pagina=<?= $numeroPaginas ?>">Última</a>
+        </li>
+        <?php endif; ?>
     </ul>
 </nav>

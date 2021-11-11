@@ -33,6 +33,15 @@ $numeroInformes = $consulta->rowCount();
 
 // $resultado = $tabla->query("SELECT COUNT(id) FROM pacientes WHERE estado > 1");
 
+// require_once __DIR__ . "/pacientes/model/TablaPaciente.php";
+
+// $tabla = new TablaPaciente();
+// $tabla->dummyData();
+
+// require_once __DIR__ . "/informes/model/TablaInforme.php";
+
+// $tabla = new TablaInforme();
+// $tabla->dummyData();
 
 
 $contenido = __DIR__ . "/view/ejemplos.php";

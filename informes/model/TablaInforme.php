@@ -40,14 +40,19 @@ class TablaInforme extends Tabla
                 INNER JOIN empleados ON empleados.id = informes.idEmpleado
                 INNER JOIN pacientes ON pacientes.id = informes.idPaciente', $this->nombreTabla);
 
+            $totalQuery = "SELECT id FROM informes";
+
             if (null !== $idPaciente) {
                 $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
+                $totalQuery .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
 
                 if (isset($busqueda['idEmpleado'])) {
                     $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+                    $totalQuery .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
                 }
             } else if (isset($busqueda['idEmpleado'])) {
                 $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+                $totalQuery .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
             }
 
             // Asignamos valor por defecto a la columna
@@ -64,6 +69,11 @@ class TablaInforme extends Tabla
                 $busqueda['pagina'] = 1;
             }
 
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['limite'])) {
+                $busqueda['limite'] = 20;
+            }
+
             $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
 
             // Generamos el límite si se indica
@@ -78,6 +88,8 @@ class TablaInforme extends Tabla
             $stmt->execute();
 
             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $total = count($this->query($totalQuery));
 
             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
             $stmt = null;
@@ -127,18 +139,6 @@ class TablaInforme extends Tabla
             }
 
             require_once __DIR__ . "/../../services/paginador/Paginador.php";
-            $query = "SELECT id as total FROM informes";
-
-            if (null !== $idPaciente) {
-                $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
-
-                if (isset($busqueda['idEmpleado'])) {
-                    $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-                }
-            } else if (isset($busqueda['idEmpleado'])) {
-                $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-            }
-            $total = count($this->query($query));
 
             if (!isset($busqueda['limite'])) {
                 $busqueda['limite'] = $total;
@@ -261,60 +261,58 @@ class TablaInforme extends Tabla
      */
     public function dummyData()
     {
-        $minFecha = (new DateTime('2021-01-01'))->getTimestamp();
-        $ahora = time();
-
         require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
 
         $celadores = $this->query(sprintf('SELECT id FROM empleados WHERE cargo = %d', Empleado::CARGO_EMPLEADO_CELADOR));
 
         $pacientes = $this->query('SELECT * FROM pacientes');
+        $ahora = time();
+        // for ($i = 0; $i < 4000; $i++) {
+        foreach ($pacientes as $paciente) {
 
-        $query = 'INSERT INTO `informes` (`idPaciente`, `idEmpleado`, `dieta`, `fecha`, `desayuno`, `comida1`, `comida2`, `comida3`, `merienda`, `cena1`, `cena2`, `cena3`, `fechaModificacion`, `ultimoEditor`) VALUES ';
+            $query = 'INSERT INTO `informes` (`idPaciente`, `idEmpleado`, `dieta`, `fecha`, `desayuno`, `comida1`, `comida2`, `comida3`, `merienda`, `cena1`, `cena2`, `cena3`, `fechaModificacion`, `ultimoEditor`) VALUES ';
 
-        for ($i = 0; $i < 4000; $i++) {
-            $paciente = $pacientes[rand(0, count($pacientes) - 1)];
-            $celador = $celadores[rand(0, count($celadores) - 1)]['id'];
+            $minFecha = (new DateTime($paciente['fechaRegistro']));
+            $maxFecha = empty($paciente['fechaSalida']) ? new DateTime('now') : new DateTime($paciente['fechaSalida']);
 
-            $dieta = $paciente['dieta'];
+            $dias = $maxFecha->diff($minFecha)->days;
+            for ($i = 0; $i < $dias; $i++) {
+                $fecha = new DateTime(date('Y-m-d H:i:s', $minFecha->getTimestamp() + (60 * 60 * 24 * $i)));
+                $celador = $celadores[rand(0, count($celadores) - 1)]['id'];
 
-            if ($paciente['estado'] == 0 || $paciente['estado'] == 1) {
-                $max = (new DateTime($paciente['fechaSalida']))->getTimestamp();
-                $fecha = new DateTime(date('Y-m-d H:i:s', rand($minFecha, $max)));
-            } else {
-                $fecha = new DateTime(date('Y-m-d H:i:s', rand($minFecha, $ahora)));
+                $dieta = $paciente['dieta'];
+
+                $desayuno = rand(1, 5);
+                $comida1 = rand(1, 5);
+                $comida2 = rand(1, 5);
+                $comida3 = rand(1, 5);
+                $merienda = rand(1, 5);
+                $cena1 = rand(1, 5);
+                $cena2 = rand(1, 5);
+                $cena3 = rand(1, 5);
+
+
+                $query .= sprintf(
+                    "(%d, %d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, NULL, NULL),",
+                    $paciente['id'],
+                    $celador,
+                    $dieta,
+                    $fecha->format('Y-m-d H:i:s'),
+                    $desayuno,
+                    $comida1,
+                    $comida2,
+                    $comida3,
+                    $merienda,
+                    $cena1,
+                    $cena2,
+                    $cena3,
+                );
             }
 
-            $desayuno = rand(1, 5);
-            $comida1 = rand(1, 5);
-            $comida2 = rand(1, 5);
-            $comida3 = rand(1, 5);
-            $merienda = rand(1, 5);
-            $cena1 = rand(1, 5);
-            $cena2 = rand(1, 5);
-            $cena3 = rand(1, 5);
-
-
-            $query .= sprintf(
-                "(%d, %d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, NULL, NULL),",
-                $paciente['id'],
-                $celador,
-                $dieta,
-                $fecha->format('Y-m-d H:i:s'),
-                $desayuno,
-                $comida1,
-                $comida2,
-                $comida3,
-                $merienda,
-                $cena1,
-                $cena2,
-                $cena3,
-            );
+            // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
+            $query = rtrim($query, ',');
+            // print_r($query);
+            $this->query($query);
         }
-
-        // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
-        $query = rtrim($query, ',');
-
-        $this->query($query);
     }
 }

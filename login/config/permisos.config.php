@@ -71,6 +71,8 @@ return [
             'nutricionista' => [
                 'padre' => 'celador',
                 'permitido' => [
+                    'PACIENTES@VER', // El celador tiene acceso a ver listados de pacientes.
+                    'PACIENTES@EDITAR', // El celador tiene acceso a ver listados de pacientes.
                     'INFORMES@VER', // El nutricionista tiene acceso a ver listados de informes.
                     'INFORMES@EDITAR', // El nutricionista tiene acceso a editar informes.
                     'PACIENTES@ASIGNAR_DIETA', // El nutricionista tiene acceso a asignar/cambiar la dieta de los pacientes.
