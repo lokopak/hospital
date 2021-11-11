@@ -71,7 +71,6 @@ return [
             'nutricionista' => [
                 'padre' => 'celador',
                 'permitido' => [
-                    'EMPLEADOS@EDITAR',
                     'INFORMES@VER', // El nutricionista tiene acceso a ver listados de informes.
                     'INFORMES@EDITAR', // El nutricionista tiene acceso a editar informes.
                     'PACIENTES@ASIGNAR_DIETA', // El nutricionista tiene acceso a asignar/cambiar la dieta de los pacientes.
@@ -81,6 +80,7 @@ return [
             'administrador' => [
                 'padre' => 'nutricionista',
                 'permitido' => [
+                    'PACIENTES@EDITAR',
                     'APP@TOTAL', // De momento le damos permiso total al administrador.
                 ],
             ],

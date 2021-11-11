@@ -1,11 +1,14 @@
 <?php
 
 require_once(__DIR__ . "/../login/services/Autorizacion.php");
+require_once(__DIR__ . "/../login/services/ControlAcceso.php");
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
 }
-
+if (!(ControlAcceso::tieneAcceso('PACIENTES@EDITAR'))) {
+    header("location: /login/no-autorizado.php");
+}
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaPaciente.php");
 require_once(__DIR__ . "/model/Paciente.php");

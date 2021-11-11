@@ -20,6 +20,7 @@ require_once(__DIR__ . "/../services/Sesion.php");
 
 
 
+
 /**
  * Este archivo funciona como controlador de la página de inicio de informes.
  */
