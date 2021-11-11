@@ -54,6 +54,13 @@ class Paciente extends Persona
     protected $estado;
 
     /**
+     * Fecha de nacimiento del paciente.
+     * 
+     * @var \DateTime
+     */
+    protected $fechaNacimiento;
+
+    /**
      * Fecha en la que se registra a un paciente
      * en el hospital. (fecha de ingreso)
      * 
@@ -177,6 +184,16 @@ class Paciente extends Persona
     public function setFechaSalida($fechaSalida)
     {
         $this->fechaSalida = $fechaSalida;
+    }
+
+    public function getFechaNacimiento()
+    {
+        return $this->fechaNacimiento;
+    }
+
+    public function setFechaNacimiento($fechaNacimiento)
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
     }
 
     /**

@@ -22,6 +22,7 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
+                            <th scope="col">Fecha nacimiento</th>
                             <th scope="col">Nº habitación</th>
                             <th scope="col">Dieta</th>
                             <th scope="col">Estado</th>
@@ -37,6 +38,7 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
                             <td class="align-middle"><?= $paciente->getId() ?></td>
                             <td class="align-middle"><?= $paciente->getNombre() ?></td>
                             <td class="align-middle"><?= $paciente->getApellidos() ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaNacimiento() ?></td>
                             <td class="align-middle"><?= $paciente->getHabitacion() ?></td>
                             <td class="align-middle">
                                 <?php if ($paciente->getDieta()) : ?>
