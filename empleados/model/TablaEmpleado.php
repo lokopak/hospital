@@ -30,7 +30,7 @@ class TablaEmpleado extends Tabla
     public function buscarTodos($columnas = [], $busqueda = [], $paginar = false)
     {
         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
-        $resultado = $this->obtenerTodos($columnas);
+        $resultado = $this->obtenerTodos($columnas, $busqueda, $paginar);
 
         $empleados = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.

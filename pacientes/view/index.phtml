@@ -32,7 +32,7 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pacientes as $paciente) : ?>
+                        <?php foreach ($pacientes->getElementos() as $paciente) : ?>
 
                         <tr>
                             <td class="align-middle py-0"><?= $paciente->getId() ?></td>
@@ -69,5 +69,11 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
             </div>
             <?php endif; ?>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col my-3">
+        <?php $pacientes->mostrarPaginador("pacientes"); ?>
     </div>
 </div>

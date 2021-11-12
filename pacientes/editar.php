@@ -44,6 +44,10 @@ if (Peticion::getInstancia()->esPost()) {
         return (new AppError('No encontrado', 'No se ha encontrado el elemento indicado.', AppError::ERROR_NO_ENCONTRADO))->mostrarError();
     }
 
+    if ($datos['estado'] != $paciente->getEstado()) {
+        print_r("estado cambiado");
+    }
+
     $resultado = $tablaPacientes->actualizar($idPaciente, $datos);
 
     // Si se ha recibido un error desde la tabla, lo mostramos.
