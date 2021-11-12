@@ -41,12 +41,12 @@ abstract class Tabla
      * @param array $busqueda [opcional] Parámetros de búsqueda
      * @param bool $paginar [opcinonal] Indica si el resultado debe ser entregado por páginas o no.
      * 
-     * @return array|null Un array con todos las entradas encontradas en forma de array.
+     * @return Paginador|null Un array con todos las entradas encontradas en forma de array.
      *                  O null en caso de fallo en la consulta.
      * 
      * @throws Exception
      */
-    public function obtenerTodos($columnas = [], $busqueda = [], $paginar = false)
+    public function obtenerTodos($columnas = [], $busqueda = [])
     {
         // Todas las interacciones con la base de datos através de PDO deben ir en un bloque try/catch para recoger las
         // posibles excepciones que estás lancen y evitar mostar datos que podrían poner en peligro la integridad
@@ -63,6 +63,7 @@ abstract class Tabla
 
             // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
             $query = sprintf('SELECT %s FROM %s', $cols, $this->nombreTabla);
+            $totalQuery = sprintf("SELECT id FROM %s", $this->nombreTabla);
 
             // Asignamos valor por defecto a la columna
             if (!isset($busqueda['ordenPor'])) {
@@ -73,10 +74,23 @@ abstract class Tabla
                 $busqueda['orden'] = 'ASC';
             }
 
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['pagina'])) {
+                $busqueda['pagina'] = 1;
+            }
+
+            // Asignamos valor por defecto a la columna
+            if (!isset($busqueda['limite'])) {
+                $busqueda['limite'] = 20;
+            }
+
             $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
 
+            // Generamos el límite si se indica
             if (isset($busqueda['limite'])) {
-                $query .= sprintf(' LIMIT %d', (int) $busqueda['limite']);
+                $pagina = (int) $busqueda['pagina'];
+                $inicio = (int) $busqueda['limite'] * ($pagina - 1);
+                $query .= sprintf(' LIMIT %d, %d', $inicio, (int) $busqueda['limite']);
             }
 
             // Preparamos la declaración
@@ -84,13 +98,20 @@ abstract class Tabla
             // Y ejecutamos la query.
             $stmt->execute();
 
+            $total = count($this->query($totalQuery));
+
             // Recogemos todas las filas encontradas en forma de array asociativo.
             $resultado = $stmt->fetchAll();
             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
             $stmt = null;
 
-            // Devolvemos el resultado
-            return $resultado;
+            require_once __DIR__ . "/../services/paginador/Paginador.php";
+
+            if (!isset($busqueda['limite'])) {
+                $busqueda['limite'] = $total;
+            }
+            print_r($busqueda['pagina']);
+            return new Paginador($busqueda['pagina'], $busqueda['limite'], $resultado, $total);
         } catch (Exception $e) {
             require_once(__DIR__ . "/../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);

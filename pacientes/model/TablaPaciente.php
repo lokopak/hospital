@@ -25,16 +25,16 @@ class TablaPaciente extends Tabla
      * @param array $columnas Array con las columnas que se 
      *                        quieren obtener de la tabla.
      *                     OJO: nunca se incluirá la columna userPassword en esta.
-     * @return mixed Array de objetos con los distintos pacientes encontrados.
+     * @return Paginador Array de objetos con los distintos pacientes encontrados.
      */
     public function buscarTodos($columnas = [], $busqueda = [], $paginar = false)
     {
         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
-        $resultado = $this->obtenerTodos($columnas);
+        $resultado = $this->obtenerTodos($columnas, $busqueda, $paginar);
 
         $pacientes = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
-        foreach ($resultado as $datos) {
+        foreach ($resultado->getElementos() as $datos) {
             // Instanciamos el nuevo objeto
             $paciente = new Paciente();
             // Rellenamos todos los atributos incluidos en el array en el objeto.
@@ -44,8 +44,9 @@ class TablaPaciente extends Tabla
             $pacientes[] = $paciente;
         }
 
+        $resultado->setElementos($pacientes);
         // Devolvemos el array generado con todos los objetos encontrados.
-        return $pacientes;
+        return $resultado;
     }
 
     /**

@@ -53,6 +53,11 @@ class Paginador
         return $this->elementos;
     }
 
+    public function setElementos($elementos)
+    {
+        $this->elementos = $elementos;
+    }
+
     /**
      * Inserta un paginador en el html
      * 

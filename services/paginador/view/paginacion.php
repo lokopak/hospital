@@ -28,14 +28,13 @@
             if ($i === $this->pagina) {
 
         ?>
-        <li class="page-item disabled"><a class="page-link"
-                href="<?= $link ?>&pagina=<?= $this->pagina ?>"><?= $i ?></a></li>
+        <li class="page-item disabled"><a class="page-link" href="<?= $link ?>&pagina=<?= $i ?>"><?= $i ?></a></li>
         <?php
             } else {
             ?>
 
 
-        <li class="page-item"><a class="page-link" href="<?= $link ?>&pagina=<?= $this->pagina ?>"><?= $i ?></a>
+        <li class="page-item"><a class="page-link" href="<?= $link ?>&pagina=<?= $i  ?>"><?= $i ?></a>
         </li>
         <?php
             }

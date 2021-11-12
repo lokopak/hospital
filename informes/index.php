@@ -43,7 +43,11 @@ $limite = Peticion::getInstancia()->fromGet('limite');
 if (null === $limite) {
     $limite = 20;
 }
-$busqueda = ['limite' => $limite, 'pagina' => $pagina];
+$ordenPor = Peticion::getInstancia()->fromGet('ordenPor');
+if (null === $ordenPor) {
+    $ordenPor = 'id';
+}
+$busqueda = ['limite' => $limite, 'pagina' => $pagina, 'ordenPor' => $ordenPor];
 // Si no puede ver todos los informes, sólo mostramos los que son creados por el empleado
 if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
 
