@@ -16,13 +16,23 @@
                 <form class="d-flex" method="POST" action="/buscar/buscar.php">
                     <div class="input-group">
                         <input type="text" name="valor" class="form-control" aria-label="Text input with dropdown button">
-                        <select class="form-select" name="secccion" id="inputGroupSelect01">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" name="seccion" id="inputGroupSelect01">
+                            <option selected value="todos">Buscar...</option>
+                            <?php
+
+                            require_once(__DIR__ . "/../login/services/ControlAcceso.php");
+                            if (ControlAcceso::tieneAcceso('PACIENTES@VER')) : ?>
+                                <option value="pacientes">Pacientes</option>
+                            <?php endif; ?>
+                            <?php
+
+                
+                            if (ControlAcceso::tieneAcceso('EMPLEADOS@VER')) : ?>
+                                <option value="empleados">Empleados</option>
+                            <?php endif; ?>
+                            <!-- <option value="informes">Three</option> -->
                         </select>
-                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Button</button>
+                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Buscar</button>
                     </div>
                 </form>
                 <ul class="nav-menu mb-0 list-unstyled d-flex flex-md-row align-items-md-center">
