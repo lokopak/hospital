@@ -14,7 +14,7 @@
 <div class="toast-container position-absolute mt-5 top-0 end-0 p-3" id="toastPlacement">
     <?php
     // Mostramos todos los mensajes que se hayan producido.
-    foreach ($mensajes as $mensaje) {
+    foreach ($this->mensajes as $mensaje) {
         switch ($mensaje['tipo']) {
             case 'success':
                 $icono = 'check-circle';
@@ -30,7 +30,7 @@
                 $icono = 'info-circle';
         }
     ?>
-    <div class="toast align-items-center text-white bg-<?= $mensaje["tipo"] ?> border-0 show" role="alert"
+    <div class="toast align-items-center text-white bg-<?= $mensaje["tipo"] ?> border-0" role="alert"
         aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-autohide="true" data-bs-delay="3000">
         <div class="d-flex">
             <div class="toast-body fs-4">
@@ -44,3 +44,15 @@
     }
     ?>
 </div>
+
+<?php
+require_once __DIR__ . "/../../../view/service/InyectorScript.php";
+
+$script = "<script>
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+var toastList = toastElList.map(function (toastEl) {
+  return new bootstrap.Toast(toastEl, {'autohide': true, 'animation': true, 'delay': 5000})
+});
+toastList.forEach((toast) => toast.show());
+</script>";
+InyectorScript::getInstancia()->agregarScript($script);

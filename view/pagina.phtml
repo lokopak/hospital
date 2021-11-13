@@ -9,6 +9,10 @@
     <div class="page" id="docToPdf">
         <?php require(__DIR__ . "/header.php"); ?>
         <?php require(__DIR__ . "/breadcrumb.php"); ?>
+        <?php
+        require_once __DIR__ . "/../services/message/Messenger.php";
+        Messenger::getInstance()->mostrarMensajes();
+        ?>
 
         <section class="pt-5">
             <div class="container-fluid">

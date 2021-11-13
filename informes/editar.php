@@ -59,10 +59,8 @@ if (Peticion::getInstancia()->esPost()) {
     $resultado = $tablaInformes->actualizar($id, $datos);
 
     if ($resultado > 0) {
-        echo '
-        <div class="alert alert-success" role="alert">
-          Informe editado correctamente.
-        </div>';
+        require_once __DIR__ . "/../services/message/Messenger.php";
+        Messenger::getInstance()->agregarMensaje('Informe editado correctamente.', 'success');
         // No es muy elegante, pero es la forma más segura de recoger los datos.
         $informe = $tablaInformes->buscarUno($id);
     } else {
