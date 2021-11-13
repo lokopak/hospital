@@ -169,7 +169,9 @@ class Paginador
             $maxPagina = $this->getNumeroTotalPaginas();
             // Para mantener la cantidad de páginas que se muestran en '$this->maxPaginas', una vez tengamos la última página en rango
             // debemos mantener la página mostrada al comienzo del grupo fija para que se muestren '$this->maxPaginas' siempre.
-            $minPagina = $maxPagina - $this->maxPaginas;
+            if ($this->getNumeroTotalPaginas() > $this->maxPaginas) {
+                $minPagina = $maxPagina - $this->maxPaginas;
+            }
         }
 
         // Si se han generado más de una página, mostramos el paginador.
