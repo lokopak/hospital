@@ -2,8 +2,6 @@
 
 class Paginador
 {
-    protected $tabla;
-
     /**
      * Página actual
      * 
@@ -19,20 +17,26 @@ class Paginador
     protected $limite;
 
     /**
-     * Array que contiene los elementos a mostrar.
+     * Array que contiene los elementos del paginador.
      * 
      * @var array
      */
     protected $elementos;
 
     /**
-     * El número total de elementons encontrados
+     * El número total de elementons en el paginador
      * 
      * @var int
      */
     protected $total;
 
-    protected $maxPaginas = 9;
+    /**
+     * Número máximo de páginas que se mostrarán en
+     * el paginador.
+     * 
+     * @var int
+     */
+    protected $maxPaginas = 10;
 
     /**
      * Constructor
@@ -50,6 +54,17 @@ class Paginador
     }
 
     /**
+     * Devuelve en número de la página actual
+     * del paginador.
+     * 
+     * @return int
+     */
+    public function getPaginaAcutal()
+    {
+        return $this->pagina;
+    }
+
+    /**
      * Fija la página actual.
      * 
      * @param int $pagina
@@ -60,40 +75,69 @@ class Paginador
     }
 
     /**
+     * Devuelve el primer elemento que se mostrará en la página
+     * actual.
      * 
+     * @return int
      */
-    public function getInicio()
+    public function getPrimerElemento()
     {
         return $this->limite * ($this->pagina - 1);
     }
 
     /**
+     * Devuelve el número total de elementos en el paginador.
      * 
+     * @return int
      */
-    public function getNumeroElementos()
+    public function getNumeroTotalElementos()
     {
         return count($this->elementos);
     }
 
     /**
+     * Devuelve los elementos de la página actual
+     * del paginador.
      * 
+     * @return array
+     */
+    public function getElementosActuales()
+    {
+        return array_slice($this->elementos, $this->getPrimerElemento(), $this->limite);
+    }
+
+    /**
+     * Devuelve todos los elementos del paginador.
+     * 
+     * @return array
      */
     public function getElementos()
     {
-        return array_slice($this->elementos, $this->getInicio(), $this->limite);
+        return $this->elementos;
     }
 
+    /**
+     * Asigna los elementos a mostrar en el paginador.
+     * 
+     * @param array $elementos
+     * 
+     * @return void
+     */
     public function setElementos($elementos)
     {
         $this->elementos = $elementos;
     }
 
     /**
+     * Devuelve el número total de páginas dependiendo del
+     * número total de elementos y del límite de elementos por
+     * página indicado.
      * 
+     * @return int
      */
     public function getNumeroTotalPaginas()
     {
-        return (int) ceil($this->getNumeroElementos() / $this->limite);
+        return (int) ceil($this->getNumeroTotalElementos() / $this->limite);
     }
 
     /**
@@ -108,20 +152,24 @@ class Paginador
      */
     public function mostrarPaginador($seccion)
     {
-        $total = $this->total;
         // Creamos el link para el paginador, necesita agregarle la página, pero eso se hace en el propio archivo de html.
-        // NOTA: se le agrega la '/' antes de 'biblioteca' para que se genere un link relativo al host base. 'localhost'
+        // NOTA: se le agrega la '/' antes de la sección para que se genere un link relativo al host base.
         // Si no le agregamos ese '/', el link que generará será relativo a la ubicación en la que nos encontremos ahora (en el navegador web)
         $link = "/" . $seccion . "/index.php?limite=" . $this->limite;
 
+        // Asignamos el número de página más pequeño a mostrar en el grupo actual.
         $minPagina = 1;
         if ($this->pagina > $this->maxPaginas) {
             $minPagina = $this->pagina - (int)($this->maxPaginas / 2);
         }
 
+        // Asignamos el número de pagina más alto a mostrar en el grupo actual.
         $maxPagina = $minPagina + $this->maxPaginas;
         if ($maxPagina >= $this->getNumeroTotalPaginas()) {
             $maxPagina = $this->getNumeroTotalPaginas();
+            // Para mantener la cantidad de páginas que se muestran en '$this->maxPaginas', una vez tengamos la última página en rango
+            // debemos mantener la página mostrada al comienzo del grupo fija para que se muestren '$this->maxPaginas' siempre.
+            $minPagina = $maxPagina - $this->maxPaginas;
         }
 
         // Si se han generado más de una página, mostramos el paginador.
