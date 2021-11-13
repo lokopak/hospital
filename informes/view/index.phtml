@@ -9,6 +9,46 @@
                         class="fa fa-plus me-2"></i>Nuevo informe</a></div>
             <?php endif; ?>
         </div>
+        <div class="card-header">
+
+            <form class="row row-cols-lg-auto g-3 align-items-center" method="GET" action="/informes/index.php">
+                <div class="col-12">
+                    <label class="visually-hidden" for="ordenPor">Ordenar por</label>
+                    <select class="form-select" id="ordenPor" name="ordenPor">
+                        <option value="id"
+                            <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'id' ? 'selected' : '') ?>>
+                            Ordenar Por...
+                        </option>
+                        <option value="paciente"
+                            <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'paciente' ? 'selected' : '') ?>>
+                            Paciente</option>
+                        <option value="empleado"
+                            <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'empleado' ? 'selected' : '') ?>>
+                            Empleado</option>
+                        <option value="dieta"
+                            <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'dieta' ? 'selected' : '') ?>>
+                            Dieta</option>
+                        <option value="fecha"
+                            <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'fecha' ? 'selected' : '') ?>>
+                            Fecha</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="visually-hidden" for="orden">Orden</label>
+                    <select class="form-select" name="orden" id="orden">
+                        <option value="ASC"
+                            <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'ASC' ? 'selected' : '') ?>>A - Z
+                        </option>
+                        <option value="DESC"
+                            <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'DESC' ? 'selected' : '') ?>>Z - A
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary rounded-2">Actualizar</button>
+                </div>
+            </form>
+        </div>
         <div class="card-body">
             <?php if (empty($resultado)) { ?>
             <div class="alert alert-primary d-flex align-items-center" role="alert">
@@ -22,7 +62,6 @@
                 <table class="table text-sm mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Paciente</th>
                             <th scope="col">Empleado</th>
                             <th scope="col">Dieta</th>
@@ -36,7 +75,6 @@
                         <?php
                                 if (ControlAcceso::tieneAcceso('INFORMES@VER_PROPIOS')) : ?>
                         <tr>
-                            <td class="align-middle"><?= $informe->getId() ?></td>
                             <td class="align-middle">
                                 <?= sprintf("%s %s", $informe->getPaciente()->getNombre(), $informe->getPaciente()->getApellidos()) ?>
                             </td>

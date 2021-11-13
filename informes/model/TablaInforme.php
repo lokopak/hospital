@@ -54,6 +54,12 @@ class TablaInforme extends Tabla
             if (!isset($busqueda['ordenPor'])) {
                 $busqueda['ordenPor'] = 'id';
             }
+            // es necesario para constriuir una query correcta.
+            if (strcmp($busqueda['ordenPor'], 'paciente') === 0 || strcmp($busqueda['ordenPor'], 'empleado') === 0) {
+                // ej: 'paciente' -> 'informes.idPaciente'
+                $busqueda['ordenPor'] = $busqueda['ordenPor'] . 's.apellidos';
+            }
+
             // Asignamos valor por defecto a la columna
             if (!isset($busqueda['orden'])) {
                 $busqueda['orden'] = 'ASC';
