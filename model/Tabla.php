@@ -74,44 +74,19 @@ abstract class Tabla
                 $busqueda['orden'] = 'ASC';
             }
 
-            // Asignamos valor por defecto a la columna
-            if (!isset($busqueda['pagina'])) {
-                $busqueda['pagina'] = 1;
-            }
-
-            // Asignamos valor por defecto a la columna
-            if (!isset($busqueda['limite'])) {
-                $busqueda['limite'] = 20;
-            }
-
             $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
-
-            // Generamos el límite si se indica
-            if (isset($busqueda['limite'])) {
-                $pagina = (int) $busqueda['pagina'];
-                $inicio = (int) $busqueda['limite'] * ($pagina - 1);
-                $query .= sprintf(' LIMIT %d, %d', $inicio, (int) $busqueda['limite']);
-            }
 
             // Preparamos la declaración
             $stmt  = $this->conexion->prepare($query);
             // Y ejecutamos la query.
             $stmt->execute();
 
-            $total = count($this->query($totalQuery));
-
             // Recogemos todas las filas encontradas en forma de array asociativo.
             $resultado = $stmt->fetchAll();
             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
             $stmt = null;
 
-            require_once __DIR__ . "/../services/paginador/Paginador.php";
-
-            if (!isset($busqueda['limite'])) {
-                $busqueda['limite'] = $total;
-            }
-            print_r($busqueda['pagina']);
-            return new Paginador($busqueda['pagina'], $busqueda['limite'], $resultado, $total);
+            return $resultado;
         } catch (Exception $e) {
             require_once(__DIR__ . "/../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
@@ -130,7 +105,7 @@ abstract class Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos pacientes encontrados.
      */
-    public abstract function buscarTodos($columnas = [], $busqueda = [], $paginar = false);
+    public abstract function buscarTodos($columnas = [], $busqueda = []);
 
     /**
      * Inserta los datos proporcionados en la tabla correspondiente.

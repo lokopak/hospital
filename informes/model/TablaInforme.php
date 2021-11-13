@@ -40,19 +40,14 @@ class TablaInforme extends Tabla
                 INNER JOIN empleados ON empleados.id = informes.idEmpleado
                 INNER JOIN pacientes ON pacientes.id = informes.idPaciente', $this->nombreTabla);
 
-            $totalQuery = "SELECT id FROM informes";
-
             if (null !== $idPaciente) {
                 $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
-                $totalQuery .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
 
                 if (isset($busqueda['idEmpleado'])) {
                     $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-                    $totalQuery .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
                 }
             } else if (isset($busqueda['idEmpleado'])) {
                 $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-                $totalQuery .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
             }
 
             // Asignamos valor por defecto a la columna
@@ -88,8 +83,6 @@ class TablaInforme extends Tabla
             $stmt->execute();
 
             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $total = count($this->query($totalQuery));
 
             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
             $stmt = null;
@@ -138,12 +131,7 @@ class TablaInforme extends Tabla
                 $informes[] = $informe;
             }
 
-            require_once __DIR__ . "/../../services/paginador/Paginador.php";
-
-            if (!isset($busqueda['limite'])) {
-                $busqueda['limite'] = $total;
-            }
-            return new Paginador($busqueda['pagina'], $busqueda['limite'], $informes, $total);
+            return $informes;
         } catch (PDOException $e) {
             require_once(__DIR__ . "/../../services/AppError.php");
             return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);

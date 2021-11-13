@@ -27,10 +27,10 @@ class TablaEmpleado extends Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos empleados encontrados.
      */
-    public function buscarTodos($columnas = [], $busqueda = [], $paginar = false)
+    public function buscarTodos($columnas = [], $busqueda = [])
     {
         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
-        $resultado = $this->obtenerTodos($columnas, $busqueda, $paginar);
+        $resultado = $this->obtenerTodos($columnas, $busqueda);
 
         $empleados = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
