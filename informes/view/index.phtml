@@ -32,7 +32,7 @@
 
                     </thead>
                     <tbody>
-                        <?php foreach ($resultado->getElementos() as $informe) { ?>
+                        <?php foreach ($resultado->getElementosActuales() as $informe) { ?>
                         <?php
                                 if (ControlAcceso::tieneAcceso('INFORMES@VER_PROPIOS')) : ?>
                         <tr>

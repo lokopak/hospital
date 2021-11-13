@@ -28,7 +28,7 @@ class TablaInforme extends Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos pacientes encontrados.
      */
-    public function buscarTodos($idPaciente = null, $busqueda = [], $paginar = false)
+    public function buscarTodos($idPaciente = null, $busqueda = [])
     {
         try {
             // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
@@ -59,24 +59,7 @@ class TablaInforme extends Tabla
                 $busqueda['orden'] = 'ASC';
             }
 
-            // Asignamos valor por defecto a la columna
-            if (!isset($busqueda['pagina'])) {
-                $busqueda['pagina'] = 1;
-            }
-
-            // Asignamos valor por defecto a la columna
-            if (!isset($busqueda['limite'])) {
-                $busqueda['limite'] = 20;
-            }
-
             $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
-
-            // Generamos el límite si se indica
-            if (isset($busqueda['limite'])) {
-                $pagina = (int) $busqueda['pagina'];
-                $inicio = (int) $busqueda['limite'] * ($pagina - 1);
-                $query .= sprintf(' LIMIT %d, %d', $inicio, (int) $busqueda['limite']);
-            }
 
             $stmt  = $this->conexion->prepare($query);
 

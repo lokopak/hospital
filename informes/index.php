@@ -20,6 +20,7 @@ require_once(__DIR__ . "/model/TablaInforme.php");
 require_once(__DIR__ . "/../services/AppError.php");
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/../services/Sesion.php");
+require_once(__DIR__ . "/../services/paginador/Paginador.php");
 
 /**
  * Este archivo funciona como controlador de la página de inicio de informes.
@@ -39,15 +40,23 @@ $pagina = Peticion::getInstancia()->fromGet('pagina');
 if (null === $pagina) {
     $pagina = 1;
 }
+
 $limite = Peticion::getInstancia()->fromGet('limite');
 if (null === $limite) {
     $limite = 20;
 }
+
 $ordenPor = Peticion::getInstancia()->fromGet('ordenPor');
 if (null === $ordenPor) {
     $ordenPor = 'id';
 }
-$busqueda = ['limite' => $limite, 'pagina' => $pagina, 'ordenPor' => $ordenPor];
+
+$orden = Peticion::getInstancia()->fromGet('orden');
+if (null === $orden) {
+    $orden = 'ASC';
+}
+
+$busqueda = ['ordenPor' => $ordenPor, 'orden' => $orden];
 // Si no puede ver todos los informes, sólo mostramos los que son creados por el empleado
 if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
 
@@ -55,11 +64,13 @@ if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
 }
 
 // Realizamos la consulta para buscar el listado de informes pasándole sólo las columnas que queremos/necesitamos mostrar.
-$resultado = $conexion->buscarTodos($idPaciente, $busqueda, true);
+$resultado = $conexion->buscarTodos($idPaciente, $busqueda);
 
 if ($resultado instanceof AppError) {
     return $resultado->mostrarError();
 }
+
+$resultado = new Paginador($resultado, $pagina, $limite);
 
 // Guardamos el path al archivo que tiene el contenido de la página.
 // NOTA: como la llamada / require al archivo con la plantilla de la página se hace desde aquí, guardamos el path en relación a este archivo.

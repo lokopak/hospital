@@ -22,7 +22,12 @@ require_once(__DIR__ . "/model/TablaEmpleado.php");
 $conexion = new TablaEmpleado();
 
 // Realizamos la consulta para buscar el listado de empleados pasándole sólo las columnas que queremos/necesitamos mostrar.
-$empleados = $conexion->buscarTodos(['id', 'nombre', 'apellidos', 'DNI', 'cargo']);
+$elementos = $conexion->buscarTodos(['id', 'nombre', 'apellidos', 'DNI', 'cargo']);
+
+// Si se ha producido algún error durante la conexión con la base de datos, mostramos la página de error.
+if ($elementos instanceof AppError) {
+    return $resultado->mostrarError();
+}
 
 $pagina = Peticion::getInstancia()->fromGet('pagina');
 if (is_null($pagina)) {
@@ -30,11 +35,11 @@ if (is_null($pagina)) {
 }
 
 $limite = Peticion::getInstancia()->fromGet('limite');
-if (null === $limite) {
+if (is_null($limite)) {
     $limite = 20;
 }
 
-$elementos = new Paginador($empleados, $pagina, $limite);
+$elementos = new Paginador($elementos, $pagina, $limite);
 
 // Guardamos el path al archivo que tiene el contenido de la página.
 // NOTA: como la llamada / require al archivo con la plantilla de la página se hace desde aquí, guardamos el path en relación a este archivo.
