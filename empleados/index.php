@@ -7,9 +7,11 @@ require_once __DIR__ . "/../services/paginador/Paginador.php";
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
+    exit();
 }
 if (!(ControlAcceso::tieneAcceso('EMPLEADOS@VER'))) {
     header("location: /login/no-autorizado.php");
+    exit();
 }
 
 require_once(__DIR__ . "/model/TablaEmpleado.php");

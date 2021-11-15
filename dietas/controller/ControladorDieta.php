@@ -15,6 +15,7 @@ class ControladorDieta extends Controlador
 
         if (!Autorizacion::getInstancia()->tieneIdentidad()) {
             header("location: /login/login.php");
+            exit();
         }
 
         $dietas = TablaDieta::getInstancia()->getDietas();

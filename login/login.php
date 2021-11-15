@@ -7,6 +7,7 @@ require_once(__DIR__ . "/../empleados/model/TablaEmpleado.php");
 if (Autorizacion::getInstancia()->tieneIdentidad()) {
     // El usuario ya está identificado. Prevenimos el reloging.
     header("location: /index.php");
+    exit();
 }
 
 if (Peticion::getInstancia()->esPost()) {
@@ -44,6 +45,7 @@ if (Peticion::getInstancia()->esPost()) {
 
         if (isset($resultado['resultado']) && $resultado['resultado'] === true) {
             header("location: /index.php");
+            exit();
         } else {
             $loginErr = "Usuario o contraseña incorrectos.";
         }

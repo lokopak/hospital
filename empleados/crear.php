@@ -5,9 +5,11 @@ require_once(__DIR__ . "/../login/services/ControlAcceso.php");
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
+    exit();
 }
 if (!(ControlAcceso::tieneAcceso('EMPLEADOS@EDITAR'))) {
     header("location: /login/no-autorizado.php");
+    exit();
 }
 
 require_once(__DIR__ . "/../services/Peticion.php");
@@ -57,6 +59,7 @@ if (Peticion::getInstancia()->esPost()) {
 
     if ($idEmpleado > 0) {
         header("Location: /empleados/editar.php?idEmpleado=" . $idEmpleado);
+        exit();
     } else {
         return AppError::error('Error inesperado', 'No se ha podido crear el nuevo empleado.');
     }

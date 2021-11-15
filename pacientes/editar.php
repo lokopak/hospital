@@ -5,9 +5,11 @@ require_once(__DIR__ . "/../login/services/ControlAcceso.php");
 
 if (!Autorizacion::getInstancia()->tieneIdentidad()) {
     header("location: /login/login.php");
+    exit();
 }
 if (!(ControlAcceso::tieneAcceso('PACIENTES@EDITAR'))) {
     header("location: /login/no-autorizado.php");
+    exit();
 }
 require_once(__DIR__ . "/../services/Peticion.php");
 require_once(__DIR__ . "/model/TablaPaciente.php");
@@ -57,6 +59,7 @@ if (Peticion::getInstancia()->esPost()) {
 
     if ($resultado > 0) {
         header("Location: /pacientes/editar.php?idPaciente=" . $idPaciente);
+        exit();
     } else {
         echo '
         <div class="alert alert-warning" role="alert">

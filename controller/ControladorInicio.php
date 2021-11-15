@@ -20,6 +20,7 @@ class ControladorInicio extends Controlador
 
         if (!Autorizacion::getInstancia()->tieneIdentidad()) {
             header("location: /login/login.php");
+            exit();
         }
 
         $hoy = new DateTime(date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -7)));
