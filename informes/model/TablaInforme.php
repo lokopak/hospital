@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . "/../../model/Tabla.php");
 require_once(__DIR__ . "/../../empleados/model/Empleado.php");
 require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
@@ -8,15 +10,7 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
 
 class TablaInforme extends Tabla
 {
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        // Asitnamos la tabla a la clase.
-        $this->nombreTabla = "informes";
-    }
+    protected $nombreTabla = "informes";
 
     /**
      * Busca todos los Empleados que se encuentran

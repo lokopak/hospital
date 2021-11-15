@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/ConexionDB.php");
+
 abstract class Tabla
 {
 
@@ -105,7 +106,7 @@ abstract class Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos pacientes encontrados.
      */
-    public abstract function buscarTodos($columnas = [], $busqueda = []);
+    // public abstract function buscarTodos($columnas = [], $busqueda = []);
 
     /**
      * Inserta los datos proporcionados en la tabla correspondiente.
