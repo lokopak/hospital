@@ -130,97 +130,97 @@ class TablaInforme extends Tabla
      */
     public function buscarUno($id, $busqueda = null, $columnas = [])
     {
-        //     try {
-        //         // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
-        //         $query = sprintf('SELECT informes.*,
-        //                             empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
-        //                             pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
-        //                             FROM %s
-        //                             INNER JOIN pacientes ON pacientes.id = informes.idPaciente
-        //                             INNER JOIN empleados ON empleados.id = informes.idEmpleado
-        //                             WHERE informes.id = %d', $this->nombreTabla, $id);
+        try {
+            // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
+            $query = sprintf('SELECT informes.*,
+                                    empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
+                                    pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
+                                    FROM %s
+                                    INNER JOIN pacientes ON pacientes.id = informes.idPaciente
+                                    INNER JOIN empleados ON empleados.id = informes.idEmpleado
+                                    WHERE informes.id = %d', $this->nombreTabla, $id);
 
-        //         // Preparamos la declaración
-        //         $stmt  = $this->conexion->prepare($query);
-        //         // Y ejecutamos la query.
-        //         $stmt->execute();
+            // Preparamos la declaración
+            $stmt  = $this->conexion->prepare($query);
+            // Y ejecutamos la query.
+            $stmt->execute();
 
-        //         // Recogemos todas las filas encontradas en forma de array asociativo.
-        //         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Recogemos todas las filas encontradas en forma de array asociativo.
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        //         // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-        //         $stmt = null;
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
 
-        //         if (!$resultado) {
-        //             return null;
-        //         }
+            if (!$resultado) {
+                return null;
+            }
 
-        //         // Instanciamos el nuevo objeto
-        //         $informe = new Informe();
-        //         // Rellenamos todos los atributos incluidos en el array en el objeto.
+            // Instanciamos el nuevo objeto
+            $informe = new Informe();
+            // Rellenamos todos los atributos incluidos en el array en el objeto.
 
-        //         // Convertimos los datos del paciente en un objeto
-        //         $paciente = new Paciente();
-        //         $paciente->rellenarConArray([
-        //             'id' => $resultado['idPaciente'],
-        //             'nombre' => $resultado['nombrePaciente'],
-        //             'apellidos' => $resultado['apellidosPaciente']
-        //         ]);
-        //         // Agregamos el objeto del paciente al array de datos.
-        //         $resultado['paciente'] = $paciente;
+            // Convertimos los datos del paciente en un objeto
+            $paciente = new Paciente();
+            $paciente->rellenarConArray([
+                'id' => $resultado['idPaciente'],
+                'nombre' => $resultado['nombrePaciente'],
+                'apellidos' => $resultado['apellidosPaciente']
+            ]);
+            // Agregamos el objeto del paciente al array de datos.
+            $resultado['paciente'] = $paciente;
 
-        //         // Convertimos los datos del empleado en un objeto 
-        //         $empleado = new Empleado();
-        //         $empleado->rellenarConArray([
-        //             'id' => $resultado['idEmpleado'],
-        //             'nombre' => $resultado['nombreEmpleado'],
-        //             'apellidos' => $resultado['apellidosEmpleado']
-        //         ]);
-        //         // Agregamos el objeto del empleado en el array de datos.
-        //         $resultado['empleado'] = $empleado;
+            // Convertimos los datos del empleado en un objeto 
+            $empleado = new Empleado();
+            $empleado->rellenarConArray([
+                'id' => $resultado['idEmpleado'],
+                'nombre' => $resultado['nombreEmpleado'],
+                'apellidos' => $resultado['apellidosEmpleado']
+            ]);
+            // Agregamos el objeto del empleado en el array de datos.
+            $resultado['empleado'] = $empleado;
 
-        //         // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
-        //         $resultado['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($resultado['dieta']);
+            // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
+            $resultado['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($resultado['dieta']);
 
-        //         // Convertimos la fecha de modificación en un objeto DateTime y se lo agregamos al array de datos.
-        //         if (!empty($resultado['fechaModificacion'])) {
-        //             // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
-        //             $resultado['fechaModificacion'] = new DateTime($resultado['fechaModificacion']);
-        //         }
+            // Convertimos la fecha de modificación en un objeto DateTime y se lo agregamos al array de datos.
+            if (!empty($resultado['fechaModificacion'])) {
+                // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
+                $resultado['fechaModificacion'] = new DateTime($resultado['fechaModificacion']);
+            }
 
-        //         // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
-        //         $resultado['fecha'] = new DateTime($resultado['fecha']);
+            // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
+            $resultado['fecha'] = new DateTime($resultado['fecha']);
 
-        //         // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
-        //         $informe->rellenarConArray($resultado);
+            // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
+            $informe->rellenarConArray($resultado);
 
-        //         if (!empty($resultado['ultimoEditor'])) {
-        //             $query = sprintf('SELECT empleados.id, empleados.nombre, empleados.apellidos FROM empleados WHERE empleados.id = %d', (int) $resultado['ultimoEditor']);
+            if (!empty($resultado['ultimoEditor'])) {
+                $query = sprintf('SELECT empleados.id, empleados.nombre, empleados.apellidos FROM empleados WHERE empleados.id = %d', (int) $resultado['ultimoEditor']);
 
-        //             // Preparamos la declaración
-        //             $stmt  = $this->conexion->prepare($query);
-        //             // Y ejecutamos la query.
-        //             $stmt->execute();
+                // Preparamos la declaración
+                $stmt  = $this->conexion->prepare($query);
+                // Y ejecutamos la query.
+                $stmt->execute();
 
-        //             // Recogemos todas las filas encontradas en forma de array asociativo.
-        //             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+                // Recogemos todas las filas encontradas en forma de array asociativo.
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        //             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-        //             $stmt = null;
+                // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+                $stmt = null;
 
-        //             if (null !== $resultado) {
-        //                 $ultimoEditor = new Empleado();
-        //                 $ultimoEditor->rellenarConArray($resultado);
-        //                 $informe->setUltimoEditor($ultimoEditor);
-        //             }
-        //         }
+                if (null !== $resultado) {
+                    $ultimoEditor = new Empleado();
+                    $ultimoEditor->rellenarConArray($resultado);
+                    $informe->setUltimoEditor($ultimoEditor);
+                }
+            }
 
-        //         // Devolvemos el informe encontrado
-        //         return $informe;
-        //     } catch (PDOException $e) {
-        //         require_once(__DIR__ . "/../../services/AppError.php");
-        //         return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
-        //     }
+            // Devolvemos el informe encontrado
+            return $informe;
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
     }
 
     // /**
