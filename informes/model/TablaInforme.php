@@ -8,116 +8,116 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
 
 class TablaInforme extends Tabla
 {
-    // protected $nombreTabla = "informes";
+    protected $nombreTabla = "informes";
 
-    // /**
-    //  * Busca todos los Empleados que se encuentran
-    //  * en la tabla 'pacientes' y que cumplen los requisitos
-    //  * establecidos por los parámetros de búsqueda.
-    //  * 
-    //  * @param array $columnas Array con las columnas que se 
-    //  *                        quieren obtener de la tabla.
-    //  *                     OJO: nunca se incluirá la columna userPassword en esta.
-    //  * @return mixed Array de objetos con los distintos pacientes encontrados.
-    //  */
-    // public function buscarTodos($columnas = [], $busqueda = [])
-    // {
-    //     try {
-    //         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
-    //         // $resultado = $this->obtenerTodos($columnas);
-    //         $query = sprintf('SELECT informes.*,
-    //             empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
-    //             pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
-    //             FROM %s
-    //             INNER JOIN empleados ON empleados.id = informes.idEmpleado
-    //             INNER JOIN pacientes ON pacientes.id = informes.idPaciente', $this->nombreTabla);
+    /**
+     * Busca todos los Empleados que se encuentran
+     * en la tabla 'pacientes' y que cumplen los requisitos
+     * establecidos por los parámetros de búsqueda.
+     * 
+     * @param array $columnas Array con las columnas que se 
+     *                        quieren obtener de la tabla.
+     *                     OJO: nunca se incluirá la columna userPassword en esta.
+     * @return mixed Array de objetos con los distintos pacientes encontrados.
+     */
+    public function buscarTodos($columnas = [], $busqueda = [])
+    {
+        //     try {
+        //         // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
+        //         // $resultado = $this->obtenerTodos($columnas);
+        //         $query = sprintf('SELECT informes.*,
+        //             empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
+        //             pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
+        //             FROM %s
+        //             INNER JOIN empleados ON empleados.id = informes.idEmpleado
+        //             INNER JOIN pacientes ON pacientes.id = informes.idPaciente', $this->nombreTabla);
 
-    //         if (isset($busqueda['idPaciente'])) {
-    //             $query .= sprintf(' WHERE informes.idPaciente = %d', (int) $busqueda['idPaciente']);
+        //         if (isset($busqueda['idPaciente'])) {
+        //             $query .= sprintf(' WHERE informes.idPaciente = %d', (int) $busqueda['idPaciente']);
 
-    //             if (isset($busqueda['idEmpleado'])) {
-    //                 $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-    //             }
-    //         } else if (isset($busqueda['idEmpleado'])) {
-    //             $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
-    //         }
+        //             if (isset($busqueda['idEmpleado'])) {
+        //                 $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+        //             }
+        //         } else if (isset($busqueda['idEmpleado'])) {
+        //             $query .= sprintf(' WHERE informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);
+        //         }
 
-    //         // Asignamos valor por defecto a la columna
-    //         if (!isset($busqueda['ordenPor'])) {
-    //             $busqueda['ordenPor'] = 'id';
-    //         }
-    //         // es necesario para constriuir una query correcta.
-    //         if (strcmp($busqueda['ordenPor'], 'paciente') === 0 || strcmp($busqueda['ordenPor'], 'empleado') === 0) {
-    //             // ej: 'paciente' -> 'informes.idPaciente'
-    //             $busqueda['ordenPor'] = $busqueda['ordenPor'] . 's.apellidos';
-    //         }
+        //         // Asignamos valor por defecto a la columna
+        //         if (!isset($busqueda['ordenPor'])) {
+        //             $busqueda['ordenPor'] = 'id';
+        //         }
+        //         // es necesario para constriuir una query correcta.
+        //         if (strcmp($busqueda['ordenPor'], 'paciente') === 0 || strcmp($busqueda['ordenPor'], 'empleado') === 0) {
+        //             // ej: 'paciente' -> 'informes.idPaciente'
+        //             $busqueda['ordenPor'] = $busqueda['ordenPor'] . 's.apellidos';
+        //         }
 
-    //         // Asignamos valor por defecto a la columna
-    //         if (!isset($busqueda['orden'])) {
-    //             $busqueda['orden'] = 'ASC';
-    //         }
+        //         // Asignamos valor por defecto a la columna
+        //         if (!isset($busqueda['orden'])) {
+        //             $busqueda['orden'] = 'ASC';
+        //         }
 
-    //         $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
+        //         $query .= sprintf(' ORDER BY %s %s', $busqueda['ordenPor'], $busqueda['orden']);
 
-    //         $stmt  = $this->conexion->prepare($query);
+        //         $stmt  = $this->conexion->prepare($query);
 
-    //         $stmt->execute();
+        //         $stmt->execute();
 
-    //         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //         // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-    //         $stmt = null;
+        //         // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+        //         $stmt = null;
 
-    //         if (!$resultado) {
-    //             return [];
-    //         }
+        //         if (!$resultado) {
+        //             return [];
+        //         }
 
-    //         $informes = [];
-    //         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
-    //         foreach ($resultado as $datos) {
-    //             // Instanciamos el nuevo objeto
-    //             $informe = new Informe();
-    //             // Rellenamos todos los atributos incluidos en el array en el objeto.
+        //         $informes = [];
+        //         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
+        //         foreach ($resultado as $datos) {
+        //             // Instanciamos el nuevo objeto
+        //             $informe = new Informe();
+        //             // Rellenamos todos los atributos incluidos en el array en el objeto.
 
-    //             // Convertimos los datos del paciente en un objeto
-    //             $paciente = new Paciente();
-    //             $paciente->rellenarConArray([
-    //                 'id' => $datos['idPaciente'],
-    //                 'nombre' => $datos['nombrePaciente'],
-    //                 'apellidos' => $datos['apellidosPaciente']
-    //             ]);
-    //             // Agregamos el objeto del paciente al array de datos.
-    //             $datos['paciente'] = $paciente;
+        //             // Convertimos los datos del paciente en un objeto
+        //             $paciente = new Paciente();
+        //             $paciente->rellenarConArray([
+        //                 'id' => $datos['idPaciente'],
+        //                 'nombre' => $datos['nombrePaciente'],
+        //                 'apellidos' => $datos['apellidosPaciente']
+        //             ]);
+        //             // Agregamos el objeto del paciente al array de datos.
+        //             $datos['paciente'] = $paciente;
 
-    //             // Convertimos los datos del empleado en un objeto 
-    //             $empleado = new Empleado();
-    //             $empleado->rellenarConArray([
-    //                 'id' => $datos['idEmpleado'],
-    //                 'nombre' => $datos['nombreEmpleado'],
-    //                 'apellidos' => $datos['apellidosEmpleado']
-    //             ]);
-    //             // Agregamos el objeto del empleado en el array de datos.
-    //             $datos['empleado'] = $empleado;
+        //             // Convertimos los datos del empleado en un objeto 
+        //             $empleado = new Empleado();
+        //             $empleado->rellenarConArray([
+        //                 'id' => $datos['idEmpleado'],
+        //                 'nombre' => $datos['nombreEmpleado'],
+        //                 'apellidos' => $datos['apellidosEmpleado']
+        //             ]);
+        //             // Agregamos el objeto del empleado en el array de datos.
+        //             $datos['empleado'] = $empleado;
 
-    //             // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
-    //             $datos['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($datos['dieta']);
+        //             // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
+        //             $datos['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($datos['dieta']);
 
-    //             // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
-    //             $datos['fecha'] = new DateTime($datos['fecha']);
+        //             // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
+        //             $datos['fecha'] = new DateTime($datos['fecha']);
 
-    //             // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
-    //             $informe->rellenarConArray($datos);
+        //             // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
+        //             $informe->rellenarConArray($datos);
 
-    //             // Agregamos el nuevo objeto al array
-    //             $informes[] = $informe;
-    //         }
+        //             // Agregamos el nuevo objeto al array
+        //             $informes[] = $informe;
+        //         }
 
-    //         return $informes;
-    //     } catch (PDOException $e) {
-    //         require_once(__DIR__ . "/../../services/AppError.php");
-    //         return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
-    //     }
-    // }
+        //         return $informes;
+        //     } catch (PDOException $e) {
+        //         require_once(__DIR__ . "/../../services/AppError.php");
+        //         return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        //     }
+    }
 
     // /**
     //  * Búsca un elemento en la tabla correspondiente que coincida
