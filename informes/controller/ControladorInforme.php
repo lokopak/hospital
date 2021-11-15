@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../../login/services/Autorizacion.php");
 require_once(__DIR__ . "/../../login/services/ControlAcceso.php");
 require_once(__DIR__ . "/../../login/services/Autentificacion.php");
 
-// require_once(__DIR__ . "/../model/TablaInforme.php");
+require_once(__DIR__ . "/../model/TablaInforme.php");
 require_once(__DIR__ . "/../../pacientes/model/TablaPaciente.php");
 require_once(__DIR__ . "/../../services/AppError.php");
 require_once(__DIR__ . "/../../services/Peticion.php");
