@@ -73,7 +73,6 @@ class ControladorInforme extends Controlador
         $busqueda = ['ordenPor' => $ordenPor, 'orden' => $orden];
         // Si no puede ver todos los informes, sólo mostramos los que son creados por el empleado
         if (!ControlAcceso::tieneAcceso('INFORMES@VER')) {
-
             $busqueda['idEmpleado'] = $empleado->getId();
         }
 
