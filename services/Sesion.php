@@ -136,7 +136,7 @@ class Sesion
             // Si el indice ya existe en $b, lo sustituimos
             if (isset($a[$indice]) || array_key_exists($indice, $a)) {
                 // El nuevo valor es un array y el viejo son un array? Mejor asignamos de forma recursiva cada valor.
-                if (is_array($valor) && is_array($a[$valor])) {
+                if (is_array($valor) && is_array($a[$indice])) {
                     $a[$indice] = $this->combinarDatos($a[$indice], $valor);
                 }
                 // En caso contrario, simplemente sustituimos.
@@ -254,6 +254,9 @@ class Sesion
         $this->sesion = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS, '\\ArrayIterator');
     }
 
+    /**
+     * Graba la sesión al cerrar 
+     */
     public function grabarAlCerrar()
     {
         $_SESSION = $this->sesion->getArrayCopy();
