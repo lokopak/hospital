@@ -9,5 +9,6 @@
     <link rel="stylesheet" href="/assets/vendor/choices.js/public/assets/styles/choices.min.css">
     <link rel="stylesheet" href="/assets/vendor/overlayscrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="icon" href="/assets/favicon.png" type="image/png" sizes="any">
     <title>Hospitalis Consulting</title>
 </head>
