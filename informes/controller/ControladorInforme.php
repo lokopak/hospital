@@ -89,6 +89,7 @@ class ControladorInforme extends Controlador
         $this->setPlantilla("index");
 
         return $this->mostrarHtml([
+            'busqueda' => $busqueda,
             'resultado' => $resultado,
             'idPaciente' => $idPaciente
         ]);
