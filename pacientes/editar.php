@@ -46,7 +46,7 @@ if (Peticion::getInstancia()->esPost()) {
         return (new AppError('No encontrado', 'No se ha encontrado el elemento indicado.', AppError::ERROR_NO_ENCONTRADO))->mostrarError();
     }
 
-    if ($datos['estado'] != $paciente->getEstado()) {
+    if ($datos['estado'] != $paciente['estado']) {
         print_r("estado cambiado");
     }
 
