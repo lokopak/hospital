@@ -27,7 +27,8 @@
                     <select class="form-select" id="cargo" name="cargo">
                         <option value="0">Seleccionar el cargo</option>
                         <?php foreach ($cargos as $indice => $cargo) { ?>
-                        <option value="<?= $indice ?>" <?= ($empleado->getCargo() === $cargo ? "selected" : '') ?>>
+                        <option value="<?= $indice ?>"
+                            <?= ($indice === (int) $empleado->getCargo() ? "selected" : '') ?>>
                             <?= ucfirst($cargo) ?></option>
                         <?php } ?>
                     </select>
