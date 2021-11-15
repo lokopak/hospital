@@ -28,7 +28,7 @@ class TablaInforme extends Tabla
      *                     OJO: nunca se incluirá la columna userPassword en esta.
      * @return mixed Array de objetos con los distintos pacientes encontrados.
      */
-    public function buscarTodos($idPaciente = null, $busqueda = [])
+    public function buscarTodos($columnas = [], $busqueda = [])
     {
         try {
             // Obtenemos todas las entradas encontradas en la base de datos en forma de arrays.
@@ -40,8 +40,8 @@ class TablaInforme extends Tabla
                 INNER JOIN empleados ON empleados.id = informes.idEmpleado
                 INNER JOIN pacientes ON pacientes.id = informes.idPaciente', $this->nombreTabla);
 
-            if (null !== $idPaciente) {
-                $query .= sprintf(' WHERE informes.idPaciente = %d', $idPaciente);
+            if (isset($busqueda['idPaciente'])) {
+                $query .= sprintf(' WHERE informes.idPaciente = %d', (int) $busqueda['idPaciente']);
 
                 if (isset($busqueda['idEmpleado'])) {
                     $query .= sprintf(' AND informes.idEmpleado = %d', (int) $busqueda['idEmpleado']);

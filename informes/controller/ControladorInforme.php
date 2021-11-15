@@ -47,7 +47,7 @@ class ControladorInforme extends Controlador
 
         // Si se ha proporcionado id del paciente, nos aseguramos que se trata con el tipo de variable correcto.
         if (null !== $idPaciente) {
-            $idPaciente = (int) $idPaciente;
+            $busqueda['idPaciente'] = (int) $idPaciente;
         }
 
         $pagina = Peticion::getInstancia()->fromGet('pagina');
@@ -78,7 +78,7 @@ class ControladorInforme extends Controlador
         }
 
         // Realizamos la consulta para buscar el listado de informes pasándole sólo las columnas que queremos/necesitamos mostrar.
-        $resultado = $conexion->buscarTodos($idPaciente, $busqueda);
+        $resultado = $conexion->buscarTodos([], $busqueda);
 
         if ($resultado instanceof AppError) {
             return $resultado->mostrarError();
