@@ -1,14 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../login/services/Autorizacion.php");
-
-if (!Autorizacion::getInstancia()->tieneIdentidad()) {
-    header("location: /login/login.php");
-}
-
-require_once(__DIR__ . "/model/TablaDieta.php");
-
-$dietas = TablaDieta::getInstancia()->getDietas();
+require_once __DIR__ . "/controller/ControladorDieta.php";
 
 /**
  * Imprime una fila de la tabla con una dieta sin dietas hijas.
@@ -125,6 +117,6 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     }
 }
 
-$contenido = __DIR__ . "/view/index.phtml";
+$contolador = new ControladorDieta();
 
-return require_once(__DIR__ . "/../view/pagina.phtml");
+return $contolador->index();

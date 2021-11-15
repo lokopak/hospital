@@ -18,7 +18,11 @@
             <div class="container-fluid">
                 <!-- Contenido de la página -->
                 <?php if (isset($contenido)) {
-                    require($contenido);
+                    if (!is_file($contenido)) {
+                        echo $contenido;
+                    } else {
+                        require($contenido);
+                    }
                 } ?>
             </div>
         </section>
