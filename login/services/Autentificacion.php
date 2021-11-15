@@ -27,6 +27,11 @@ class Autentificacion
      */
     protected $columnaIdentificacion = 'DNI';
 
+    /**
+     * Datos del usuario actualmente logeado.
+     * 
+     * @var Empleado
+     */
     protected $usuarioActual;
 
     /**
