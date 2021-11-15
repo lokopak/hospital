@@ -6,25 +6,38 @@ class Messenger
     /**
      * Variable global donde se guardarán los mensajes que surjan durante la ejecución de
      * la aplicación y que serán mostrados una vez termine.
+     * 
+     * @var array
      */
     protected $mensajes = [];
 
     /**
-     * The uniq instance of this class
+     * Instancia única de esta clase.
+     * 
+     * @var Messenger
      */
     protected static $instance = null;
+
+    /**
+     * Contenedor con los datos relativos a la identidad del usuario.
+     * 
+     * @var \ContenedorSesion
+     */
+    protected $contenedor;
 
     /**
      * Constructor
      */
     private function __construct()
     {
+        // Creamos el contenedor que tendrá los datos de la sesión.
+        $this->contenedor = new ContenedorSesion('AppMessenger', Sesion::getInstancia());
     }
 
     /**
      * Returns the instance
      * 
-     * @return \Library\Core\Error\ErrorReporter
+     * @return Messenger
      */
     public static function getInstance()
     {
@@ -55,6 +68,8 @@ class Messenger
         // Insertamos el mensaje al final del array de mensajes.
         // Si no se le indica un índice cuando se asignan valores a un array, se genera un nuevo índice al final del array.
         $this->mensajes[] = $mensaje;
+
+        $this->contenedor->agregar("mensaje-" . count($this->mensajes), $mensaje);
     }
 
     /**
@@ -65,9 +80,7 @@ class Messenger
      */
     public function hayMensajes()
     {
-
-        // Devuelve el resultado de la comparación '>' (mayor que)
-        return count($this->mensajes) > 0;
+        return !$this->contenedor->vacio();
     }
 
     /**
@@ -81,6 +94,8 @@ class Messenger
     {
         // Si hay errores para mostrar los agrega al html.
         if ($this->hayMensajes()) {
+            $mensajes = $this->contenedor->leer();
+            $this->mensajes = $mensajes;
 
             // Mostramos el html del error.
             // __DIR__ es una consante que indica el direcctorio donde está este archivo, para poder encontrar correctamente el archivo
@@ -89,6 +104,7 @@ class Messenger
 
             // Eliminamos todos los mensajes
             $this->mensajes = [];
+            $this->contenedor->vaciar();
         }
     }
 }

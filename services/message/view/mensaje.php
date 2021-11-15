@@ -47,12 +47,13 @@
 
 <?php
 require_once __DIR__ . "/../../../view/service/InyectorScript.php";
-
 $script = "<script>
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))
 var toastList = toastElList.map(function (toastEl) {
-  return new bootstrap.Toast(toastEl, {'autohide': true, 'animation': true, 'delay': 5000})
+    return new bootstrap.Toast(toastEl, {'autohide': true, 'animation': true, 'delay': 5000})
 });
 toastList.forEach((toast) => toast.show());
 </script>";
+
 InyectorScript::getInstancia()->agregarScript($script);
+?>
