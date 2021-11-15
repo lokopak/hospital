@@ -46,9 +46,9 @@ class ControladorInforme extends Controlador
         $idPaciente = Peticion::getInstancia()->fromGet('idPaciente');
 
         // Si se ha proporcionado id del paciente, nos aseguramos que se trata con el tipo de variable correcto.
-        if (null !== $idPaciente) {
-            $busqueda['idPaciente'] = (int) $idPaciente;
-        }
+        // if (null !== $idPaciente) {
+        //     $busqueda['idPaciente'] = (int) $idPaciente;
+        // }
 
         $pagina = Peticion::getInstancia()->fromGet('pagina');
         if (null === $pagina) {
