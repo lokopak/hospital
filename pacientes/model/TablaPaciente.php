@@ -34,7 +34,7 @@ class TablaPaciente extends Tabla
 
         $pacientes = [];
         // Convertimos cada entrada en el array recibido en el objeto correspondiente.
-        foreach ($resultado->getElementos() as $datos) {
+        foreach ($resultado as $datos) {
             // Instanciamos el nuevo objeto
             $paciente = new Paciente();
             // Rellenamos todos los atributos incluidos en el array en el objeto.
@@ -44,9 +44,8 @@ class TablaPaciente extends Tabla
             $pacientes[] = $paciente;
         }
 
-        $resultado->setElementos($pacientes);
         // Devolvemos el array generado con todos los objetos encontrados.
-        return $resultado;
+        return $pacientes;
     }
 
     /**

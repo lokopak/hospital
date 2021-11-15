@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
+// require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
 ?>
 <div class="row">
     <div class="card">
@@ -32,7 +32,7 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pacientes->getElementos() as $paciente) : ?>
+                        <?php foreach ($pacientes as $paciente) : ?>
 
                         <tr>
                             <td class="align-middle py-0"><?= $paciente->getId() ?></td>
@@ -71,9 +71,10 @@ require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
         </div>
     </div>
 </div>
-
+<?php if ($pacientes instanceof Paginador) : ?>
 <div class="row">
     <div class="col my-3">
         <?php $pacientes->mostrarPaginador("pacientes"); ?>
     </div>
 </div>
+<?php endif; ?>
