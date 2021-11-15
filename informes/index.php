@@ -2,6 +2,6 @@
 
 require_once __DIR__ . "/controller/ControladorInforme.php";
 
-// $contolador = new ControladorInforme();
+$contolador = new ControladorInforme();
 
-// return $contolador->index();
+return $contolador->index();
