@@ -119,169 +119,169 @@ class TablaInforme extends Tabla
         //     }
     }
 
-    // /**
-    //  * Búsca un elemento en la tabla correspondiente que coincida
-    //  * con la id proporcionada. Y devuele un array con los índices
-    //  * coincidentes con las columnas de la tabla.
-    //  * 
-    //  * @param int $id Id a buscar.
-    //  * 
-    //  * @return mixed
-    //  */
-    // public function buscarUno($id, $busqueda = null, $columnas = [])
-    // {
-    //     try {
-    //         // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
-    //         $query = sprintf('SELECT informes.*,
-    //                             empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
-    //                             pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
-    //                             FROM %s
-    //                             INNER JOIN pacientes ON pacientes.id = informes.idPaciente
-    //                             INNER JOIN empleados ON empleados.id = informes.idEmpleado
-    //                             WHERE informes.id = %d', $this->nombreTabla, $id);
+    /**
+     * Búsca un elemento en la tabla correspondiente que coincida
+     * con la id proporcionada. Y devuele un array con los índices
+     * coincidentes con las columnas de la tabla.
+     * 
+     * @param int $id Id a buscar.
+     * 
+     * @return mixed
+     */
+    public function buscarUno($id, $busqueda = null, $columnas = [])
+    {
+        try {
+            // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
+            $query = sprintf('SELECT informes.*,
+                                empleados.id as idEmpleado, empleados.nombre as nombreEmpleado, empleados.apellidos as apellidosEmpleado,
+                                pacientes.id as idPaciente, pacientes.nombre as nombrePaciente, pacientes.apellidos as apellidosPaciente
+                                FROM %s
+                                INNER JOIN pacientes ON pacientes.id = informes.idPaciente
+                                INNER JOIN empleados ON empleados.id = informes.idEmpleado
+                                WHERE informes.id = %d', $this->nombreTabla, $id);
 
-    //         // Preparamos la declaración
-    //         $stmt  = $this->conexion->prepare($query);
-    //         // Y ejecutamos la query.
-    //         $stmt->execute();
+            // Preparamos la declaración
+            $stmt  = $this->conexion->prepare($query);
+            // Y ejecutamos la query.
+            $stmt->execute();
 
-    //         // Recogemos todas las filas encontradas en forma de array asociativo.
-    //         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Recogemos todas las filas encontradas en forma de array asociativo.
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //         // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-    //         $stmt = null;
+            // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+            $stmt = null;
 
-    //         if (!$resultado) {
-    //             return null;
-    //         }
+            if (!$resultado) {
+                return null;
+            }
 
-    //         // Instanciamos el nuevo objeto
-    //         $informe = new Informe();
-    //         // Rellenamos todos los atributos incluidos en el array en el objeto.
+            // Instanciamos el nuevo objeto
+            $informe = new Informe();
+            // Rellenamos todos los atributos incluidos en el array en el objeto.
 
-    //         // Convertimos los datos del paciente en un objeto
-    //         $paciente = new Paciente();
-    //         $paciente->rellenarConArray([
-    //             'id' => $resultado['idPaciente'],
-    //             'nombre' => $resultado['nombrePaciente'],
-    //             'apellidos' => $resultado['apellidosPaciente']
-    //         ]);
-    //         // Agregamos el objeto del paciente al array de datos.
-    //         $resultado['paciente'] = $paciente;
+            // Convertimos los datos del paciente en un objeto
+            $paciente = new Paciente();
+            $paciente->rellenarConArray([
+                'id' => $resultado['idPaciente'],
+                'nombre' => $resultado['nombrePaciente'],
+                'apellidos' => $resultado['apellidosPaciente']
+            ]);
+            // Agregamos el objeto del paciente al array de datos.
+            $resultado['paciente'] = $paciente;
 
-    //         // Convertimos los datos del empleado en un objeto 
-    //         $empleado = new Empleado();
-    //         $empleado->rellenarConArray([
-    //             'id' => $resultado['idEmpleado'],
-    //             'nombre' => $resultado['nombreEmpleado'],
-    //             'apellidos' => $resultado['apellidosEmpleado']
-    //         ]);
-    //         // Agregamos el objeto del empleado en el array de datos.
-    //         $resultado['empleado'] = $empleado;
+            // Convertimos los datos del empleado en un objeto 
+            $empleado = new Empleado();
+            $empleado->rellenarConArray([
+                'id' => $resultado['idEmpleado'],
+                'nombre' => $resultado['nombreEmpleado'],
+                'apellidos' => $resultado['apellidosEmpleado']
+            ]);
+            // Agregamos el objeto del empleado en el array de datos.
+            $resultado['empleado'] = $empleado;
 
-    //         // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
-    //         $resultado['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($resultado['dieta']);
+            // Convertimos el nombre de la dieta en el objeto correspondiente y se lo agregamos al array de datos.
+            $resultado['dieta'] = TablaDieta::getInstancia()->getDietaPorNombre($resultado['dieta']);
 
-    //         // Convertimos la fecha de modificación en un objeto DateTime y se lo agregamos al array de datos.
-    //         if (!empty($resultado['fechaModificacion'])) {
-    //             // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
-    //             $resultado['fechaModificacion'] = new DateTime($resultado['fechaModificacion']);
-    //         }
+            // Convertimos la fecha de modificación en un objeto DateTime y se lo agregamos al array de datos.
+            if (!empty($resultado['fechaModificacion'])) {
+                // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
+                $resultado['fechaModificacion'] = new DateTime($resultado['fechaModificacion']);
+            }
 
-    //         // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
-    //         $resultado['fecha'] = new DateTime($resultado['fecha']);
+            // Convertimos la fecha en un objeto DateTime y se lo agregamos al array de datos.
+            $resultado['fecha'] = new DateTime($resultado['fecha']);
 
-    //         // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
-    //         $informe->rellenarConArray($resultado);
+            // Ahora sí, rellenamos el objeto del informe con los datos recibidos.
+            $informe->rellenarConArray($resultado);
 
-    //         if (!empty($resultado['ultimoEditor'])) {
-    //             $query = sprintf('SELECT empleados.id, empleados.nombre, empleados.apellidos FROM empleados WHERE empleados.id = %d', (int) $resultado['ultimoEditor']);
+            if (!empty($resultado['ultimoEditor'])) {
+                $query = sprintf('SELECT empleados.id, empleados.nombre, empleados.apellidos FROM empleados WHERE empleados.id = %d', (int) $resultado['ultimoEditor']);
 
-    //             // Preparamos la declaración
-    //             $stmt  = $this->conexion->prepare($query);
-    //             // Y ejecutamos la query.
-    //             $stmt->execute();
+                // Preparamos la declaración
+                $stmt  = $this->conexion->prepare($query);
+                // Y ejecutamos la query.
+                $stmt->execute();
 
-    //             // Recogemos todas las filas encontradas en forma de array asociativo.
-    //             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+                // Recogemos todas las filas encontradas en forma de array asociativo.
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //             // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
-    //             $stmt = null;
+                // Anulamos la declaración para poder cerrar correctamente la conexión al final de la ejecución de la app.
+                $stmt = null;
 
-    //             if (null !== $resultado) {
-    //                 $ultimoEditor = new Empleado();
-    //                 $ultimoEditor->rellenarConArray($resultado);
-    //                 $informe->setUltimoEditor($ultimoEditor);
-    //             }
-    //         }
+                if (null !== $resultado) {
+                    $ultimoEditor = new Empleado();
+                    $ultimoEditor->rellenarConArray($resultado);
+                    $informe->setUltimoEditor($ultimoEditor);
+                }
+            }
 
-    //         // Devolvemos el informe encontrado
-    //         return $informe;
-    //     } catch (PDOException $e) {
-    //         require_once(__DIR__ . "/../../services/AppError.php");
-    //         return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
-    //     }
-    // }
+            // Devolvemos el informe encontrado
+            return $informe;
+        } catch (PDOException $e) {
+            require_once(__DIR__ . "/../../services/AppError.php");
+            return AppError::error('Error en la base de datos', 'No se ha podido llevar a cabo la petición indicada.', $e);
+        }
+    }
 
-    // /**
-    //  * Genera una cantidad de informes aleatorios para rellenar la base de datos.
-    //  * 
-    //  * @return void
-    //  */
-    // public function dummyData()
-    // {
-    //     require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
+    /**
+     * Genera una cantidad de informes aleatorios para rellenar la base de datos.
+     * 
+     * @return void
+     */
+    public function dummyData()
+    {
+        require_once __DIR__ . "/../../dietas/model/TablaDieta.php";
 
-    //     $celadores = $this->query(sprintf('SELECT id FROM empleados WHERE cargo = %d', Empleado::CARGO_EMPLEADO_CELADOR));
+        $celadores = $this->query(sprintf('SELECT id FROM empleados WHERE cargo = %d', Empleado::CARGO_EMPLEADO_CELADOR));
 
-    //     $pacientes = $this->query('SELECT * FROM pacientes');
-    //     $ahora = time();
-    //     // for ($i = 0; $i < 4000; $i++) {
-    //     foreach ($pacientes as $paciente) {
+        $pacientes = $this->query('SELECT * FROM pacientes');
+        $ahora = time();
+        // for ($i = 0; $i < 4000; $i++) {
+        foreach ($pacientes as $paciente) {
 
-    //         $query = 'INSERT INTO `informes` (`idPaciente`, `idEmpleado`, `dieta`, `fecha`, `desayuno`, `comida1`, `comida2`, `comida3`, `merienda`, `cena1`, `cena2`, `cena3`, `fechaModificacion`, `ultimoEditor`) VALUES ';
+            $query = 'INSERT INTO `informes` (`idPaciente`, `idEmpleado`, `dieta`, `fecha`, `desayuno`, `comida1`, `comida2`, `comida3`, `merienda`, `cena1`, `cena2`, `cena3`, `fechaModificacion`, `ultimoEditor`) VALUES ';
 
-    //         $minFecha = (new DateTime($paciente['fechaRegistro']));
-    //         $maxFecha = empty($paciente['fechaSalida']) ? new DateTime('now') : new DateTime($paciente['fechaSalida']);
+            $minFecha = (new DateTime($paciente['fechaRegistro']));
+            $maxFecha = empty($paciente['fechaSalida']) ? new DateTime('now') : new DateTime($paciente['fechaSalida']);
 
-    //         $dias = $maxFecha->diff($minFecha)->days;
-    //         for ($i = 0; $i < $dias; $i++) {
-    //             $fecha = new DateTime(date('Y-m-d H:i:s', $minFecha->getTimestamp() + (60 * 60 * 24 * $i)));
-    //             $celador = $celadores[rand(0, count($celadores) - 1)]['id'];
+            $dias = $maxFecha->diff($minFecha)->days;
+            for ($i = 0; $i < $dias; $i++) {
+                $fecha = new DateTime(date('Y-m-d H:i:s', $minFecha->getTimestamp() + (60 * 60 * 24 * $i)));
+                $celador = $celadores[rand(0, count($celadores) - 1)]['id'];
 
-    //             $dieta = $paciente['dieta'];
+                $dieta = $paciente['dieta'];
 
-    //             $desayuno = rand(1, 5);
-    //             $comida1 = rand(1, 5);
-    //             $comida2 = rand(1, 5);
-    //             $comida3 = rand(1, 5);
-    //             $merienda = rand(1, 5);
-    //             $cena1 = rand(1, 5);
-    //             $cena2 = rand(1, 5);
-    //             $cena3 = rand(1, 5);
+                $desayuno = rand(1, 5);
+                $comida1 = rand(1, 5);
+                $comida2 = rand(1, 5);
+                $comida3 = rand(1, 5);
+                $merienda = rand(1, 5);
+                $cena1 = rand(1, 5);
+                $cena2 = rand(1, 5);
+                $cena3 = rand(1, 5);
 
 
-    //             $query .= sprintf(
-    //                 "(%d, %d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, NULL, NULL),",
-    //                 $paciente['id'],
-    //                 $celador,
-    //                 $dieta,
-    //                 $fecha->format('Y-m-d H:i:s'),
-    //                 $desayuno,
-    //                 $comida1,
-    //                 $comida2,
-    //                 $comida3,
-    //                 $merienda,
-    //                 $cena1,
-    //                 $cena2,
-    //                 $cena3,
-    //             );
-    //         }
+                $query .= sprintf(
+                    "(%d, %d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, NULL, NULL),",
+                    $paciente['id'],
+                    $celador,
+                    $dieta,
+                    $fecha->format('Y-m-d H:i:s'),
+                    $desayuno,
+                    $comida1,
+                    $comida2,
+                    $comida3,
+                    $merienda,
+                    $cena1,
+                    $cena2,
+                    $cena3,
+                );
+            }
 
-    //         // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
-    //         $query = rtrim($query, ',');
-    //         // print_r($query);
-    //         $this->query($query);
-    //     }
-    // }
+            // Para evitar agregar un if en cada iteración, simplemente eliminamos la última ',' en la última entrada de datos.
+            $query = rtrim($query, ',');
+            // print_r($query);
+            $this->query($query);
+        }
+    }
 }
