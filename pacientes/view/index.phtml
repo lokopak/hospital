@@ -1,5 +1,5 @@
 <?php
-// require_once(__DIR__ . "/../../dietas/model/TablaDieta.php");
+require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
 ?>
 <div class="row">
     <div class="card">
@@ -23,7 +23,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col">Fecha nacimiento</th>
-                            <th scope="col">Nº habitación</th>
+                            <th scope="col"><i class="fa fa-bed"></i></th>
                             <th scope="col">Dieta</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Fecha de registro</th>
@@ -35,29 +35,29 @@
                         <?php foreach ($pacientes as $paciente) : ?>
 
                         <tr>
-                            <td class="align-middle py-0"><?= $paciente->getId() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getNombre() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getApellidos() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getFechaNacimiento() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getHabitacion() ?></td>
-                            <td class="align-middle py-0 text-truncate" style="max-width: 40px;">
+                            <td class="align-middle"><?= $paciente->getId() ?></td>
+                            <td class="align-middle"><?= $paciente->getNombre() ?></td>
+                            <td class="align-middle"><?= $paciente->getApellidos() ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaNacimiento() ?></td>
+                            <td class="align-middle"><?= $paciente->getHabitacion() ?></td>
+                            <td class="align-middle text-truncate" style="max-width: 40px;">
                                 <?php if ($paciente->getDieta()) : ?>
                                 <?= $paciente->getDieta() ?>
                                 <?php else : ?>
                                 Sin asignar
                                 <?php endif; ?>
                             </td>
-                            <td class="align-middle py-0"><?= $paciente->getEstado() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getFechaRegistro() ?></td>
-                            <td class="align-middle py-0"><?= $paciente->getFechaSalida() ?></td>
-                            <td class="align-middle py-0">
+                            <td class="align-middle"><?= Paciente::getNombreEstado($paciente->getEstado()) ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaRegistro() ?></td>
+                            <td class="align-middle"><?= $paciente->getFechaSalida() ?></td>
+                            <td class="align-middle">
                                 <?php
                                         if (ControlAcceso::tieneAcceso('PACIENTES@EDITAR')) : ?>
-                                <a class="btn btn-primary rounded-circle align-middle"
+                                <a class="btn btn-primary btn-sm rounded-circle align-middle"
                                     href="/pacientes/editar.php?idPaciente=<?= $paciente->getId(); ?>"><i
                                         class="fa fa-edit"></i></a>
                                 <?php endif; ?>
-                                <a class="btn btn-outline-primary rounded-circle"
+                                <a class="btn btn-outline-primary btn-sm rounded-circle"
                                     href="/informes/index.php?idPaciente=<?= $paciente->getId(); ?>"><i
                                         class="fa fa-file-text-o"></i></a>
                             </td>

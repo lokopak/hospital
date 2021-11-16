@@ -212,4 +212,20 @@ class Paciente extends Persona
     {
         return self::$estados;
     }
+
+    /**
+     * Devuelve el nombre de un estado
+     * 
+     * @param int $estado
+     * @return string
+     */
+    public static function getNombreEstado($estado)
+    {
+
+        if (isset(self::$estados[$estado])) {
+            return self::$estados[$estado];
+        }
+
+        return 'desconocido';
+    }
 }
