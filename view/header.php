@@ -3,7 +3,8 @@
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between w-100">
                 <div class="d-flex align-items-center">
-                    <a class="menu-btn d-flex align-items-center justify-content-center p-2 bg-gray-900" id="toggle-btn" href="#">
+                    <a class="menu-btn d-flex align-items-center justify-content-center p-2 bg-gray-900" id="toggle-btn"
+                        href="#">
                         <i class="fa fa-bars text-white"></i>
                     </a>
                     <a class="navbar-brand ms-2" href="/index.php">
@@ -14,25 +15,33 @@
                     </a>
                 </div>
                 <form class="d-flex" method="POST" action="/buscar/buscar.php">
-                    <div class="input-group">
-                        <input type="text" name="valor" class="form-control" aria-label="Text input with dropdown button">
-                        <select class="form-select" name="seccion" id="inputGroupSelect01">
-                            <option selected value="todos">Buscar...</option>
-                            <?php
+                    <div class="bg-light rounded rounded-pill shadow-sm ps-2">
+                        <div class="input-group">
+                            <input type="text" name="valor" class="form-control border-0 bg-light rounded-pill"
+                                aria-label="Text input with dropdown button">
+                            <div class="input-group-append">
 
-                            require_once(__DIR__ . "/../login/services/ControlAcceso.php");
-                            if (ControlAcceso::tieneAcceso('PACIENTES@VER')) : ?>
-                                <option value="pacientes">Pacientes</option>
-                            <?php endif; ?>
-                            <?php
+                                <select class="form-select border-0 bg-light" name="seccion" id="inputGroupSelect01">
+                                    <option selected value="todos">Buscar...</option>
+                                    <?php
 
-                
-                            if (ControlAcceso::tieneAcceso('EMPLEADOS@VER')) : ?>
-                                <option value="empleados">Empleados</option>
-                            <?php endif; ?>
-                            <!-- <option value="informes">Three</option> -->
-                        </select>
-                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Buscar</button>
+                                    require_once(__DIR__ . "/../login/services/ControlAcceso.php");
+                                    if (ControlAcceso::tieneAcceso('PACIENTES@VER')) : ?>
+                                    <option value="pacientes">Pacientes</option>
+                                    <?php endif; ?>
+                                    <?php
+
+
+                                    if (ControlAcceso::tieneAcceso('EMPLEADOS@VER')) : ?>
+                                    <option value="empleados">Empleados</option>
+                                    <?php endif; ?>
+                                    <!-- <option value="informes">Three</option> -->
+                                </select>
+                            </div>
+                            <button class="btn btn-link text-primary" type="submit" id="inputGroupFileAddon03"><i
+                                    class="fa fa-search"></i></button>
+                        </div>
+
                     </div>
                 </form>
                 <ul class="nav-menu mb-0 list-unstyled d-flex flex-md-row align-items-md-center">
@@ -42,7 +51,8 @@
                             <span class="d-none d-sm-inline-block">Desconectar</span>
                             <i class="fa fa-power-off ms-2"></i>
                         </a> -->
-                        <button class="nav-link btn btn-danger text-white text-sm rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#modalDesconectar">
+                        <button class="nav-link btn btn-danger text-white text-sm rounded-pill" type="button"
+                            data-bs-toggle="modal" data-bs-target="#modalDesconectar">
                             <span class="d-none d-sm-inline-block">Desconectar</span>
                             <i class="fa fa-power-off ms-2"></i>
                         </button>
@@ -63,8 +73,10 @@
                     ¿Estás seguro de que quieres desconectarte?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary rounded-pill" onclick="document.location='/login/logout.php'">¡Claro que sí, Guapi!</button>
+                    <button type="button" class="btn btn-secondary rounded-pill"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary rounded-pill"
+                        onclick="document.location='/login/logout.php'">¡Claro que sí, Guapi!</button>
                 </div>
             </div>
         </div>
