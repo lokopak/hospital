@@ -6,8 +6,9 @@ require_once(__DIR__ . "/../../login/services/Autorizacion.php");
 require_once(__DIR__ . "/../../login/services/ControlAcceso.php");
 require_once __DIR__ . "/../../services/Peticion.php";
 require_once __DIR__ . "/../../services/paginador/Paginador.php";
-
 require_once(__DIR__ . "/../model/TablaEmpleado.php");
+require_once __DIR__ . "/../../services/AppError.php";
+require_once(__DIR__ . "/../model/Empleado.php");
 
 class ControladorEmpleado extends Controlador
 {
@@ -77,6 +78,83 @@ class ControladorEmpleado extends Controlador
         return $this->mostrarHtml([
             'busqueda' => $busqueda,
             'elementos' => $elementos
+        ]);
+    }
+
+    public function editar()
+    {
+
+        if (!Autorizacion::getInstancia()->tieneIdentidad()) {
+            header("location: /login/login.php");
+            exit();
+        }
+        if (!(ControlAcceso::tieneAcceso('EMPLEADOS@EDITAR'))) {
+            header("location: /login/no-autorizado.php");
+            exit();
+        }
+        $tablaEmpelados = new TablaEmpleado();
+
+        if (Peticion::getInstancia()->esPost()) {
+
+            // Recogemos todos los datos desde el POST
+            $datos = Peticion::getInstancia()->fromPost();
+
+
+            // El resto de valores debe ser un integer.
+            $datos['cargo'] = (int) $datos['cargo'];
+            // No se ha proporcionado la id del epleado.
+            if (!isset($datos['idEmpleado'])) {
+                return (new AppError('Petición no válida', 'No se ha proporcionado los datos necesarios'))->mostrarError();
+            }
+
+            $idEmpleado = (int) $datos['idEmpleado'];
+            unset($datos['idEmpleado']);
+
+            if (isset($datos['cargo'])) {
+                // El resto de valores debe ser un integer.
+                $datos['cargo'] = (int) $datos['cargo'];
+            }
+            $resultado = $tablaEmpelados->actualizar($idEmpleado, $datos);
+
+            if ($resultado instanceof AppError) {
+                $resultado->mostrarError();
+            }
+            if ($idEmpleado == null) {
+                echo " ERROR";
+            }
+            $datosEmpleado = $tablaEmpelados->buscarUno($idEmpleado);
+            if ($datosEmpleado == null) {
+                echo " ERROR";
+            } else {
+                $empleado = new Empleado();
+                $empleado->rellenarConArray($datosEmpleado);
+            }
+
+            if ($resultado) {
+            } else {
+                echo '
+                <div class="alert alert-warning" role="alert">
+                  Algo ha fallado.
+                </div>';
+            }
+        } else {
+            $idEmpleado = Peticion::getInstancia()->fromGet("idEmpleado");
+            if ($idEmpleado == null) {
+                echo " ERROR";
+            }
+            $datosEmpleado = $tablaEmpelados->buscarUno($idEmpleado);
+            if ($datosEmpleado == null) {
+                echo " ERROR";
+            } else {
+                $empleado = new Empleado();
+                $empleado->rellenarConArray($datosEmpleado);
+            }
+        }
+
+        $this->setPlantilla("editar");
+
+        return $this->mostrarHtml([
+            'empleado' => $empleado,
         ]);
     }
 }
