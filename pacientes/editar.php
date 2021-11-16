@@ -1,88 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../login/services/Autorizacion.php");
-require_once(__DIR__ . "/../login/services/ControlAcceso.php");
-
-if (!Autorizacion::getInstancia()->tieneIdentidad()) {
-    header("location: /login/login.php");
-    exit();
-}
-if (!(ControlAcceso::tieneAcceso('PACIENTES@EDITAR'))) {
-    header("location: /login/no-autorizado.php");
-    exit();
-}
-require_once(__DIR__ . "/../services/Peticion.php");
-require_once(__DIR__ . "/model/TablaPaciente.php");
-require_once(__DIR__ . "/model/Paciente.php");
-require_once(__DIR__ . "/../services/AppError.php");
-
-$tablaPacientes = new TablaPaciente();
-
-if (Peticion::getInstancia()->esPost()) {
-
-    // Recogemos todos los datos desde el POST
-    $datos = Peticion::getInstancia()->fromPost();
-
-    // Convertimos todos los valores a su tipo correcto.
-
-    // El resto de valores debe ser un integer.
-    $datos['estado'] = (int) $datos['estado'];
-
-    // Si no se ha proporcionado una ide de paciente, la petición no puede procesarse correctamente. Mostramos un error.
-    if (!isset($datos['idPaciente'])) {
-        return (new AppError('Petición invalida', 'La petición no incluye los datos necesarios para ser procesada.'))->mostrarError();
-    }
-
-    // Recogemos la id del paciente en una variable separada y nos aseguramos que es del tipo correcto.
-    $idPaciente = (int) $datos['idPaciente'];
-    // Eliminamos esta entrada de los datos, no va a usarse.
-    unset($datos['idPaciente']);
-
-    // Comprobamos si el paciente existe
-    $paciente = $tablaPacientes->buscarUno($idPaciente);
-
-    // Mostramos el error 'no encontrado'
-    if (null === $paciente) {
-        return (new AppError('No encontrado', 'No se ha encontrado el elemento indicado.', AppError::ERROR_NO_ENCONTRADO))->mostrarError();
-    }
-
-    if ($datos['estado'] != $paciente['estado']) {
-        print_r("estado cambiado");
-    }
-
-    $resultado = $tablaPacientes->actualizar($idPaciente, $datos);
-
-    // Si se ha recibido un error desde la tabla, lo mostramos.
-    if ($resultado instanceof AppError) {
-        return $resultado->mostrarError();
-    }
-
-    if ($resultado > 0) {
-        header("Location: /pacientes/editar.php?idPaciente=" . $idPaciente);
-        exit();
-    } else {
-        echo '
-        <div class="alert alert-warning" role="alert">
-          Algo ha fallado.
-        </div>';
-    }
-}
-require_once(__DIR__ . "/model/Paciente.php");
-$estados = Paciente::getEstados();
-
-
-$idPaciente = Peticion::getInstancia()->fromGet('idPaciente');
-if ($idPaciente == null) {
-    echo "error";
-}
-$datosPaciente = $tablaPacientes->buscarUno($idPaciente);
-if ($datosPaciente == null) {
-    echo "error";
-} else {
-    $paciente = new Paciente();
-    $paciente->rellenarConArray($datosPaciente);
-}
-
 /**
  * Imprime una fila de la tabla con una dieta sin dietas hijas.
  * 
@@ -208,6 +125,8 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     }
 }
 
-$contenido = __DIR__ . "/view/editar.phtml";
+require_once __DIR__ . "/controller/ControladorPaciente.php";
 
-require_once(__DIR__ . "/../view/pagina.phtml");
+$contolador = new ControladorPaciente();
+
+return $contolador->editar();

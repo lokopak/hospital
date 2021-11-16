@@ -1,61 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../login/services/Autorizacion.php");
-
-if (!Autorizacion::getInstancia()->tieneIdentidad()) {
-    header("location: /login/login.php");
-    exit();
-}
-
-require_once(__DIR__ . "/../services/Peticion.php");
-require_once(__DIR__ . "/model/TablaPaciente.php");
-require_once(__DIR__ . "/model/Paciente.php");
-require_once(__DIR__ . "/../login/services/ControlAcceso.php");
-
-if (!(ControlAcceso::tieneAcceso('PACIENTES@EDITAR'))) {
-    header("location: /login/no-autorizado.php");
-    exit();
-}
-
-if (Peticion::getInstancia()->esPost()) {
-
-    // Recogemos todos los datos desde el POST
-    $datos = Peticion::getInstancia()->fromPost();
-
-    // Convertimos todos los valores a su tipo correcto.
-
-    // El resto de valores debe ser un integer.
-    $datos['estado'] = (int) $datos['estado'];
-
-
-    $id = (int) $datos['idPaciente'];
-
-    $datos['id'] = $id;
-    unset($datos['idPaciente']);
-
-    $tablaPacientes = new TablaPaciente();
-
-    $idPaciente = $tablaPacientes->insertar($datos);
-
-    // Si se ha producido un error durante la inserción, simplemente mostramos el error.
-    if ($idPaciente instanceof AppError) {
-        return $idPaciente->mostrarError();
-    }
-
-    if ($idPaciente > 0) {
-        header("Location: /pacientes/editar.php?idPaciente=" . $idPaciente);
-        exit();
-    } else {
-        echo '
-        <div class="alert alert-warning" role="alert">
-          Algo ha fallado.
-        </div>';
-    }
-}
-require_once(__DIR__ . "/model/Paciente.php");
-$estados = Paciente::getEstados();
-
-
 /**
  * Imprime una fila de la tabla con una dieta sin dietas hijas.
  * 
@@ -179,6 +123,8 @@ function imprimirDietaConHijas($dieta, $paso = 0, $indice = 0)
     }
 }
 
-$contenido = __DIR__ . "/view/crear.phtml";
+require_once __DIR__ . "/controller/ControladorPaciente.php";
 
-require_once(__DIR__ . "/../view/pagina.phtml");
+$contolador = new ControladorPaciente();
+
+return $contolador->crear();

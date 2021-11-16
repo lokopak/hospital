@@ -6,14 +6,50 @@ require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
         <div class="card-header border-bottom">
             <h3 class="h4 mb-0">Listado pacientes:</h3>
         </div>
+
+        <div class="card-header">
+
+            <form class="row row-cols-lg-auto g-3 align-items-center" method="GET" action="/pacientes/index.php">
+                <div class="col-12">
+                    <label class="visually-hidden" for="ordenPor">Ordenar por</label>
+                    <select class="form-select" id="ordenPor" name="ordenPor">
+                        <option value="id" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'id' ? 'selected' : '') ?>>
+                            Ordenar Por...
+                        </option>
+                        <option value="nombre" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'nombre' ? 'selected' : '') ?>>
+                            Nombre</option>
+                        <option value="apellidos" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'apellidos' ? 'selected' : '') ?>>
+                            Apellidos</option>
+                        <option value="estado" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'estado' ? 'selected' : '') ?>>
+                            Estado</option>
+                        <option value="dieta" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'dieta' ? 'selected' : '') ?>>
+                            Dieta</option>
+                        <option value="fecha" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'fecha' ? 'selected' : '') ?>>
+                            Fecha</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="visually-hidden" for="orden">Orden</label>
+                    <select class="form-select" name="orden" id="orden">
+                        <option value="ASC" <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'ASC' ? 'selected' : '') ?>>A - Z
+                        </option>
+                        <option value="DESC" <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'DESC' ? 'selected' : '') ?>>Z - A
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary rounded-2">Actualizar</button>
+                </div>
+            </form>
+        </div>
         <div class="card-body">
             <?php if (empty($pacientes)) : ?>
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-                <i class="fa fa-info-circle fa-2x me-4"></i>
-                <div>
-                    No hay ningún paciente registrado actualmente.
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="fa fa-info-circle fa-2x me-4"></i>
+                    <div>
+                        No hay ningún paciente registrado actualmente.
+                    </div>
                 </div>
-            </div>
             <?php else : ?>
             <div class="table-responsive">
                 <table class="table text-sm mb-0">
@@ -32,7 +68,7 @@ require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pacientes as $paciente) : ?>
+                        <?php foreach ($pacientes->getElementosActuales() as $paciente) : ?>
 
                         <tr>
                             <td class="align-middle"><?= $paciente->getId() ?></td>
@@ -63,18 +99,17 @@ require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
                             </td>
                         </tr>
                         <?php endforeach; ?>
-
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
             <?php endif; ?>
         </div>
     </div>
 </div>
 <?php if ($pacientes instanceof Paginador) : ?>
-<div class="row">
-    <div class="col my-3">
-        <?php $pacientes->mostrarPaginador("pacientes"); ?>
+    <div class="row">
+        <div class="col my-3">
+            <?php $pacientes->mostrarPaginador("pacientes"); ?>
+        </div>
     </div>
-</div>
 <?php endif; ?>
