@@ -26,10 +26,18 @@ if (Peticion::getInstancia()->esPost()) {
 
     // El resto de valores debe ser un integer.
     $datos['cargo'] = (int) $datos['cargo'];
+    // No se ha proporcionado la id del epleado.
+    if (!isset($datos['idEmpleado'])) {
+        return (new AppError('Petición no válida', 'No se ha proporcionado los datos necesarios'))->mostrarError();
+    }
 
     $idEmpleado = (int) $datos['idEmpleado'];
     unset($datos['idEmpleado']);
 
+    if (isset($datos['cargo'])) {
+        // El resto de valores debe ser un integer.
+        $datos['cargo'] = (int) $datos['cargo'];
+    }
     $resultado = $tablaEmpelados->actualizar($idEmpleado, $datos);
 
     if ($resultado instanceof AppError) {
