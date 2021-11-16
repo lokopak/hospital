@@ -53,7 +53,7 @@ require_once(__DIR__ . "/../../pacientes/model/Paciente.php");
                             <td class="align-middle">
                                 <?php
                                         if (ControlAcceso::tieneAcceso('PACIENTES@EDITAR')) : ?>
-                                <a class="btn btn-primary btn-sm rounded-circle align-middle"
+                                <a class="btn btn-primary btn-sm rounded-circle align-middle mb-md-2"
                                     href="/pacientes/editar.php?idPaciente=<?= $paciente->getId(); ?>"><i
                                         class="fa fa-edit"></i></a>
                                 <?php endif; ?>
