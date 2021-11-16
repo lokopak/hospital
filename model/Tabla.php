@@ -64,7 +64,25 @@ abstract class Tabla
 
             // Montamos la query pasándole el string de las columnas y el nombre de la tabla.
             $query = sprintf('SELECT %s FROM %s', $cols, $this->nombreTabla);
-            $totalQuery = sprintf("SELECT id FROM %s", $this->nombreTabla);
+
+            if (isset($busqueda['where'])) {
+                $where = '';
+                foreach ($busqueda['where'] as $indice => $valor) {
+                    if (!empty($where)) {
+                        $where .= ' OR ';
+                    }
+                    switch($indice) {
+                        case 'nombre': $where .= "nombre LIKE '%$valor%'"; break;
+                        case 'apellidos':
+                            $where .= "apellidos LIKE '%$valor%'";
+                            break;
+                    }
+                }
+
+                $where = ' WHERE ' . $where;
+
+                $query .= $where;
+            }
 
             // Asignamos valor por defecto a la columna
             if (!isset($busqueda['ordenPor'])) {
