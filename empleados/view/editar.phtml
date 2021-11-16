@@ -1,44 +1,100 @@
-<!-- Basic Form-->
-<form class="row" method="POST">
+<?php if (isset($empleado)) : ?>
+<form class="row needs-validation" method="POST">
     <div class="card-group">
         <div class="card">
             <div class="card-header border-bottom">
                 <h3 class="h4 mb-0">Datos empleados</h3>
-            </div>
-            <?php if ($empleado) : ?>
-            <div class="card-body">
                 <p class="text-sm">Por favor, inserte los datos del empleado.</p>
-                <div class="mb-3">
-                    <label class="form-label" for="nombre">Nombre</label>
-                    <input class="form-control" id="nombre" name="nombre" value="<?= $empleado->getNombre() ?>"
-                        type="text" aria-describedby="Nombre">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="apellidos">Apellidos</label>
-                    <input class="form-control" id="apellidos" name="apellidos" value="<?= $empleado->getApellidos() ?>"
-                        type="text">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="DNI">DNI</label>
-                    <input class="form-control" id="DNI" name="DNI" value="<?= $empleado->getDNI() ?>" type="text">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="cargo">Cargo</label>
-                    <select class="form-select" id="cargo" name="cargo">
-                        <option value="0">Seleccionar el cargo</option>
-                        <?php foreach ($cargos as $indice => $cargo) { ?>
-                        <option value="<?= $indice ?>"
-                            <?= ($indice === (int) $empleado->getCargo() ? "selected" : '') ?>>
-                            <?= ucfirst($cargo) ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <button class="btn btn-primary" type="submit">Enviar</button>
-                <input type="hidden" value="<?= $empleado->getId() ?>" name="idEmpleado">
             </div>
-            <?php else : ?>
-            <h3>No hay empleado</h3>
-            <?php endif; ?>
+            <div class="card-body">
+                <div class="w-75 m-auto">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label" for="nombre"><i class="fa fa-user me-2"></i>Nombre</label>
+                            <input class="form-control" id="nombre" name="nombre" value="<?= $empleado->getNombre() ?>"
+                                type="text" aria-describedby="Nombre" required minlength="2" maxlength="40">
+                            <div class="invalid-feedback">
+                                Este campo es obligatorio
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            <label class="form-label" for="apellidos"><i class="fa fa-user me-2"></i>Apellidos
+                                <small>*</small></label>
+                            <input class="form-control" id="apellidos" name="apellidos"
+                                value="<?= $empleado->getApellidos() ?>" type="text" required minlength="2"
+                                maxlength="80">
+                            <div class="invalid-feedback">
+                                Este campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4 mb-3">
+                            <label class="form-label" for="DNI"><i class="fa fa-id-card me-2"></i>DNI</label>
+                            <input class="form-control" id="DNI" name="DNI" value="<?= $empleado->getDNI() ?>"
+                                type="text" placeholder="12345678A" required minlength="9" maxlength="9"
+                                pattern="[0-9]{8}[A-Za-z]{1}">
+                            <div class="invalid-feedback">
+                                Este campo es obligatorio
+                            </div>
+                        </div>
+                        <div class="col-12  col-md-4 mb-3">
+                            <label class="form-label" for="cargo"><i class="fa fa-asterisk me-2"></i>Cargo</label>
+                            <select class="form-select" id="cargo" name="cargo" required>
+                                <option value="0">Seleccionar el cargo</option>
+                                <?php foreach ($cargos as $indice => $cargo) { ?>
+                                <option value="<?= $indice ?>"
+                                    <?= ($indice === (int) $empleado->getCargo() ? "selected" : '') ?>>
+                                    <?= ucfirst($cargo) ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" value="<?= $empleado->getId() ?>" name="idEmpleado">
+                    <button class="btn btn-primary mt-3" type="submit"><i class="fa fa-save me-2"></i>Guardar</button>
+                </div>
+            </div>
         </div>
     </div>
-</form>
+<?php endif; ?>
+<?php
+
+require_once __DIR__ . "/../../view/service/InyectorScript.php";
+
+    (function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+        
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+    
+            form.classList.add('was-validated')
+            }, false)
+        });
+
+        function check_password() {
+            const password = document.querySelector('input[name=userPassword]');
+            const confirm = document.querySelector('input[name=confirm_password]');
+            if (confirm.value === password.value) {
+              confirm.setCustomValidity('');
+            } else {
+              confirm.setCustomValidity('Passwords do not match');
+            }
+          }
+        
+        var passwordInputs = document.querySelectorAll('input[type=password]');
+        
+        console.log(passwordInputs);
+        
+    })();
+    
+</script>";
+
+InyectorScript::getInstancia()->agregarScript($script);
+?>
