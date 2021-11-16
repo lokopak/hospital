@@ -35,6 +35,12 @@ $pagina = Peticion::getInstancia()->fromGet('pagina');
 if (is_null($pagina)) {
     $pagina = 1;
 }
+$ordenPor = Peticion::getInstancia()->fromGet('ordenPor');
+if (
+    null === $ordenPor
+) {
+    $ordenPor = 'id';
+}
 
 $limite = Peticion::getInstancia()->fromGet('limite');
 if (is_null($limite)) {
@@ -42,9 +48,15 @@ if (is_null($limite)) {
 }
 
 $elementos = new Paginador($elementos, $pagina, $limite);
+$orden = Peticion::getInstancia()->fromGet('orden');
+if (null === $orden) {
+    $orden = 'ASC';
+}
+$busqueda = ['limite' => $limite, 'pagina' => $pagina, 'ordenPor' => $ordenPor, 'orden' => $orden];
 
 // Guardamos el path al archivo que tiene el contenido de la página.
 // NOTA: como la llamada / require al archivo con la plantilla de la página se hace desde aquí, guardamos el path en relación a este archivo.
+$empleados = $conexion->buscarTodos(['id', 'nombre', 'apellidos', 'DNI', 'cargo'], $busqueda);
 $contenido = __DIR__ . "/view/index.phtml";
 
 // Y mostramos la página entera.

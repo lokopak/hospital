@@ -3,55 +3,87 @@
         <div class="card-header border-bottom">
             <h3 class="h4 mb-0">Listado empleados:</h3>
         </div>
+
+        <div class="card-header">
+
+            <form class="row row-cols-lg-auto g-3 align-items-center" method="GET" action="/empleados/index.php">
+                <div class="col-12">
+                    <label class="visually-hidden" for="ordenPor">Ordenar por</label>
+                    <select class="form-select" id="ordenPor" name="ordenPor">
+                        <option value="id" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'id' ? 'selected' : '') ?>>
+                            Ordenar Por...
+                        </option>
+                        <option value="nombre" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'nombre' ? 'selected' : '') ?>>
+                            Nombre</option>
+                        <option value="apellidos" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'apellidos' ? 'selected' : '') ?>>
+                            Apellidos</option>
+                        <option value="DNI" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'DNI' ? 'selected' : '') ?>>
+                            DNI</option>
+                        <option value="cargo" <?= (isset($busqueda['ordenPor']) && $busqueda['ordenPor'] === 'cargo' ? 'selected' : '') ?>>
+                            Cargo</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="visually-hidden" for="orden">Orden</label>
+                    <select class="form-select" name="orden" id="orden">
+                        <option value="ASC" <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'ASC' ? 'selected' : '') ?>>A - Z
+                        </option>
+                        <option value="DESC" <?= (isset($busqueda['orden']) && $busqueda['orden'] === 'DESC' ? 'selected' : '') ?>>Z - A
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary rounded-2">Actualizar</button>
+                </div>
+            </form>
+        </div>
         <div class="card-body">
             <?php if ($elementos->getNumeroTotalElementos() === 0) { ?>
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-                <i class="fa fa-info-circle fa-2x me-4"></i>
-                <div>
-                    No hay ningún empleado registrado actualmente.
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="fa fa-info-circle fa-2x me-4"></i>
+                    <div>
+                        No hay ningún empleado registrado actualmente.
+                    </div>
                 </div>
-            </div>
             <?php } else { ?>
-            <div class="table-responsive">
-                <table class="table text-sm mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
-                            <th scope="col">DNI</th>
-                            <th scope="col">Cargo</th>
-                            <th scope="col"></th>
+                <div class="table-responsive">
+                    <table class="table text-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Cargo</th>
+                                <th scope="col"></th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($elementos->getElementosActuales() as $empleado) { ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($elementos->getElementosActuales() as $empleado) { ?>
 
-                        <tr>
-                            <td><?= $empleado->getId() ?></td>
-                            <td><?= $empleado->getNombre() ?></td>
-                            <td><?= $empleado->getApellidos() ?></td>
-                            <td><?= $empleado->getDNI() ?></td>
-                            <td><?= ucfirst($empleado->getNombreCargo()) ?></td>
-                            <td>
-                                <?php
+                                <tr>
+                                    <td><?= $empleado->getId() ?></td>
+                                    <td><?= $empleado->getNombre() ?></td>
+                                    <td><?= $empleado->getApellidos() ?></td>
+                                    <td><?= $empleado->getDNI() ?></td>
+                                    <td><?= ucfirst($empleado->getNombreCargo()) ?></td>
+                                    <td>
+                                        <?php
 
                                         require_once(__DIR__ . "/../../login/services/ControlAcceso.php");
                                         if (ControlAcceso::tieneAcceso('EMPLEADOS@EDITAR')) : ?>
-                                <a class="btn btn-primary"
-                                    href="/empleados/editar.php?idEmpleado=<?= $empleado->getId() ?>"
-                                    role="button">Editar</a>
-                                <?php endif; ?>
-                            </td>
+                                            <a class="btn btn-primary" href="/empleados/editar.php?idEmpleado=<?= $empleado->getId() ?>" role="button">Editar</a>
+                                        <?php endif; ?>
+                                    </td>
 
-                        </tr>
+                                </tr>
 
-                        <?php } ?>
+                            <?php } ?>
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
             <?php } ?>
         </div>
     </div>
