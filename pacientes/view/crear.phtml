@@ -12,28 +12,38 @@
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="nombre"><i class="fa fa-user me-2"></i>Nombre</label>
                                 <input class="form-control" id="nombre" type="text" name="nombre"
-                                    aria-describedby="Nombre">
+                                    aria-describedby="Nombre" name="nombre" aria-describedby="Nombre" required
+                                    minlength="2" maxlength="40">
+                                <div class="invalid-feedback">
+                                    Este campo es obligatorio
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="apellidos"><i
                                         class="fa fa-user me-2"></i>Apellidos</label>
-                                <input class="form-control" id="apellidos" name="apellidos" type="text">
+                                <input class="form-control" id="apellidos" name="apellidos" type="text" required
+                                    minlength="2" maxlength="80">
+                                <div class="invalid-feedback">
+                                    Este campo es obligatorio
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-3 mb-3">
-                                <label class="form-label" for="fechaNacimiento"><i class="fa fa-calendar me-2"></i>Fecha
-                                    nacimiento</label>
-                                <input class="form-control" id="fechaNacimiento" name="fechaNacimiento" type="date">
+                                <label class="form-label" for="fechaNacimiento">
+                                    <i class="fa fa-calendar me-2"></i>Fecha nacimiento</label>
+                                <input class="form-control" id="fechaNacimiento" name="fechaNacimiento" type="date"
+                                    required>
                             </div>
                             <div class="col-6 col-md-2 mb-3">
                                 <label class="form-label" for="habitacion"><i
                                         class="fa fa-bed me-2"></i>Habitación</label>
-                                <input class="form-control" id="habitacion" name="habitacion" type="number">
+                                <input class="form-control" id="habitacion" name="habitacion" type="number" required
+                                    min="1" max="2000">
                             </div>
                             <div class="col-6 col-md-3 mb-3">
                                 <label class="form-label" for="estado"><i class="fa fa-heart me-2"></i>Estado</label>
-                                <select class="form-select" id="estado" name="estado">
+                                <select class="form-select" id="estado" name="estado" required>
                                     <option selected value="-1">Estado del paciente...</option>
                                     <?php foreach ($estados as $indice => $estado) { ?>
                                     <option value="<?= $indice ?>"><?= ucfirst($estado) ?></option>
@@ -56,3 +66,44 @@
 
 
     </form>
+
+    <?php
+
+    $script = "<script>
+    (function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+        
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+    
+            form.classList.add('was-validated')
+            }, false)
+        });
+
+        function check_password() {
+            const password = document.querySelector('input[name=userPassword]');
+            const confirm = document.querySelector('input[name=confirm_password]');
+            if (confirm.value === password.value) {
+              confirm.setCustomValidity('');
+            } else {
+              confirm.setCustomValidity('Passwords do not match');
+            }
+          }
+        
+        var passwordInputs = document.querySelectorAll('input[type=password]');
+        
+        console.log(passwordInputs);
+        
+    })();
+    
+</script>";
+
+    InyectorScript::getInstancia()->agregarScript($script);
+    ?>
